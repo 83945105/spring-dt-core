@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanet.printGen.mapper.PtActivityColumnAnnotationMapper">
+    <resultMap id="BaseResultMap" type="com.huanet.printGen.bean.PtActivityColumn">
+        <id column="ID" property="id"/>
+        <result column="MODEL_ID" property="modelId"/>
+        <result column="TEXT" property="text"/>
+        <result column="VALUE" property="value"/>
+        <result column="WIDTH" property="width"/>
+        <result column="REQUIRED_IN_EXCEL" property="requiredInExcel"/>
+        <result column="VISIBLE" property="visible"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="USER_NAME" property="userName"/>
+        <result column="SORT_INDEX" property="sortIndex"/>
+        <result column="STATUS" property="status"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="MOD_TIME" property="modTime"/>
+        <result column="DEL_TIME" property="delTime"/>
+        <result column="CREATE_TIME_STAMP" property="createTimeStamp"/>
+        <result column="MOD_TIME_STAMP" property="modTimeStamp"/>
+        <result column="DEL_TIME_STAMP" property="delTimeStamp"/>
+    </resultMap>
+    <sql id="S_F">
+        <choose>
+            <when test="columnName == 'id'">ID</when>
+            <when test="columnName == 'modelId'">MODEL_ID</when>
+            <when test="columnName == 'text'">TEXT</when>
+            <when test="columnName == 'value'">VALUE</when>
+            <when test="columnName == 'width'">WIDTH</when>
+            <when test="columnName == 'requiredInExcel'">REQUIRED_IN_EXCEL</when>
+            <when test="columnName == 'visible'">VISIBLE</when>
+            <when test="columnName == 'userId'">USER_ID</when>
+            <when test="columnName == 'userName'">USER_NAME</when>
+            <when test="columnName == 'sortIndex'">SORT_INDEX</when>
+            <when test="columnName == 'status'">STATUS</when>
+            <when test="columnName == 'createTime'">CREATE_TIME</when>
+            <when test="columnName == 'modTime'">MOD_TIME</when>
+            <when test="columnName == 'delTime'">DEL_TIME</when>
+            <when test="columnName == 'createTimeStamp'">CREATE_TIME_STAMP</when>
+            <when test="columnName == 'modTimeStamp'">MOD_TIME_STAMP</when>
+            <when test="columnName == 'delTimeStamp'">DEL_TIME_STAMP</when>
+            <otherwise>${columnName}</otherwise>
+        </choose>
+    </sql>
+    <sql id="S_F_S">
+        <foreach collection="columnNames" item="columnName" separator=",">PtActivityColumn.
+            <include refid="S_F"/>
+            as #{columnName}
+        </foreach>
+    </sql>
+    <sql id="S_A">
+        <choose>
+            <when test="query != null and query.tableName != null">${query.tableName}</when>
+            <otherwise>pt_activity_column</otherwise>
+        </choose>
+    </sql>
+    <sql id="S_B">
+        <choose>
+            <when test="tableName != null">${tableName}</when>
+            <otherwise>pt_activity_column</otherwise>
+        </choose>
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">SELECT PtActivityColumn.* FROM
+        <include refid="S_B"/>
+        PtActivityColumn WHERE PtActivityColumn.ID = #{primaryKey}
+    </select>
+    <select id="selectCount" parameterType="map" resultType="int">
+        <choose>
+            <when test="query == null">SELECT COUNT(1) FROM
+                <include refid="S_A"/>
+            </when>
+            <when test="query.useExpandField == false">
+                <choose>
+                    <when test="query.hasDivideCondition == false">SELECT COUNT(1) FROM
+                        <include refid="S_A"/>
+                        PtActivityColumn
+                        <where>${query.originalConditionSql}</where>
+                    </when>
+                    <otherwise>SELECT COUNT(1) FROM (SELECT PtActivityColumn.* FROM
+                        <include refid="S_A"/>
+                        PtActivityColumn <where>${query.originalConditionSql}</where> ${query.originalDivideSql})
+                        PtActivityColumn
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="query.hasDivideCondition == false">SELECT COUNT(1) FROM (SELECT ${query.expandFieldSql}
+                        PtActivityColumn.* FROM
+                        <include refid="S_A"/>
+                        PtActivityColumn ${query.joinInfoSql} <where>${query.onInfoSql}
+                            ${query.originalConditionSql}</where>) PtActivityColumn
+                        <where>${query.transientConditionSql}</where>
+                    </when>
+                    <otherwise>SELECT COUNT(1) FROM (SELECT PtActivityColumn.* FROM (SELECT ${query.expandFieldSql}
+                        PtActivityColumn.* FROM
+                        <include refid="S_A"/>
+                        PtActivityColumn ${query.joinInfoSql} <where>${query.onInfoSql}
+                            ${query.originalConditionSql}</where>) PtActivityColumn <where>
+                            ${query.transientConditionSql}
+                        </where> ${query.transientDivideSql}) PtActivityColumn
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
+    </select>
+    <sql id="S_L">
+        <choose>
+            <when test="query == null">SELECT PtActivityColumn.* FROM pt_activity_column PtActivityColumn</when>
+            <when test="query.useExpandField == false">SELECT PtActivityColumn.* FROM
+                <include refid="S_A"/>
+                PtActivityColumn <where>${query.originalConditionSql}</where> ${query.originalDivideSql}
+                ${query.originalSortSql} ${query.limitSql}
+            </when>
+            <when test="query.useTransientField == false">SELECT ${query.expandFieldSql} PtActivityColumn.* FROM
+                <include refid="S_A"/>
+                PtActivityColumn ${query.joinInfoSql} <where>${query.onInfoSql} ${query.originalConditionSql}</where> ${query.originalDivideSql}
+                ${query.originalSortSql} ${query.limitSql}
+            </when>
+            <otherwise>SELECT PtActivityColumn.* FROM (SELECT ${query.expandFieldSql} PtActivityColumn.* FROM
+                <include refid="S_A"/>
+                PtActivityColumn ${query.joinInfoSql}<where>${query.onInfoSql} ${query.originalConditionSql}</where>)
+                PtActivityColumn <where>${query.transientConditionSql}</where> ${query.transientDivideSql}
+                ${query.transientSortSql} ${query.limitSql}
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="selectOne" parameterType="map" resultMap="BaseResultMap">
+        <include refid="S_L"/>
+    </select>
+    <select id="selectList" parameterType="map" resultMap="BaseResultMap">
+        <include refid="S_L"/>
+    </select>
+    <sql id="S_C">
+        <choose>
+            <when test="query == null">SELECT PtActivityColumn.
+                <include refid="S_F"/>
+                FROM pt_activity_column PtActivityColumn
+            </when>
+            <when test="query.useExpandField == false">SELECT PtActivityColumn.
+                <include refid="S_F"/>
+                FROM
+                <include refid="S_A"/>
+                PtActivityColumn <where>${query.originalConditionSql}</where> ${query.originalDivideSql}
+                ${query.originalSortSql} ${query.limitSql}
+            </when>
+            <otherwise>SELECT PtActivityColumn.
+                <include refid="S_F"/>
+                FROM (SELECT ${query.expandFieldSql} PtActivityColumn.* FROM
+                <include refid="S_A"/>
+                PtActivityColumn ${query.joinInfoSql}<where>${query.onInfoSql} ${query.originalConditionSql}</where>)
+                PtActivityColumn <where>${query.transientConditionSql}</where> ${query.transientDivideSql}
+                ${query.transientSortSql} ${query.limitSql}
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="selectColumnOne" parameterType="map" resultType="Object">
+        <include refid="S_C"/>
+    </select>
+    <select id="selectColumnList" parameterType="map" resultType="Object">
+        <include refid="S_C"/>
+    </select>
+    <select id="selectColumnSet" parameterType="map" resultType="Object">
+        <include refid="S_C"/>
+    </select>
+    <sql id="S_M">
+        <choose>
+            <when test="query == null">SELECT
+                <include refid="S_F_S"/>
+                FROM pt_activity_column PtActivityColumn
+            </when>
+            <when test="query.useExpandField == false">SELECT
+                <include refid="S_F_S"/>
+                FROM
+                <include refid="S_A"/>
+                PtActivityColumn <where>${query.originalConditionSql}</where> ${query.originalDivideSql}
+                ${query.originalSortSql} ${query.limitSql}
+            </when>
+            <otherwise>SELECT
+                <include refid="S_F_S"/>
+                FROM (SELECT ${query.expandFieldSql} PtActivityColumn.* FROM
+                <include refid="S_A"/>
+                PtActivityColumn ${query.joinInfoSql}<where>${query.onInfoSql} ${query.originalConditionSql}</where>)
+                PtActivityColumn <where>${query.transientConditionSql}</where> ${query.transientDivideSql}
+                ${query.transientSortSql} ${query.limitSql}
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="selectColumnMapOne" parameterType="map" resultType="map">
+        <include refid="S_M"/>
+    </select>
+    <select id="selectColumnMapInList" parameterType="map" resultType="map">
+        <include refid="S_M"/>
+    </select>
+    <select id="selectColumnMapInArray" parameterType="map" resultType="map">
+        <include refid="S_M"/>
+    </select>
+    <insert id="insertList" parameterType="map">insert into
+        <include refid="S_B"/>
+        <include refid="S_O"/>
+    </insert>
+    <insert id="insertArray" parameterType="map">insert into
+        <include refid="S_B"/>
+        <include refid="S_O"/>
+    </insert>
+    <insert id="replaceList" parameterType="map">replace into
+        <include refid="S_B"/>
+        <include refid="S_O"/>
+    </insert>
+    <insert id="replaceArray" parameterType="map">replace into
+        <include refid="S_B"/>
+        <include refid="S_O"/>
+    </insert>
+    <sql id="S_K">insert into
+        <include refid="S_B"/>
+        <include refid="S_O"/>
+        on duplicate key update
+        MODEL_ID=values(MODEL_ID),TEXT=values(TEXT),VALUE=values(VALUE),WIDTH=values(WIDTH),REQUIRED_IN_EXCEL=values(REQUIRED_IN_EXCEL),VISIBLE=values(VISIBLE),USER_ID=values(USER_ID),USER_NAME=values(USER_NAME),SORT_INDEX=values(SORT_INDEX),STATUS=values(STATUS),CREATE_TIME=values(CREATE_TIME),MOD_TIME=values(MOD_TIME),DEL_TIME=values(DEL_TIME),CREATE_TIME_STAMP=values(CREATE_TIME_STAMP),MOD_TIME_STAMP=values(MOD_TIME_STAMP),DEL_TIME_STAMP=values(DEL_TIME_STAMP)
+    </sql>
+    <insert id="insertOrUpdateList" parameterType="map">
+        <include refid="S_K"/>
+    </insert>
+    <insert id="insertOrUpdateArray" parameterType="map">
+        <include refid="S_K"/>
+    </insert>
+    <update id="updateListByPrimaryKeySelective" parameterType="map">
+        <include refid="S_E"/>
+    </update>
+    <update id="updateArrayByPrimaryKeySelective" parameterType="map">
+        <include refid="S_E"/>
+    </update>
+    <update id="updateSelective" parameterType="map">update<include refid="S_A"/>PtActivityColumn ${query.joinInfoSql}
+        <set>
+            <if test="record.id != null">PtActivityColumn.ID = #{record.id},</if>
+            <if test="record.modelId != null">PtActivityColumn.MODEL_ID = #{record.modelId},</if>
+            <if test="record.text != null">PtActivityColumn.TEXT = #{record.text},</if>
+            <if test="record.value != null">PtActivityColumn.VALUE = #{record.value},</if>
+            <if test="record.width != null">PtActivityColumn.WIDTH = #{record.width},</if>
+            <if test="record.requiredInExcel != null">PtActivityColumn.REQUIRED_IN_EXCEL = #{record.requiredInExcel},
+            </if>
+            <if test="record.visible != null">PtActivityColumn.VISIBLE = #{record.visible},</if>
+            <if test="record.userId != null">PtActivityColumn.USER_ID = #{record.userId},</if>
+            <if test="record.userName != null">PtActivityColumn.USER_NAME = #{record.userName},</if>
+            <if test="record.sortIndex != null">PtActivityColumn.SORT_INDEX = #{record.sortIndex},</if>
+            <if test="record.status != null">PtActivityColumn.STATUS = #{record.status},</if>
+            <if test="record.createTime != null">PtActivityColumn.CREATE_TIME = #{record.createTime},</if>
+            <if test="record.modTime != null">PtActivityColumn.MOD_TIME = #{record.modTime},</if>
+            <if test="record.delTime != null">PtActivityColumn.DEL_TIME = #{record.delTime},</if>
+            <if test="record.createTimeStamp != null">PtActivityColumn.CREATE_TIME_STAMP = #{record.createTimeStamp},
+            </if>
+            <if test="record.modTimeStamp != null">PtActivityColumn.MOD_TIME_STAMP = #{record.modTimeStamp},</if>
+            <if test="record.delTimeStamp != null">PtActivityColumn.DEL_TIME_STAMP = #{record.delTimeStamp},</if>
+        </set>
+        <where>${query.onInfoSql} ${query.originalConditionSql}</where>
+    </update>
+    <delete id="delete" parameterType="map">delete PtActivityColumn from
+        <include refid="S_A"/>
+        PtActivityColumn ${query.joinInfoSql}
+        <where>${query.onInfoSql} ${query.originalConditionSql}</where>
+    </delete>
+    <sql id="S_O">
+        (ID,MODEL_ID,TEXT,VALUE,WIDTH,REQUIRED_IN_EXCEL,VISIBLE,USER_ID,USER_NAME,SORT_INDEX,STATUS,CREATE_TIME,MOD_TIME,DEL_TIME,CREATE_TIME_STAMP,MOD_TIME_STAMP,DEL_TIME_STAMP)
+        values
+        <foreach collection="records" item="record" separator=",">
+            (#{record.id},#{record.modelId},#{record.text},#{record.value},#{record.width},#{record.requiredInExcel},#{record.visible},#{record.userId},#{record.userName},#{record.sortIndex},#{record.status},#{record.createTime},#{record.modTime},#{record.delTime},#{record.createTimeStamp},#{record.modTimeStamp},#{record.delTimeStamp})
+        </foreach>
+    </sql>
+    <sql id="S_E">update
+        <include refid="S_B"/>
+        setMODEL_ID = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.modelId != null">when #{record.id} then #{record.modelId}</if>
+        </foreach>
+        else MODEL_ID end,TEXT = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.text != null">when #{record.id} then #{record.text}</if>
+        </foreach>
+        else TEXT end,VALUE = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.value != null">when #{record.id} then #{record.value}</if>
+        </foreach>
+        else VALUE end,WIDTH = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.width != null">when #{record.id} then #{record.width}</if>
+        </foreach>
+        else WIDTH end,REQUIRED_IN_EXCEL = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.requiredInExcel != null">when #{record.id} then #{record.requiredInExcel}</if>
+        </foreach>
+        else REQUIRED_IN_EXCEL end,VISIBLE = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.visible != null">when #{record.id} then #{record.visible}</if>
+        </foreach>
+        else VISIBLE end,USER_ID = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.userId != null">when #{record.id} then #{record.userId}</if>
+        </foreach>
+        else USER_ID end,USER_NAME = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.userName != null">when #{record.id} then #{record.userName}</if>
+        </foreach>
+        else USER_NAME end,SORT_INDEX = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.sortIndex != null">when #{record.id} then #{record.sortIndex}</if>
+        </foreach>
+        else SORT_INDEX end,STATUS = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.status != null">when #{record.id} then #{record.status}</if>
+        </foreach>
+        else STATUS end,CREATE_TIME = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.createTime != null">when #{record.id} then #{record.createTime}</if>
+        </foreach>
+        else CREATE_TIME end,MOD_TIME = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.modTime != null">when #{record.id} then #{record.modTime}</if>
+        </foreach>
+        else MOD_TIME end,DEL_TIME = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.delTime != null">when #{record.id} then #{record.delTime}</if>
+        </foreach>
+        else DEL_TIME end,CREATE_TIME_STAMP = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.createTimeStamp != null">when #{record.id} then #{record.createTimeStamp}</if>
+        </foreach>
+        else CREATE_TIME_STAMP end,MOD_TIME_STAMP = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.modTimeStamp != null">when #{record.id} then #{record.modTimeStamp}</if>
+        </foreach>
+        else MOD_TIME_STAMP end,DEL_TIME_STAMP = case ID when '666' then ''
+        <foreach collection="records" item="record" separator="">
+            <if test="record.delTimeStamp != null">when #{record.id} then #{record.delTimeStamp}</if>
+        </foreach>
+        else DEL_TIME_STAMP end where id in
+        <foreach collection="records" item="record" open="(" close=")" separator=",">#{record.id}</foreach>
+    </sql>
+</mapper>
