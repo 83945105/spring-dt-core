@@ -11,19 +11,25 @@ import java.util.List;
  */
 public final class ConditionBuilder<C extends ConditionModel> {
 
-    protected C handleModel;
+    private C handleModel;
 
-    protected List<ConditionalData> conditionalDataList = new ArrayList<>();
+    private List<ConditionalData> conditionalDataList = new ArrayList<>();
+
+    private ConditionalData conditionalData;
 
     public ConditionBuilder(C handleModel) {
         this.handleModel = handleModel;
     }
 
-    public void setHandler(String a, String b, String c, boolean d, boolean e) {
-//        ConditionalData conditionalData = new ConditionalData();
+    public void setHandler(String tableName, String b, String c, boolean d, boolean e) {
+//        conditionalData = new ConditionalData();
     }
 
     public C equalTo() {
         return handleModel;
+    }
+
+    public List<ConditionalData> getConditionalDataList() {
+        return conditionalDataList;
     }
 }

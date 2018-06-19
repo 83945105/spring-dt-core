@@ -1,33 +1,37 @@
 package com.dt.core.model;
 
-import com.dt.core.bean.ConditionLink;
-import com.dt.core.bean.ConditionModel;
-import com.dt.core.bean.OnModel;
+import com.dt.core.bean.*;
 import com.dt.core.data.ConditionData;
-import com.dt.core.data.ToolData;
 import com.dt.core.norm.Condition;
+import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 
 /**
  * Created by 白超 on 2018/6/18.
  */
-public abstract class ConditionTool<M extends Model<M, MO, MC>, MO extends OnModel<MO, M>, MC extends ConditionModel<MC, M>> extends GroupTool<M, MO, MC> {
+public abstract class ConditionTool<M extends Model<M, MO, MC, MS, MG>,
+        MO extends OnModel<M, MO, MC, MS, MG>,
+        MC extends ConditionModel<M, MO, MC, MS, MG>,
+        MS extends SortModel<M, MO, MC, MS, MG>,
+        MG extends GroupModel<M, MO, MC, MS, MG>> extends GroupTool<M, MO, MC, MS, MG> {
 
-    public ConditionTool(ToolData<M, MO, MC> toolData) {
-        super(toolData);
+    public ConditionTool(Data<M, MO, MC, MS, MG> data) {
+        super(data);
     }
 
-    public ConditionTool<M, MO, MC> condition(Condition<MC> condition) {
-        this.toolData.addConditionLink(condition.apply(new ConditionLink(), this.toolData.getTargetCondition()));
+    public ConditionTool<M, MO, MC, MS, MG> condition(Condition<MC> condition) {
+//        this.toolData.addConditionLink(condition.apply(new ConditionLink(), this.toolData.getTargetCondition()));
         return this;
     }
 
-    public <T extends Model<T, TO, TC>,
-            TO extends OnModel<TO, T>,
-            TC extends ConditionModel<TC, T>> ConditionTool<M, MO, MC> condition(Class<T> conditionClass, Condition<TC> condition) {
+    public <T extends Model<T, TO, TC, TS, TG>,
+            TO extends OnModel<T, TO, TC, TS, TG>,
+            TC extends ConditionModel<T, TO, TC, TS, TG>,
+            TS extends SortModel<T, TO, TC, TS, TG>,
+            TG extends GroupModel<T, TO, TC, TS, TG>> ConditionTool<M, MO, MC, MS, MG> condition(Class<T> conditionClass, Condition<TC> condition) {
 
-        ConditionData<T, TO, TC> conditionData = new ConditionData(this.toolData, conditionClass);
-        this.toolData.addConditionData(conditionData);
+//        ConditionData<T, TO, TC> conditionData = new ConditionData(this.toolData, conditionClass);
+//        this.toolData.addConditionData(conditionData);
         return this;
     }
 

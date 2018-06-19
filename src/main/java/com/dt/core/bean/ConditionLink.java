@@ -10,15 +10,17 @@ import java.util.Map;
  * 条件
  * Created by 白超 on 2018/6/7.
  */
-public class ConditionLink {
+public final class ConditionLink {
 
-    protected Map<ConditionLinkType, List<ConditionalData>> conditionMap = new LinkedHashMap<>();
+    private Map<ConditionLinkType, List<ConditionalData>> conditionMap = new LinkedHashMap<>();
 
-    public ConditionLink and(ConditionModel dataModel) {
+    public ConditionLink and(ConditionModel conditionModel) {
+        conditionMap.put(ConditionLinkType.AND, conditionModel.conditionBuilder.getConditionalDataList());
         return this;
     }
 
-    public ConditionLink or(ConditionModel dataModel) {
+    public ConditionLink or(ConditionModel conditionModel) {
+        conditionMap.put(ConditionLinkType.OR, conditionModel.conditionBuilder.getConditionalDataList());
         return this;
     }
 
@@ -27,4 +29,7 @@ public class ConditionLink {
         OR
     }
 
+    public Map<ConditionLinkType, List<ConditionalData>> getConditionMap() {
+        return conditionMap;
+    }
 }

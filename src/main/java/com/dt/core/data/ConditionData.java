@@ -7,9 +7,6 @@ import com.dt.core.norm.Model;
 /**
  * Created by 白超 on 2018/6/18.
  */
-public class ConditionData<T extends Model<T, TO, TC>, TO extends OnModel<TO, T>, TC extends ConditionModel<TC, T>> extends Data<T, TO, TC> {
+public class ConditionData {
 
-    public ConditionData(Data ownerData, Class<T> targetClass) {
-        super(ownerData, targetClass);
-    }
 }

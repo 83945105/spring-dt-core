@@ -7,12 +7,12 @@ import com.dt.core.bean.ConditionLink;
  * Created by 白超 on 2018/6/17.
  */
 @FunctionalInterface
-public interface Condition<MC> {
+public interface Condition<TC> {
 
     /**
      * @param condition 连接条件
-     * @param mainTable 主表的条件
+     * @param table     表的条件
      * @return
      */
-    ConditionLink apply(ConditionLink condition, MC mainTable);
+    ConditionLink apply(ConditionLink condition, TC table);
 }
