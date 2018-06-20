@@ -3,14 +3,14 @@ package com.dt.core.test;
 import com.dt.core.bean.*;
 import com.dt.core.norm.Model;
 
-public final class UserModel implements Model<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+public final class StuModel implements Model<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
 
-    public UserModel() {
+    public StuModel() {
     }
 
-    private String tableName = "user";
+    private String tableName = "stu";
 
-    private String alias = "User";
+    private String alias = "Stu";
 
     @Override
     public String getTableName() {
@@ -23,7 +23,7 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
     }
 
     @Override
-    public OnModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> getOn() {
+    public OnModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> getOn() {
         return on();
     }
 
@@ -31,12 +31,12 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
         return new On();
     }
 
-    public static final class On extends OnModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class On extends OnModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
 
         private On() {
         }
 
-        public OnBuilder<On> userId() {
+        public OnBuilder<On> stuId() {
             return onBuilder;
         }
     }
@@ -50,12 +50,12 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
         return new Condition();
     }
 
-    public static final class Condition extends ConditionModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class Condition extends ConditionModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
 
         private Condition() {
         }
 
-        public ConditionBuilder<Condition> userId() {
+        public ConditionBuilder<Condition> stuId() {
             this.conditionBuilder.setHandler("User", "id", "ID", false, false);
             return conditionBuilder;
         }
@@ -71,9 +71,9 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
         return new Sort();
     }
 
-    public static final class Sort extends SortModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class Sort extends SortModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
 
-        public SortBuilder<Sort> userId() {
+        public SortBuilder<Sort> stuId() {
             return sortBuilder;
         }
 
@@ -88,12 +88,12 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
         return new Group();
     }
 
-    public static final class Group extends GroupModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class Group extends GroupModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
 
         private Group() {
         }
 
-        public GroupBuilder<Group> userId() {
+        public GroupBuilder<Group> stuId() {
             return groupBuilder;
         }
 

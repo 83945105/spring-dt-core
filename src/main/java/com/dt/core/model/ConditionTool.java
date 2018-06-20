@@ -1,8 +1,8 @@
 package com.dt.core.model;
 
 import com.dt.core.bean.*;
-import com.dt.core.data.ConditionData;
-import com.dt.core.norm.Condition;
+import com.dt.core.norm.ConditionA;
+import com.dt.core.norm.ConditionB;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 
@@ -19,7 +19,7 @@ public abstract class ConditionTool<M extends Model<M, MO, MC, MS, MG>,
         super(data);
     }
 
-    public ConditionTool<M, MO, MC, MS, MG> condition(Condition<MC> condition) {
+    public ConditionTool<M, MO, MC, MS, MG> condition(ConditionA<M, MO, MC, MS, MG> condition) {
         return this;
     }
 
@@ -27,7 +27,7 @@ public abstract class ConditionTool<M extends Model<M, MO, MC, MS, MG>,
             TO extends OnModel<T, TO, TC, TS, TG>,
             TC extends ConditionModel<T, TO, TC, TS, TG>,
             TS extends SortModel<T, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TO, TC, TS, TG>> ConditionTool<M, MO, MC, MS, MG> condition(Class<T> conditionClass, Condition<TC> condition) {
+            TG extends GroupModel<T, TO, TC, TS, TG>> ConditionTool<M, MO, MC, MS, MG> condition(Class<T> conditionClass, ConditionB<M, MO, MC, MS, MG, T, TO, TC, TS, TG> condition) {
         return condition(conditionClass, null, condition);
     }
 
@@ -35,7 +35,7 @@ public abstract class ConditionTool<M extends Model<M, MO, MC, MS, MG>,
             TO extends OnModel<T, TO, TC, TS, TG>,
             TC extends ConditionModel<T, TO, TC, TS, TG>,
             TS extends SortModel<T, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TO, TC, TS, TG>> ConditionTool<M, MO, MC, MS, MG> condition(Class<T> conditionClass, String alias, Condition<TC> condition) {
+            TG extends GroupModel<T, TO, TC, TS, TG>> ConditionTool<M, MO, MC, MS, MG> condition(Class<T> conditionClass, String alias, ConditionB<M, MO, MC, MS, MG, T, TO, TC, TS, TG> condition) {
         return this;
     }
 

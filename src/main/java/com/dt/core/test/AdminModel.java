@@ -36,7 +36,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminM
         private On() {
         }
 
-        public OnBuilder<On> username() {
+        public OnBuilder<On> adminId() {
             return onBuilder;
         }
     }
@@ -55,23 +55,8 @@ public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminM
         private Condition() {
         }
 
-        public ConditionBuilder<Condition> id() {
+        public ConditionBuilder<Condition> adminId() {
             this.conditionBuilder.setHandler("Admin", "id", "ID", false, false);
-            return conditionBuilder;
-        }
-
-        public ConditionBuilder<Condition> modelId() {
-            this.conditionBuilder.setHandler("Admin", "modelId", "MODEL_ID", false, false);
-            return conditionBuilder;
-        }
-
-        public ConditionBuilder<Condition> text() {
-            this.conditionBuilder.setHandler("Admin", "text", "TEXT", false, false);
-            return conditionBuilder;
-        }
-
-        public ConditionBuilder<Condition> value() {
-            this.conditionBuilder.setHandler("Admin", "value", "VALUE", false, false);
             return conditionBuilder;
         }
 
@@ -88,11 +73,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminM
 
     public static final class Sort extends SortModel<AdminModel, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
 
-        public SortBuilder<Sort> id() {
-            return sortBuilder;
-        }
-
-        public SortBuilder<Sort> modelId() {
+        public SortBuilder<Sort> adminId() {
             return sortBuilder;
         }
 
@@ -112,7 +93,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminM
         private Group() {
         }
 
-        public GroupBuilder<Group> id() {
+        public GroupBuilder<Group> adminId() {
             return groupBuilder;
         }
 

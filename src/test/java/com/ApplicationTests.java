@@ -5,6 +5,7 @@ import com.dt.core.bean.ConditionLink;
 import com.dt.core.bean.JoinType;
 import com.dt.core.bean.OnLink;
 import com.dt.core.test.AdminModel;
+import com.dt.core.test.StuModel;
 import com.dt.core.test.UserModel;
 
 public class ApplicationTests {
@@ -18,32 +19,46 @@ public class ApplicationTests {
             DataTool.select(UserModel.class)
 
                     .join(AdminModel.class, JoinType.INNER, (on, joinTable, mainTable) -> on
-                            .and(joinTable.username().equalTo("")
-                                    .username().equalTo(""))
-                            .and(mainTable.username().equalTo(joinTable.username())))
+                            .and(joinTable.adminId().equalTo("")
+                                    .adminId().equalTo(""))
+                            .and(mainTable.userId().equalTo(joinTable.adminId())))
 
-                    .condition((condition, table) -> condition
-                            .and(table.modelId().equalTo()
-                                    .id().equalTo())
-                            .or(table.id().equalTo()))
+                    .condition((condition, mainTable) -> condition
+                            .and(mainTable.userId().equalTo()
+                                    .userId().equalTo())
+                            .or(mainTable.userId().equalTo())
+                            .and((c1, mt1) -> c1.and(mt1.userId().equalTo()))
+                            .and(UserModel.class, (c1, t1, mt1) -> c1.and(t1.userId().equalTo())
+                                    .and(mt1.userId().equalTo())))
 
-                    .condition((condition, table) -> condition
-                            .and(table.id().equalTo()))
+                    .condition((condition, mainTable) -> condition
+                            .and(mainTable.userId().equalTo()))
 
-                    .condition(AdminModel.class, (condition, table) -> condition
-                            .and(table.modelId().equalTo()))
+                    .condition(AdminModel.class, (condition, table, mainTable) -> condition
+                            .and(StuModel.class, (c1, t1, mt1) -> c1.and(t1.stuId().equalTo()))
+                            .and(table.adminId().equalTo().adminId().equalTo())
+                            .and(mainTable.userId().equalTo())
+                            .or(mainTable.userId().equalTo())
+                            .or(table.adminId().equalTo())
+                            .and((c1, t1) -> c1.and((c2, t2) -> c2.and(t2.userId().equalTo())))
+                            .and(AdminModel.class, (c1, t1, mt1) -> c1.and(t1.adminId().equalTo()).and(mt1.userId().equalTo()))
+                            .and(AdminModel.class, (c1, t1, mt1) -> c1.and((c2, mt2) -> c2.and(mt2.userId().equalTo())))
+                            .and((c1, mt1) -> c1.and(mt1.userId().equalTo())
+                                    .or(AdminModel.class, "Admin2", (c2, t2, mt2) -> c2.and(t2.adminId().equalTo()))
+                                    .or(StuModel.class, (c2, t2, mt2) -> c2.and(t2))))
 
-                    .group(table -> table.id().add())
 
-                    .group(AdminModel.class, table -> table.id().add())
+                    .group(table -> table.userId().add())
 
-                    .group(AdminModel.class, "Admin2", table -> table.id().add())
+                    .group(AdminModel.class, table -> table.adminId().add())
 
-                    .sort(table -> table.name().asc().name().desc())
+                    .group(AdminModel.class, "Admin2", table -> table.adminId().add())
 
-                    .sort(AdminModel.class, table -> table.id().desc())
+                    .sort(table -> table.userId().asc().userId().desc())
 
-                    .sort(AdminModel.class, "Admin2", table -> table.modelId().desc())
+                    .sort(AdminModel.class, table -> table.adminId().desc())
+
+                    .sort(AdminModel.class, "Admin2", table -> table.adminId().desc())
 
                     .limit(1);
 
