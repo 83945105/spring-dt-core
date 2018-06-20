@@ -20,7 +20,6 @@ public abstract class ConditionTool<M extends Model<M, MO, MC, MS, MG>,
     }
 
     public ConditionTool<M, MO, MC, MS, MG> condition(Condition<MC> condition) {
-//        this.toolData.addConditionLink(condition.apply(new ConditionLink(), this.toolData.getTargetCondition()));
         return this;
     }
 
@@ -29,9 +28,14 @@ public abstract class ConditionTool<M extends Model<M, MO, MC, MS, MG>,
             TC extends ConditionModel<T, TO, TC, TS, TG>,
             TS extends SortModel<T, TO, TC, TS, TG>,
             TG extends GroupModel<T, TO, TC, TS, TG>> ConditionTool<M, MO, MC, MS, MG> condition(Class<T> conditionClass, Condition<TC> condition) {
+        return condition(conditionClass, null, condition);
+    }
 
-//        ConditionData<T, TO, TC> conditionData = new ConditionData(this.toolData, conditionClass);
-//        this.toolData.addConditionData(conditionData);
+    public <T extends Model<T, TO, TC, TS, TG>,
+            TO extends OnModel<T, TO, TC, TS, TG>,
+            TC extends ConditionModel<T, TO, TC, TS, TG>,
+            TS extends SortModel<T, TO, TC, TS, TG>,
+            TG extends GroupModel<T, TO, TC, TS, TG>> ConditionTool<M, MO, MC, MS, MG> condition(Class<T> conditionClass, String alias, Condition<TC> condition) {
         return this;
     }
 

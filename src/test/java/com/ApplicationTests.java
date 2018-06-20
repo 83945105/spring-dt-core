@@ -33,15 +33,17 @@ public class ApplicationTests {
                     .condition(AdminModel.class, (condition, table) -> condition
                             .and(table.modelId().equalTo()))
 
-                    .group()
+                    .group(table -> table.id().add())
+
+                    .group(AdminModel.class, table -> table.id().add())
+
+                    .group(AdminModel.class, "Admin2", table -> table.id().add())
 
                     .sort(table -> table.name().asc().name().desc())
 
                     .sort(AdminModel.class, table -> table.id().desc())
 
-                    .sort((sort, table) -> sort
-                            .and(table.name().asc().name().desc())
-                            .and(AdminModel.class, table1 -> table1))
+                    .sort(AdminModel.class, "Admin2", table -> table.modelId().desc())
 
                     .limit(1);
 

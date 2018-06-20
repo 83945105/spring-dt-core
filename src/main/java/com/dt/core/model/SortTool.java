@@ -6,8 +6,7 @@ import com.dt.core.bean.OnModel;
 import com.dt.core.bean.SortModel;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
-import com.dt.core.norm.SortA;
-import com.dt.core.norm.SortB;
+import com.dt.core.norm.Sort;
 
 /**
  * Created by 白超 on 2018/6/18.
@@ -22,7 +21,7 @@ public abstract class SortTool<M extends Model<M, MO, MC, MS, MG>,
         super(data);
     }
 
-    public SortTool<M, MO, MC, MS, MG> sort(SortA<M, MO, MC, MS, MG> sort) {
+    public SortTool<M, MO, MC, MS, MG> sort(Sort<M, MO, MC, MS, MG> sort) {
 
         return this;
     }
@@ -31,7 +30,7 @@ public abstract class SortTool<M extends Model<M, MO, MC, MS, MG>,
             TO extends OnModel<T, TO, TC, TS, TG>,
             TC extends ConditionModel<T, TO, TC, TS, TG>,
             TS extends SortModel<T, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TO, TC, TS, TG>> SortTool<M, MO, MC, MS, MG> sort(Class<T> sortClass, SortA<T, TO, TC, TS, TG> sort) {
+            TG extends GroupModel<T, TO, TC, TS, TG>> SortTool<M, MO, MC, MS, MG> sort(Class<T> sortClass, Sort<T, TO, TC, TS, TG> sort) {
         return sort(sortClass, null, sort);
     }
 
@@ -39,30 +38,9 @@ public abstract class SortTool<M extends Model<M, MO, MC, MS, MG>,
             TO extends OnModel<T, TO, TC, TS, TG>,
             TC extends ConditionModel<T, TO, TC, TS, TG>,
             TS extends SortModel<T, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TO, TC, TS, TG>> SortTool<M, MO, MC, MS, MG> sort(Class<T> sortClass, String alias, SortA<T, TO, TC, TS, TG> sort) {
+            TG extends GroupModel<T, TO, TC, TS, TG>> SortTool<M, MO, MC, MS, MG> sort(Class<T> sortClass, String alias, Sort<T, TO, TC, TS, TG> sort) {
 
         return this;
     }
 
-    public SortTool<M, MO, MC, MS, MG> sort(SortB<M, MO, MC, MS, MG> sort) {
-
-        return this;
-    }
-
-    public <T extends Model<T, TO, TC, TS, TG>,
-            TO extends OnModel<T, TO, TC, TS, TG>,
-            TC extends ConditionModel<T, TO, TC, TS, TG>,
-            TS extends SortModel<T, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TO, TC, TS, TG>> SortTool<M, MO, MC, MS, MG> sort(Class<T> sortClass, SortB<T, TO, TC, TS, TG> sort) {
-        return sort(sortClass, null, sort);
-    }
-
-    public <T extends Model<T, TO, TC, TS, TG>,
-            TO extends OnModel<T, TO, TC, TS, TG>,
-            TC extends ConditionModel<T, TO, TC, TS, TG>,
-            TS extends SortModel<T, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TO, TC, TS, TG>> SortTool<M, MO, MC, MS, MG> sort(Class<T> sortClass, String alias, SortB<T, TO, TC, TS, TG> sort) {
-
-        return this;
-    }
 }
