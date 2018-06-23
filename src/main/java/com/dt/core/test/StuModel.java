@@ -3,7 +3,10 @@ package com.dt.core.test;
 import com.dt.core.bean.*;
 import com.dt.core.norm.Model;
 
-public final class StuModel implements Model<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
+public final class StuModel implements Model<StuModel, StuModel.Column, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
+
+    public static final String id = "id";
+    public static final String stuName = "stu_name";
 
     public StuModel() {
     }
@@ -23,7 +26,26 @@ public final class StuModel implements Model<StuModel, StuModel.On, StuModel.Con
     }
 
     @Override
-    public OnModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> getOn() {
+    public ColumnModel<StuModel, StuModel.Column, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> getColumn() {
+        return column();
+    }
+
+    public static StuModel.Column column() {
+        return new StuModel.Column();
+    }
+
+    public static final class Column extends ColumnModel<StuModel, StuModel.Column, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
+
+        private Column() {
+        }
+
+        public Column stuId() {
+            return this;
+        }
+    }
+
+    @Override
+    public OnModel<StuModel, StuModel.Column, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> getOn() {
         return on();
     }
 
@@ -31,7 +53,7 @@ public final class StuModel implements Model<StuModel, StuModel.On, StuModel.Con
         return new On();
     }
 
-    public static final class On extends OnModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
+    public static final class On extends OnModel<StuModel, StuModel.Column, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
 
         private On() {
         }
@@ -50,7 +72,7 @@ public final class StuModel implements Model<StuModel, StuModel.On, StuModel.Con
         return new Condition();
     }
 
-    public static final class Condition extends ConditionModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
+    public static final class Condition extends ConditionModel<StuModel, StuModel.Column, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
 
         private Condition() {
         }
@@ -71,7 +93,7 @@ public final class StuModel implements Model<StuModel, StuModel.On, StuModel.Con
         return new Sort();
     }
 
-    public static final class Sort extends SortModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
+    public static final class Sort extends SortModel<StuModel, StuModel.Column, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
 
         public SortBuilder<Sort> stuId() {
             return sortBuilder;
@@ -88,13 +110,13 @@ public final class StuModel implements Model<StuModel, StuModel.On, StuModel.Con
         return new Group();
     }
 
-    public static final class Group extends GroupModel<StuModel, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
+    public static final class Group extends GroupModel<StuModel, StuModel.Column, StuModel.On, StuModel.Condition, StuModel.Sort, StuModel.Group> {
 
         private Group() {
         }
 
-        public GroupBuilder<Group> stuId() {
-            return groupBuilder;
+        public Group stuId() {
+            return this;
         }
 
     }

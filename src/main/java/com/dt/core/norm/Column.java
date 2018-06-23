@@ -1,17 +1,18 @@
-package com.dt.core.bean;
+package com.dt.core.norm;
 
-import com.dt.core.norm.Model;
+import com.dt.core.bean.*;
 
 /**
- * Created by 白超 on 2018/6/19.
+ * Created by 白超 on 2018/6/23.
  */
-public class SortModel<T extends Model<T, TL, TO, TC, TS, TG>,
+@FunctionalInterface
+public interface Column<T extends Model<T, TL, TO, TC, TS, TG>,
         TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
         TO extends OnModel<T, TL, TO, TC, TS, TG>,
         TC extends ConditionModel<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
         TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
-    protected SortBuilder<TS> sortBuilder = new SortBuilder<>((TS) this);
+    TL apply(TL table);
 
 }

@@ -3,7 +3,10 @@ package com.dt.core.test;
 import com.dt.core.bean.*;
 import com.dt.core.norm.Model;
 
-public final class UserModel implements Model<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+public final class UserModel implements Model<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+
+    public static final String id = "id";
+    public static final String userName = "user_name";
 
     public UserModel() {
     }
@@ -23,7 +26,26 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
     }
 
     @Override
-    public OnModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> getOn() {
+    public ColumnModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> getColumn() {
+        return column();
+    }
+
+    public static UserModel.Column column() {
+        return new UserModel.Column();
+    }
+
+    public static final class Column extends ColumnModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+
+        private Column() {
+        }
+
+        public Column userId() {
+            return this;
+        }
+    }
+
+    @Override
+    public OnModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> getOn() {
         return on();
     }
 
@@ -31,7 +53,7 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
         return new On();
     }
 
-    public static final class On extends OnModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class On extends OnModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
 
         private On() {
         }
@@ -50,7 +72,7 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
         return new Condition();
     }
 
-    public static final class Condition extends ConditionModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class Condition extends ConditionModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
 
         private Condition() {
         }
@@ -71,7 +93,7 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
         return new Sort();
     }
 
-    public static final class Sort extends SortModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class Sort extends SortModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
 
         public SortBuilder<Sort> userId() {
             return sortBuilder;
@@ -88,13 +110,13 @@ public final class UserModel implements Model<UserModel, UserModel.On, UserModel
         return new Group();
     }
 
-    public static final class Group extends GroupModel<UserModel, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class Group extends GroupModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
 
         private Group() {
         }
 
-        public GroupBuilder<Group> userId() {
-            return groupBuilder;
+        public Group userId() {
+            return this;
         }
 
     }

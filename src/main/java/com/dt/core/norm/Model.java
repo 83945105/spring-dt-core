@@ -1,28 +1,28 @@
 package com.dt.core.norm;
 
-import com.dt.core.bean.ConditionModel;
-import com.dt.core.bean.GroupModel;
-import com.dt.core.bean.OnModel;
-import com.dt.core.bean.SortModel;
+import com.dt.core.bean.*;
 
 /**
  * Created by 白超 on 2018/6/16.
  */
-public interface Model<T extends Model<T, TO, TC, TS, TG>,
-        TO extends OnModel<T, TO, TC, TS, TG>,
-        TC extends ConditionModel<T, TO, TC, TS, TG>,
-        TS extends SortModel<T, TO, TC, TS, TG>,
-        TG extends GroupModel<T, TO, TC, TS, TG>> {
+public interface Model<T extends Model<T, TL, TO, TC, TS, TG>,
+        TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
+        TO extends OnModel<T, TL, TO, TC, TS, TG>,
+        TC extends ConditionModel<T, TL, TO, TC, TS, TG>,
+        TS extends SortModel<T, TL, TO, TC, TS, TG>,
+        TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
     String getTableName();
 
     String getAlias();
 
-    OnModel<T, TO, TC, TS, TG> getOn();
+    ColumnModel<T, TL, TO, TC, TS, TG> getColumn();
 
-    ConditionModel<T, TO, TC, TS, TG> getCondition();
+    OnModel<T, TL, TO, TC, TS, TG> getOn();
 
-    SortModel<T, TO, TC, TS, TG> getSort();
+    ConditionModel<T, TL, TO, TC, TS, TG> getCondition();
 
-    GroupModel<T, TO, TC, TS, TG> getGroup();
+    SortModel<T, TL, TO, TC, TS, TG> getSort();
+
+    GroupModel<T, TL, TO, TC, TS, TG> getGroup();
 }

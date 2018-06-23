@@ -3,7 +3,10 @@ package com.dt.core.test;
 import com.dt.core.bean.*;
 import com.dt.core.norm.Model;
 
-public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
+public final class AdminModel implements Model<AdminModel, AdminModel.Column, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
+
+    public static final String id = "id";
+    public static final String adminName = "admin_name";
 
     public AdminModel() {
     }
@@ -23,7 +26,26 @@ public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminM
     }
 
     @Override
-    public OnModel<AdminModel, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> getOn() {
+    public ColumnModel<AdminModel, Column, On, Condition, Sort, Group> getColumn() {
+        return column();
+    }
+
+    public static Column column() {
+        return new Column();
+    }
+
+    public static final class Column extends ColumnModel<AdminModel, AdminModel.Column, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
+
+        private Column() {
+        }
+
+        public Column adminId() {
+            return this;
+        }
+    }
+
+    @Override
+    public OnModel<AdminModel, AdminModel.Column, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> getOn() {
         return on();
     }
 
@@ -31,7 +53,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminM
         return new On();
     }
 
-    public static final class On extends OnModel<AdminModel, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
+    public static final class On extends OnModel<AdminModel, AdminModel.Column, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
 
         private On() {
         }
@@ -50,7 +72,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminM
         return new Condition();
     }
 
-    public static final class Condition extends ConditionModel<AdminModel, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
+    public static final class Condition extends ConditionModel<AdminModel, AdminModel.Column, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
 
         private Condition() {
         }
@@ -71,7 +93,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminM
         return new Sort();
     }
 
-    public static final class Sort extends SortModel<AdminModel, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
+    public static final class Sort extends SortModel<AdminModel, AdminModel.Column, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
 
         public SortBuilder<Sort> adminId() {
             return sortBuilder;
@@ -88,13 +110,13 @@ public final class AdminModel implements Model<AdminModel, AdminModel.On, AdminM
         return new Group();
     }
 
-    public static final class Group extends GroupModel<AdminModel, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
+    public static final class Group extends GroupModel<AdminModel, AdminModel.Column, AdminModel.On, AdminModel.Condition, AdminModel.Sort, AdminModel.Group> {
 
         private Group() {
         }
 
-        public GroupBuilder<Group> adminId() {
-            return groupBuilder;
+        public Group adminId() {
+            return this;
         }
 
     }
