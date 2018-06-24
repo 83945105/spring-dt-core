@@ -11,7 +11,7 @@ import com.dt.core.norm.Model;
 public abstract class GroupTool<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
-        MC extends ConditionModel<M, ML, MO, MC, MS, MG>,
+        MC extends WhereModel<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends SortTool<M, ML, MO, MC, MS, MG> {
 
@@ -27,7 +27,7 @@ public abstract class GroupTool<M extends Model<M, ML, MO, MC, MS, MG>,
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
-            TC extends ConditionModel<T, TL, TO, TC, TS, TG>,
+            TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> GroupTool<M, ML, MO, MC, MS, MG> group(Class<T> groupClass, Group<T, TL, TO, TC, TS, TG> group) {
         return group(groupClass, null, group);
@@ -36,7 +36,7 @@ public abstract class GroupTool<M extends Model<M, ML, MO, MC, MS, MG>,
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
-            TC extends ConditionModel<T, TL, TO, TC, TS, TG>,
+            TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> GroupTool<M, ML, MO, MC, MS, MG> group(Class<T> groupClass, String alias, Group<T, TL, TO, TC, TS, TG> group) {
 

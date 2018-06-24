@@ -14,7 +14,7 @@ public class ApplicationTests {
         for (int i = 0; i < 100; i++) {
             Long startTime = System.currentTimeMillis();
 
-            MySqlTool.SELECT(UserModel.class)
+            MySqlTool.SELECT("user_10086", UserModel.class)
 
                     .column(AdminModel.id, AdminModel.adminName)
 
@@ -26,10 +26,10 @@ public class ApplicationTests {
 
                     .column(AdminModel.class, table -> table.adminId().adminId())
 
-                    .join(AdminModel.class, JoinType.INNER, (on, joinTable, mainTable) -> on
-                            .and(joinTable.adminId().equalTo("")
-                                    .adminId().equalTo(""))
-                            .and(mainTable.userId().equalTo(joinTable.adminId())))
+                    .join("admin_10086", AdminModel.class, "admin2", JoinType.INNER, (on, joinTable, mainTable) -> on
+                            .and(joinTable.adminId().equalTo(""))
+                            .and(joinTable.adminId().equalTo(mainTable.userId()))
+                            .and(joinTable.adminId().equalTo("stu2", StuModel.class, StuModel.On::stuId)))
 
                     .where((condition, mainTable) -> condition
                             .and(mainTable.userId().equalTo()

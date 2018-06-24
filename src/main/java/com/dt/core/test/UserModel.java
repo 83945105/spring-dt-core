@@ -3,7 +3,7 @@ package com.dt.core.test;
 import com.dt.core.bean.*;
 import com.dt.core.norm.Model;
 
-public final class UserModel implements Model<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+public final class UserModel implements Model<UserModel, UserModel.Column, UserModel.On, UserModel.Where, UserModel.Sort, UserModel.Group> {
 
     public static final String id = "id";
     public static final String userName = "user_name";
@@ -26,74 +26,59 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
     }
 
     @Override
-    public ColumnModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> getColumn() {
-        return column();
+    public ColumnModel<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> getColumn() {
+        return new Column();
     }
 
-    public static UserModel.Column column() {
-        return new UserModel.Column();
-    }
-
-    public static final class Column extends ColumnModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class Column extends ColumnModel<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> {
 
         private Column() {
         }
 
         public Column userId() {
+            this.columns.add("user_id");
             return this;
         }
     }
 
     @Override
-    public OnModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> getOn() {
-        return on();
-    }
-
-    public static On on() {
+    public OnModel<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> getOn() {
         return new On();
     }
 
-    public static final class On extends OnModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class On extends OnModel<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> {
 
         private On() {
         }
 
-        public OnBuilder<On> userId() {
+        public OnBuilder<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> userId() {
             return onBuilder;
         }
     }
 
     @Override
-    public Condition getCondition() {
-        return condition();
+    public Where getWhere() {
+        return new Where();
     }
 
-    public static Condition condition() {
-        return new Condition();
-    }
+    public static final class Where extends WhereModel<UserModel, Column, On, Where, Sort, Group> {
 
-    public static final class Condition extends ConditionModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
-
-        private Condition() {
+        private Where() {
         }
 
-        public ConditionBuilder<Condition> userId() {
-            this.conditionBuilder.setHandler("User", "id", "ID", false, false);
-            return conditionBuilder;
+        public WhereBuilder<Where> userId() {
+            this.whereBuilder.setHandler("User", "id", "ID", false, false);
+            return whereBuilder;
         }
 
     }
 
     @Override
     public SortModel getSort() {
-        return sort();
-    }
-
-    public static Sort sort() {
         return new Sort();
     }
 
-    public static final class Sort extends SortModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class Sort extends SortModel<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> {
 
         public SortBuilder<Sort> userId() {
             return sortBuilder;
@@ -103,14 +88,10 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
 
     @Override
     public GroupModel getGroup() {
-        return group();
-    }
-
-    public static Group group() {
         return new Group();
     }
 
-    public static final class Group extends GroupModel<UserModel, UserModel.Column, UserModel.On, UserModel.Condition, UserModel.Sort, UserModel.Group> {
+    public static final class Group extends GroupModel<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> {
 
         private Group() {
         }

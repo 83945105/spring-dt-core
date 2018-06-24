@@ -3,11 +3,11 @@ package com.dt.core.norm;
 import com.dt.core.bean.*;
 
 /**
- * 条件
- * Created by 白超 on 2018/6/17.
+ * 连接查询On条件
+ * Created by 白超 on 2018/6/16.
  */
 @FunctionalInterface
-public interface ConditionB<M extends Model<M, ML, MO, MC, MS, MG>,
+public interface OnA<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
@@ -21,10 +21,13 @@ public interface ConditionB<M extends Model<M, ML, MO, MC, MS, MG>,
         TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
     /**
-     * @param condition 连接条件
-     * @param table     指定表条件
+     * 构建On条件
+     *
+     * @param on        连接对象
+     * @param joinTable 连接表的条件
      * @param mainTable 主表的条件
      * @return
      */
-    WhereLink<M, ML, MO, MC, MS, MG> apply(WhereLink<M, ML, MO, MC, MS, MG> condition, TC table, MC mainTable);
+    OnLink<T, TL, TO, TC, TS, TG> apply(OnLink<T, TL, TO, TC, TS, TG> on, TO joinTable, MO mainTable);
+
 }

@@ -4,23 +4,59 @@ import com.dt.core.bean.*;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by 白超 on 2018/6/18.
  */
-public class ToolData<T extends Model<T, TL, TO, TC, TS, TG>,
-        TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
-        TO extends OnModel<T, TL, TO, TC, TS, TG>,
-        TC extends ConditionModel<T, TL, TO, TC, TS, TG>,
-        TS extends SortModel<T, TL, TO, TC, TS, TG>,
-        TG extends GroupModel<T, TL, TO, TC, TS, TG>> implements Data<T, TL, TO, TC, TS, TG> {
+public class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
+        ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
+        MO extends OnModel<M, ML, MO, MC, MS, MG>,
+        MC extends WhereModel<M, ML, MO, MC, MS, MG>,
+        MS extends SortModel<M, ML, MO, MC, MS, MG>,
+        MG extends GroupModel<M, ML, MO, MC, MS, MG>> implements Data<M, ML, MO, MC, MS, MG> {
 
-    private String tableName;
+    private MainTableData<M, ML, MO, MC, MS, MG> mainMainTableData;
 
-    public ToolData() {
+    private Map<String, JoinTableData> joinTableDataAliasMap = new HashMap<>();
+    private Map<Class, String> classAliasMap = new HashMap<>();
+
+    @Override
+    public MainTableData<M, ML, MO, MC, MS, MG> getMainMainTableData() {
+        return this.mainMainTableData;
     }
 
-    public ToolData(String tableName) {
-        this.tableName = tableName;
+    @Override
+    public void setMainMainTableData(MainTableData<M, ML, MO, MC, MS, MG> mainMainTableData) {
+        this.mainMainTableData = mainMainTableData;
+    }
+
+    @Override
+    public <J extends Model<J, JL, JO, JC, JS, JG>,
+            JL extends ColumnModel<J, JL, JO, JC, JS, JG>,
+            JO extends OnModel<J, JL, JO, JC, JS, JG>,
+            JC extends WhereModel<J, JL, JO, JC, JS, JG>,
+            JS extends SortModel<J, JL, JO, JC, JS, JG>,
+            JG extends GroupModel<J, JL, JO, JC, JS, JG>> JoinTableData<J, JL, JO, JC, JS, JG> getJoinTableData(String alias, Class<J> joinClass) {
+        JoinTableData joinTableData;
+        if (alias == null) {
+            alias = this.classAliasMap.get(joinClass);
+        }
+        if (alias != null) {
+            joinTableData = this.joinTableDataAliasMap.get(alias);
+            if (joinTableData != null) {
+                return joinTableData;
+            }
+        }
+        //走到这里说明不存在
+        joinTableData = new JoinTableData(joinClass);
+        if (alias == null) {
+            alias = joinTableData.getAlias();
+        }
+        this.joinTableDataAliasMap.put(alias, joinTableData);
+        this.classAliasMap.put(joinClass, alias);
+        return joinTableData;
     }
 
     @Override

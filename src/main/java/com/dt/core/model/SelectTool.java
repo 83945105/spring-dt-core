@@ -1,6 +1,7 @@
 package com.dt.core.model;
 
 import com.dt.core.bean.*;
+import com.dt.core.data.MainTableData;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 
@@ -10,7 +11,7 @@ import com.dt.core.norm.Model;
 public class SelectTool<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
-        MC extends ConditionModel<M, ML, MO, MC, MS, MG>,
+        MC extends WhereModel<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends SelectColumnTool<M, ML, MO, MC, MS, MG> {
 
@@ -18,12 +19,15 @@ public class SelectTool<M extends Model<M, ML, MO, MC, MS, MG>,
         super(data);
     }
 
-    public SelectColumnTool<M, ML, MO, MC, MS, MG> select(Class<M> mainClass) {
+    public SelectColumnTool<M, ML, MO, MC, MS, MG> select(String tableName, Class<M> mainClass) {
+        MainTableData data = new MainTableData(mainClass);
+        data.setTableName(tableName);
+        this.data.setMainMainTableData(data);
         return this;
     }
 
-    public SelectColumnTool<M, ML, MO, MC, MS, MG> select(Class<M> mainClass, String tableName) {
-        return this;
+    public SelectColumnTool<M, ML, MO, MC, MS, MG> select(Class<M> mainClass) {
+        return select(null, mainClass);
     }
 
 }

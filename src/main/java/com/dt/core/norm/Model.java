@@ -8,7 +8,7 @@ import com.dt.core.bean.*;
 public interface Model<T extends Model<T, TL, TO, TC, TS, TG>,
         TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
         TO extends OnModel<T, TL, TO, TC, TS, TG>,
-        TC extends ConditionModel<T, TL, TO, TC, TS, TG>,
+        TC extends WhereModel<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
         TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
@@ -20,7 +20,7 @@ public interface Model<T extends Model<T, TL, TO, TC, TS, TG>,
 
     OnModel<T, TL, TO, TC, TS, TG> getOn();
 
-    ConditionModel<T, TL, TO, TC, TS, TG> getCondition();
+    WhereModel<T, TL, TO, TC, TS, TG> getWhere();
 
     SortModel<T, TL, TO, TC, TS, TG> getSort();
 
