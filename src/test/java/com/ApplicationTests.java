@@ -2,6 +2,8 @@ package com;
 
 import com.dt.core.MySqlTool;
 import com.dt.core.bean.JoinType;
+import com.dt.core.norm.Data;
+import com.dt.core.norm.DataTool;
 import com.dt.core.test.AdminModel;
 import com.dt.core.test.StuModel;
 import com.dt.core.test.UserModel;
@@ -11,10 +13,10 @@ public class ApplicationTests {
     public static void main(String[] args) throws Exception {
         Long tst = System.currentTimeMillis();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1; i++) {
             Long startTime = System.currentTimeMillis();
 
-            MySqlTool.SELECT("user_10086", UserModel.class)
+            DataTool dataTool = MySqlTool.SELECT("user_10086", UserModel.class)
 
                     .column(AdminModel.id, AdminModel.adminName)
 
@@ -68,6 +70,9 @@ public class ApplicationTests {
                     .sort(AdminModel.class, "Admin2", table -> table.adminId().desc())
 
                     .limit(1);
+
+
+            Data data = dataTool.getData();
 
             Long endTime = System.currentTimeMillis();
 

@@ -31,15 +31,16 @@ public abstract class JoinTool<M extends Model<M, ML, MO, MC, MS, MG>,
                                                                                                String alias,
                                                                                                JoinType joinType,
                                                                                                OnA<M, ML, MO, MC, MS, MG, J, JL, JO, JC, JS, JG> on) {
-        //TODO
         MainTableData<M, ML, MO, MC, MS, MG> mainTableData = this.data.getMainMainTableData();
         JoinTableData<J, JL, JO, JC, JS, JG> joinTableData = this.data.getJoinTableData(alias, joinClass);
         joinTableData.setTableName(tableName);
         joinTableData.setJoinType(joinType);
         OnLink<J, JL, JO, JC, JS, JG> onLink = new OnLink<>();
         JO jo = (JO) joinTableData.getTable().getOn();
-        jo.setTargetTableData(mainTableData);
-        on.apply(onLink, jo, (MO) mainTableData.getTable().getOn());
+        jo.setData(this.data);
+        MO mo = (MO) mainTableData.getTable().getOn();
+        OnLink link = on.apply(onLink, jo, mo);
+        joinTableData.addOnDataMap(link.getOnDataMap());
         return this;
     }
 

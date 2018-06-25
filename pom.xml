@@ -43,7 +43,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <holygrail.version>0.1.5-SNAPSHOT</holygrail.version>
+        <holygrail.version>0.2.0-SNAPSHOT</holygrail.version>
     </properties>
 
     <dependencies>

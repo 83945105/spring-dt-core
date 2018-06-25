@@ -14,11 +14,7 @@ public final class MainTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         TO extends OnModel<T, TL, TO, TC, TS, TG>,
         TC extends WhereModel<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
-        TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
-
-    private String tableName;
-
-    private String alias;
+        TG extends GroupModel<T, TL, TO, TC, TS, TG>> extends TableData {
 
     private T table;
 
@@ -37,22 +33,6 @@ public final class MainTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         }
         this.tableName = this.table.getTableName();
         this.alias = this.table.getAlias();
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
     }
 
     public String[] getSelectColumns() {

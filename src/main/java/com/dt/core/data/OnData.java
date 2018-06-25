@@ -8,11 +8,11 @@ import com.dt.core.bean.OnType;
  */
 public class OnData {
 
-    private String joinTableName;
+    private String mainTableName;
 
-    private String joinAlias;
+    private String mainAlias;
 
-    private String joinColumnName;
+    private String mainColumnName;
 
     private OnType onType = OnType.EQUAL;
 
@@ -24,28 +24,28 @@ public class OnData {
 
     private Object targetValue;
 
-    public String getJoinTableName() {
-        return joinTableName;
+    public String getMainTableName() {
+        return mainTableName;
     }
 
-    public void setJoinTableName(String joinTableName) {
-        this.joinTableName = joinTableName;
+    public void setMainTableName(String mainTableName) {
+        this.mainTableName = mainTableName;
     }
 
-    public String getJoinAlias() {
-        return joinAlias;
+    public String getMainAlias() {
+        return mainAlias;
     }
 
-    public void setJoinAlias(String joinAlias) {
-        this.joinAlias = joinAlias;
+    public void setMainAlias(String mainAlias) {
+        this.mainAlias = mainAlias;
     }
 
-    public String getJoinColumnName() {
-        return joinColumnName;
+    public String getMainColumnName() {
+        return mainColumnName;
     }
 
-    public void setJoinColumnName(String joinColumnName) {
-        this.joinColumnName = joinColumnName;
+    public void setMainColumnName(String mainColumnName) {
+        this.mainColumnName = mainColumnName;
     }
 
     public OnType getOnType() {

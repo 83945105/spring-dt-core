@@ -3,6 +3,9 @@ package com.dt.core.data;
 import com.dt.core.bean.*;
 import com.dt.core.norm.Model;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -14,11 +17,7 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         TO extends OnModel<T, TL, TO, TC, TS, TG>,
         TC extends WhereModel<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
-        TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
-
-    private String tableName;
-
-    private String alias;
+        TG extends GroupModel<T, TL, TO, TC, TS, TG>> extends TableData {
 
     private T table;
 
@@ -27,6 +26,12 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
     private String[] selectColumns;
 
     private JoinType joinType = JoinType.INNER;
+
+    private Map<OnType, List<OnData>> onDataMap = new LinkedHashMap<>();
+
+    public void addOnDataMap(Map<OnType, List<OnData>> onDataMap) {
+        onDataMap.putAll(onDataMap);
+    }
 
     public JoinTableData(Class<T> tableClass) {
         this.tableClass = tableClass;
@@ -39,22 +44,6 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         }
         this.tableName = this.table.getTableName();
         this.alias = this.table.getAlias();
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
     }
 
     public String[] getSelectColumns() {

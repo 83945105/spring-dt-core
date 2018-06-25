@@ -1,6 +1,6 @@
 package com.dt.core.bean;
 
-import com.dt.core.data.MainTableData;
+import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 
 /**
@@ -13,15 +13,15 @@ public class OnModel<M extends Model<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> {
 
-    private MainTableData targetTableData;
+    private Data data;
 
     protected OnBuilder<M, ML, MO, MC, MS, MG> onBuilder = new OnBuilder<>((MO) this);
 
-    public MainTableData getTargetTableData() {
-        return targetTableData;
+    public Data getData() {
+        return data;
     }
 
-    public void setTargetTableData(MainTableData targetTableData) {
-        this.targetTableData = targetTableData;
+    public void setData(Data data) {
+        this.data = data;
     }
 }

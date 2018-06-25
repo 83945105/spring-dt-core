@@ -5,6 +5,8 @@ import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,7 +22,7 @@ public class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
     private MainTableData<M, ML, MO, MC, MS, MG> mainMainTableData;
 
     private Map<String, JoinTableData> joinTableDataAliasMap = new HashMap<>();
-    private Map<Class, String> classAliasMap = new HashMap<>();
+    private Map<String, Class> classAliasMap = new HashMap<>();
 
     @Override
     public MainTableData<M, ML, MO, MC, MS, MG> getMainMainTableData() {
@@ -41,7 +43,12 @@ public class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
             JG extends GroupModel<J, JL, JO, JC, JS, JG>> JoinTableData<J, JL, JO, JC, JS, JG> getJoinTableData(String alias, Class<J> joinClass) {
         JoinTableData joinTableData;
         if (alias == null) {
-            alias = this.classAliasMap.get(joinClass);
+            for (Map.Entry<String, Class> entry : this.classAliasMap.entrySet()) {
+                if (entry.getValue() == joinClass) {
+                    alias = entry.getKey();
+                    break;
+                }
+            }
         }
         if (alias != null) {
             joinTableData = this.joinTableDataAliasMap.get(alias);
@@ -55,7 +62,7 @@ public class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
             alias = joinTableData.getAlias();
         }
         this.joinTableDataAliasMap.put(alias, joinTableData);
-        this.classAliasMap.put(joinClass, alias);
+        this.classAliasMap.put(alias, joinClass);
         return joinTableData;
     }
 

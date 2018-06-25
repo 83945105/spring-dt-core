@@ -5,15 +5,14 @@ import com.dt.core.norm.Model;
 
 public final class UserModel implements Model<UserModel, UserModel.Column, UserModel.On, UserModel.Where, UserModel.Sort, UserModel.Group> {
 
+    public static final String tableName = "user";
+    public static final String alias = "User";
     public static final String id = "id";
+    public static final String userId = "user_id";
     public static final String userName = "user_name";
 
     public UserModel() {
     }
-
-    private String tableName = "user";
-
-    private String alias = "User";
 
     @Override
     public String getTableName() {
@@ -52,7 +51,7 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
         }
 
         public OnBuilder<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> userId() {
-            return onBuilder;
+            return this.onBuilder.handler(UserModel.tableName, UserModel.alias, UserModel.userId);
         }
     }
 

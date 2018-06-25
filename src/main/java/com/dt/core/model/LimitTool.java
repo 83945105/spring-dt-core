@@ -2,6 +2,7 @@ package com.dt.core.model;
 
 import com.dt.core.bean.*;
 import com.dt.core.norm.Data;
+import com.dt.core.norm.DataTool;
 import com.dt.core.norm.Model;
 
 /**
@@ -12,7 +13,7 @@ public abstract class LimitTool<M extends Model<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
-        MG extends GroupModel<M, ML, MO, MC, MS, MG>> {
+        MG extends GroupModel<M, ML, MO, MC, MS, MG>> implements DataTool<M, ML, MO, MC, MS, MG> {
 
     protected Data<M, ML, MO, MC, MS, MG> data;
 
@@ -20,13 +21,18 @@ public abstract class LimitTool<M extends Model<M, ML, MO, MC, MS, MG>,
         this.data = data;
     }
 
-    public LimitTool<M, ML, MO, MC, MS, MG> limit(int start, Integer end) {
+    public DataTool<M, ML, MO, MC, MS, MG> limit(int start, Integer end) {
         data.setLimit(start, end);
         return this;
     }
 
-    public LimitTool<M, ML, MO, MC, MS, MG> limit(int start) {
+    public DataTool<M, ML, MO, MC, MS, MG> limit(int start) {
         return limit(start, null);
+    }
+
+    @Override
+    public Data<M, ML, MO, MC, MS, MG> getData() {
+        return data;
     }
 
 }
