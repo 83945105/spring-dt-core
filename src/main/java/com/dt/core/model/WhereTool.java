@@ -1,6 +1,7 @@
 package com.dt.core.model;
 
 import com.dt.core.bean.*;
+import com.dt.core.data.JoinTableData;
 import com.dt.core.norm.ConditionA;
 import com.dt.core.norm.ConditionB;
 import com.dt.core.norm.Data;
@@ -21,6 +22,21 @@ public abstract class WhereTool<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     public WhereTool<M, ML, MO, MC, MS, MG> where(ConditionA<M, ML, MO, MC, MS, MG> condition) {
+        MC mc = (MC) this.data.getMainMainTableData().getTable().getWhere();
+        condition.apply(new WhereLink<>(), mc);
+        return this;
+    }
+
+    public <T extends Model<T, TL, TO, TC, TS, TG>,
+            TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
+            TO extends OnModel<T, TL, TO, TC, TS, TG>,
+            TC extends WhereModel<T, TL, TO, TC, TS, TG>,
+            TS extends SortModel<T, TL, TO, TC, TS, TG>,
+            TG extends GroupModel<T, TL, TO, TC, TS, TG>> WhereTool<M, ML, MO, MC, MS, MG> where(Class<T> conditionClass, String alias, ConditionB<M, ML, MO, MC, MS, MG, T, TL, TO, TC, TS, TG> condition) {
+        JoinTableData joinTableData = this.data.getJoinTableData(alias, conditionClass);
+        TC tc = (TC) joinTableData.getTable().getWhere();
+        MC mc = (MC) this.data.getMainMainTableData().getTable().getWhere();
+        condition.apply(new WhereLink<>(), tc, mc);
         return this;
     }
 
@@ -31,15 +47,6 @@ public abstract class WhereTool<M extends Model<M, ML, MO, MC, MS, MG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> WhereTool<M, ML, MO, MC, MS, MG> where(Class<T> conditionClass, ConditionB<M, ML, MO, MC, MS, MG, T, TL, TO, TC, TS, TG> condition) {
         return where(conditionClass, null, condition);
-    }
-
-    public <T extends Model<T, TL, TO, TC, TS, TG>,
-            TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
-            TO extends OnModel<T, TL, TO, TC, TS, TG>,
-            TC extends WhereModel<T, TL, TO, TC, TS, TG>,
-            TS extends SortModel<T, TL, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TL, TO, TC, TS, TG>> WhereTool<M, ML, MO, MC, MS, MG> where(Class<T> conditionClass, String alias, ConditionB<M, ML, MO, MC, MS, MG, T, TL, TO, TC, TS, TG> condition) {
-        return this;
     }
 
 }

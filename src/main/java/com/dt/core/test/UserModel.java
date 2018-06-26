@@ -66,7 +66,7 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
         }
 
         public WhereBuilder<Where> userId() {
-            this.whereBuilder.setHandler("User", "id", "ID", false, false);
+            this.whereBuilder.handler(UserModel.tableName, UserModel.alias, UserModel.userId);
             return whereBuilder;
         }
 

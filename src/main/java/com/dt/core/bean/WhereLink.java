@@ -1,8 +1,13 @@
 package com.dt.core.bean;
 
+import com.dt.core.data.WhereData;
 import com.dt.core.norm.ConditionA;
 import com.dt.core.norm.ConditionB;
 import com.dt.core.norm.Model;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 条件
@@ -15,11 +20,15 @@ public final class WhereLink<M extends Model<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> {
 
+    private Map<LinkType, List<WhereData>> whereDataMap = new LinkedHashMap<>();
+
     public WhereLink<M, ML, MO, MC, MS, MG> and(WhereModel<?, ?, ?, ?, ?, ?> whereModel) {
+        whereDataMap.put(LinkType.AND, whereModel.whereBuilder.getWhereDataList());
         return this;
     }
 
     public WhereLink<M, ML, MO, MC, MS, MG> or(WhereModel<?, ?, ?, ?, ?, ?> whereModel) {
+        whereDataMap.put(LinkType.OR, whereModel.whereBuilder.getWhereDataList());
         return this;
     }
 

@@ -66,7 +66,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         }
 
         public WhereBuilder<Where> adminId() {
-            this.whereBuilder.setHandler("Admin", "id", "ID", false, false);
+            this.whereBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
             return whereBuilder;
         }
 

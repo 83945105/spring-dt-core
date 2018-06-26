@@ -66,7 +66,7 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         }
 
         public WhereBuilder<Where> stuId() {
-            this.whereBuilder.setHandler("User", "id", "ID", false, false);
+            this.whereBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
             return whereBuilder;
         }
 

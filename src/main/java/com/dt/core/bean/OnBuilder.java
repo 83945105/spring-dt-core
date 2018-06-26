@@ -28,11 +28,11 @@ public class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
 
     private List<OnData> onDataList = new ArrayList<>();
 
-    public OnBuilder handler(String joinTableName, String joinAlias, String joinColumnName) {
+    public OnBuilder handler(String ownerTableName, String ownerAlias, String ownerColumnName) {
         onData = new OnData();
-        onData.setMainTableName(joinTableName);
-        onData.setMainAlias(joinAlias);
-        onData.setMainColumnName(joinColumnName);
+        onData.setOwnerTableName(ownerTableName);
+        onData.setOwnerAlias(ownerAlias);
+        onData.setOwnerColumnName(ownerColumnName);
         return this;
     }
 
@@ -62,9 +62,9 @@ public class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
     public MO equalTo(OnBuilder onBuilder) {
         onData.setOnType(OnType.EQUAL);
         OnData targetOnData = onBuilder.onData;
-        onData.setTargetTableName(targetOnData.getMainTableName());
-        onData.setTargetAlias(targetOnData.getMainAlias());
-        onData.setTargetColumnName(targetOnData.getMainColumnName());
+        onData.setTargetTableName(targetOnData.getOwnerTableName());
+        onData.setTargetAlias(targetOnData.getOwnerAlias());
+        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
         onDataList.add(onData);
         return handleModel;
     }
@@ -80,9 +80,9 @@ public class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         JoinTableData<T, TL, TO, TC, TS, TG> joinTableData = this.handleModel.getData().getJoinTableData(alias, onClass);
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
-        onData.setTargetTableName(targetOnData.getMainTableName());
-        onData.setTargetAlias(targetOnData.getMainAlias());
-        onData.setTargetColumnName(targetOnData.getMainColumnName());
+        onData.setTargetTableName(targetOnData.getOwnerTableName());
+        onData.setTargetAlias(targetOnData.getOwnerAlias());
+        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
         onDataList.add(onData);
         return handleModel;
     }

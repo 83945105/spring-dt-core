@@ -1,12 +1,11 @@
 package com.dt.core.data;
 
-import com.dt.core.bean.OnType;
+import com.dt.core.bean.WhereType;
 
 /**
- * 条件数据
- * Created by 白超 on 2018/6/24.
+ * Created by 白超 on 2018/6/26.
  */
-public class OnData {
+public class WhereData {
 
     private String ownerTableName;
 
@@ -14,15 +13,15 @@ public class OnData {
 
     private String ownerColumnName;
 
-    private OnType onType = OnType.EQUAL;
+    private WhereType whereType = WhereType.EQUAL;
 
     private String targetTableName;
 
     private String targetAlias;
 
-    private String targetColumnName;
-
     private Object targetValue;
+
+    private Object targetSecondValue;
 
     public String getOwnerTableName() {
         return ownerTableName;
@@ -48,12 +47,12 @@ public class OnData {
         this.ownerColumnName = ownerColumnName;
     }
 
-    public OnType getOnType() {
-        return onType;
+    public WhereType getWhereType() {
+        return whereType;
     }
 
-    public void setOnType(OnType onType) {
-        this.onType = onType;
+    public void setWhereType(WhereType whereType) {
+        this.whereType = whereType;
     }
 
     public String getTargetTableName() {
@@ -72,19 +71,19 @@ public class OnData {
         this.targetAlias = targetAlias;
     }
 
-    public String getTargetColumnName() {
-        return targetColumnName;
-    }
-
-    public void setTargetColumnName(String targetColumnName) {
-        this.targetColumnName = targetColumnName;
-    }
-
     public Object getTargetValue() {
         return targetValue;
     }
 
     public void setTargetValue(Object targetValue) {
         this.targetValue = targetValue;
+    }
+
+    public Object getTargetSecondValue() {
+        return targetSecondValue;
+    }
+
+    public void setTargetSecondValue(Object targetSecondValue) {
+        this.targetSecondValue = targetSecondValue;
     }
 }
