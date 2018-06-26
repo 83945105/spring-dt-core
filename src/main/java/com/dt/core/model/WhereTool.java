@@ -2,6 +2,7 @@ package com.dt.core.model;
 
 import com.dt.core.bean.*;
 import com.dt.core.data.JoinTableData;
+import com.dt.core.data.MainTableData;
 import com.dt.core.norm.ConditionA;
 import com.dt.core.norm.ConditionB;
 import com.dt.core.norm.Data;
@@ -22,8 +23,10 @@ public abstract class WhereTool<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     public WhereTool<M, ML, MO, MC, MS, MG> where(ConditionA<M, ML, MO, MC, MS, MG> condition) {
-        MC mc = (MC) this.data.getMainMainTableData().getTable().getWhere();
-        condition.apply(new WhereLink<>(), mc);
+        MainTableData mainTableData = this.data.getMainMainTableData();
+        MC mc = (MC) mainTableData.getTable().getWhere();
+        WhereLink whereLink = condition.apply(new WhereLink<>(this.data), mc);
+        mainTableData.addLinkWhereDataList(whereLink.getLinkWhereDataList());
         return this;
     }
 
@@ -36,7 +39,8 @@ public abstract class WhereTool<M extends Model<M, ML, MO, MC, MS, MG>,
         JoinTableData joinTableData = this.data.getJoinTableData(alias, conditionClass);
         TC tc = (TC) joinTableData.getTable().getWhere();
         MC mc = (MC) this.data.getMainMainTableData().getTable().getWhere();
-        condition.apply(new WhereLink<>(), tc, mc);
+        WhereLink whereLink = condition.apply(new WhereLink<>(this.data), tc, mc);
+        joinTableData.addLinkWhereDataList(whereLink.getLinkWhereDataList());
         return this;
     }
 

@@ -54,7 +54,7 @@ public class ApplicationTests {
                             .and(AdminModel.class, (c1, t1, mt1) -> c1.and(t1.adminId().equalTo("")).and(mt1.userId().equalTo("")))
                             .and(AdminModel.class, (c1, t1, mt1) -> c1.and((c2, mt2) -> c2.and(mt2.userId().equalTo(""))))
                             .and((c1, mt1) -> c1.and(mt1.userId().equalTo(""))
-                                    .or(AdminModel.class, "Admin2", (c2, t2, mt2) -> c2.and(t2.adminId().equalTo("")))
+                                    .or(AdminModel.class, "Admin2", (c2, t2, mt2) -> c2.and(t2.adminId().equalTo("666")))
                                     .or(StuModel.class, (c2, t2, mt2) -> c2.and(t2))))
 
                     .group(table -> table.userId().userId().userId())
