@@ -1,6 +1,8 @@
 package com.dt.core.model;
 
 import com.dt.core.bean.*;
+import com.dt.core.data.JoinTableData;
+import com.dt.core.data.MainTableData;
 import com.dt.core.data.SortData;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
@@ -23,7 +25,10 @@ public abstract class SortTool<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     public SortTool<M, ML, MO, MC, MS, MG> sort(Sort<M, ML, MO, MC, MS, MG> sort) {
-        List<SortData> sortDataList = sort.apply((MS) this.data.getMainMainTableData().getTable().getSort()).getSortBuilder().getSortDataList();
+        MainTableData mainTableData = this.data.getMainTableData();
+        List<SortData> sortDataList = sort.apply((MS) mainTableData.getTable().getSort()).getSortBuilder().getSortDataList();
+        mainTableData.addSortDataList(sortDataList);
+        this.data.addSortDataList(sortDataList);
         return this;
     }
 
@@ -33,7 +38,10 @@ public abstract class SortTool<M extends Model<M, ML, MO, MC, MS, MG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> SortTool<M, ML, MO, MC, MS, MG> sort(Class<T> sortClass, String alias, Sort<T, TL, TO, TC, TS, TG> sort) {
-
+        JoinTableData joinTableData = this.data.getJoinTableData(alias, sortClass);
+        List<SortData> sortDataList = sort.apply((TS) joinTableData.getTable().getSort()).getSortBuilder().getSortDataList();
+        joinTableData.addSortDataList(sortDataList);
+        this.data.addSortDataList(sortDataList);
         return this;
     }
 

@@ -18,9 +18,9 @@ public interface Data<M extends Model<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> {
 
-    MainTableData<M, ML, MO, MC, MS, MG> getMainMainTableData();
+    MainTableData<M, ML, MO, MC, MS, MG> getMainTableData();
 
-    void setMainMainTableData(MainTableData<M, ML, MO, MC, MS, MG> mainMainTableData);
+    void setMainTableData(MainTableData<M, ML, MO, MC, MS, MG> mainMainTableData);
 
     <J extends Model<J, JL, JO, JC, JS, JG>,
             JL extends ColumnModel<J, JL, JO, JC, JS, JG>,
@@ -73,5 +73,9 @@ public interface Data<M extends Model<M, ML, MO, MC, MS, MG>,
     List<GroupData> getGroupDataList();
 
     void addGroupDataList(GroupData groupData);
+
+    List<List<SortData>> getSortDataList();
+
+    void addSortDataList(List<SortData> sortDataList);
 
 }

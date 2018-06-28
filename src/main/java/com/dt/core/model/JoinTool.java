@@ -31,7 +31,7 @@ public abstract class JoinTool<M extends Model<M, ML, MO, MC, MS, MG>,
                                                                                                String alias,
                                                                                                JoinType joinType,
                                                                                                OnA<M, ML, MO, MC, MS, MG, J, JL, JO, JC, JS, JG> on) {
-        MainTableData<M, ML, MO, MC, MS, MG> mainTableData = this.data.getMainMainTableData();
+        MainTableData<M, ML, MO, MC, MS, MG> mainTableData = this.data.getMainTableData();
         JoinTableData<J, JL, JO, JC, JS, JG> joinTableData = new JoinTableData<>(joinClass);
         joinTableData.setTableName(tableName);
         joinTableData.setAlias(alias);

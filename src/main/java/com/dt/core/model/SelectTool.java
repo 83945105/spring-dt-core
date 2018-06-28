@@ -22,7 +22,7 @@ public class SelectTool<M extends Model<M, ML, MO, MC, MS, MG>,
     public JoinTool<M, ML, MO, MC, MS, MG> select(String tableName, Class<M> mainClass) {
         MainTableData data = new MainTableData(mainClass);
         data.setTableName(tableName);
-        this.data.setMainMainTableData(data);
+        this.data.setMainTableData(data);
         return this;
     }
 

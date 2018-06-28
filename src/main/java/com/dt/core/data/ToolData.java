@@ -1,7 +1,6 @@
 package com.dt.core.data;
 
 import com.dt.core.bean.*;
-import com.dt.core.exception.SelectToolException;
 import com.dt.core.exception.TableDataException;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
@@ -29,13 +28,15 @@ public final class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
 
     private List<GroupData> groupDataList = new ArrayList<>();
 
+    private List<List<SortData>> sortDataList = new ArrayList<>();
+
     @Override
-    public MainTableData<M, ML, MO, MC, MS, MG> getMainMainTableData() {
+    public MainTableData<M, ML, MO, MC, MS, MG> getMainTableData() {
         return this.mainMainTableData;
     }
 
     @Override
-    public void setMainMainTableData(MainTableData<M, ML, MO, MC, MS, MG> mainMainTableData) {
+    public void setMainTableData(MainTableData<M, ML, MO, MC, MS, MG> mainMainTableData) {
         this.mainMainTableData = mainMainTableData;
     }
 
@@ -80,7 +81,23 @@ public final class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
 
     @Override
     public void addColumnDataSet(TableData columnData) {
+        if (columnData == null) {
+            return;
+        }
         this.columnDataSet.add(columnData);
+    }
+
+    @Override
+    public List<List<LinkWhereData>> getLinkWhereDataList() {
+        return this.linkWhereDataList;
+    }
+
+    @Override
+    public void addLinkWhereDataList(List<LinkWhereData> linkWhereDataList) {
+        if (linkWhereDataList == null || linkWhereDataList.size() == 0) {
+            return;
+        }
+        this.linkWhereDataList.add(linkWhereDataList);
     }
 
     @Override
@@ -90,19 +107,22 @@ public final class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
 
     @Override
     public void addGroupDataList(GroupData groupData) {
+        if (groupData == null) {
+            return;
+        }
         this.groupDataList.add(groupData);
     }
 
     @Override
-    public List<List<LinkWhereData>> getLinkWhereDataList() {
-        return linkWhereDataList;
+    public List<List<SortData>> getSortDataList() {
+        return this.sortDataList;
     }
 
     @Override
-    public void addLinkWhereDataList(List<LinkWhereData> linkWhereDataList) {
-        if (linkWhereDataList == null || linkWhereDataList.size() == 0) {
+    public void addSortDataList(List<SortData> sortDataList) {
+        if (sortDataList == null || sortDataList.size() == 0) {
             return;
         }
-        this.linkWhereDataList.add(linkWhereDataList);
+        this.sortDataList.add(sortDataList);
     }
 }

@@ -28,7 +28,7 @@ public abstract class GroupTool<M extends Model<M, ML, MO, MC, MS, MG>,
         if (columnNames == null || columnNames.length == 0) {
             return this;
         }
-        TableData tableData = this.data.getMainMainTableData();
+        TableData tableData = this.data.getMainTableData();
         tableData.addGroupColumns(columnNames);
         this.data.addGroupDataList(new GroupData(tableData, columnNames));
         return this;
@@ -38,7 +38,7 @@ public abstract class GroupTool<M extends Model<M, ML, MO, MC, MS, MG>,
         if (columnNames == null || columnNames.size() == 0) {
             return this;
         }
-        TableData tableData = this.data.getMainMainTableData();
+        TableData tableData = this.data.getMainTableData();
         tableData.addGroupColumns(columnNames);
         this.data.addGroupDataList(new GroupData(tableData, columnNames.toArray(new String[columnNames.size()])));
         return this;
@@ -94,7 +94,7 @@ public abstract class GroupTool<M extends Model<M, ML, MO, MC, MS, MG>,
 
 
     public GroupTool<M, ML, MO, MC, MS, MG> group(Group<M, ML, MO, MC, MS, MG> group) {
-        List<String> columns = group.apply((MG) this.data.getMainMainTableData().getTable().getGroup()).getColumns();
+        List<String> columns = group.apply((MG) this.data.getMainTableData().getTable().getGroup()).getColumns();
         return group(columns);
     }
 

@@ -24,14 +24,14 @@ public abstract class SelectColumnTool<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     public SelectColumnTool<M, ML, MO, MC, MS, MG> column(String... columnNames) {
-        TableData tableData = this.data.getMainMainTableData();
+        TableData tableData = this.data.getMainTableData();
         tableData.addSelectColumns(columnNames);
         this.data.addColumnDataSet(tableData);
         return this;
     }
 
     public SelectColumnTool<M, ML, MO, MC, MS, MG> column(Collection<String> columnNames) {
-        TableData tableData = this.data.getMainMainTableData();
+        TableData tableData = this.data.getMainTableData();
         tableData.addSelectColumns(columnNames);
         this.data.addColumnDataSet(tableData);
         return this;
@@ -80,7 +80,7 @@ public abstract class SelectColumnTool<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     public SelectColumnTool<M, ML, MO, MC, MS, MG> column(Column<M, ML, MO, MC, MS, MG> column) {
-        Set<String> columns = column.apply((ML) this.data.getMainMainTableData().getTable().getColumn()).getColumns();
+        Set<String> columns = column.apply((ML) this.data.getMainTableData().getTable().getColumn()).getColumns();
         return column(columns);
     }
 

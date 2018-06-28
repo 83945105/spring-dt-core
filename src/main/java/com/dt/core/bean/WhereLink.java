@@ -37,7 +37,7 @@ public final class WhereLink<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     public WhereLink<M, ML, MO, MC, MS, MG> and(ConditionA<M, ML, MO, MC, MS, MG> condition) {
-        MC mc = (MC) this.data.getMainMainTableData().getTable().getWhere();
+        MC mc = (MC) this.data.getMainTableData().getTable().getWhere();
         WhereLink whereLink = condition.apply(new WhereLink<>(this.data), mc);
         LinkWhereData linkWhereData = new LinkWhereData(LinkType.AND);
         linkWhereData.setLinkWhereDataList(whereLink.linkWhereDataList);
@@ -55,7 +55,7 @@ public final class WhereLink<M extends Model<M, ML, MO, MC, MS, MG>,
                                                                                                ConditionB<M, ML, MO, MC, MS, MG, T, TL, TO, TC, TS, TG> condition) {
         JoinTableData joinTableData = this.data.getJoinTableData(alias, conditionClass);
         TC tc = (TC) joinTableData.getTable().getWhere();
-        MC mc = (MC) this.data.getMainMainTableData().getTable().getWhere();
+        MC mc = (MC) this.data.getMainTableData().getTable().getWhere();
         WhereLink whereLink = condition.apply(new WhereLink<>(this.data), tc, mc);
         LinkWhereData linkWhereData = new LinkWhereData(LinkType.AND);
         linkWhereData.setWhereDataList(whereLink.linkWhereDataList);
@@ -80,7 +80,7 @@ public final class WhereLink<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     public WhereLink<M, ML, MO, MC, MS, MG> or(ConditionA<M, ML, MO, MC, MS, MG> condition) {
-        MC mc = (MC) this.data.getMainMainTableData().getTable().getWhere();
+        MC mc = (MC) this.data.getMainTableData().getTable().getWhere();
         WhereLink whereLink = condition.apply(new WhereLink<>(this.data), mc);
         LinkWhereData linkWhereData = new LinkWhereData(LinkType.OR);
         linkWhereData.setLinkWhereDataList(whereLink.linkWhereDataList);
@@ -96,7 +96,7 @@ public final class WhereLink<M extends Model<M, ML, MO, MC, MS, MG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> WhereLink<M, ML, MO, MC, MS, MG> or(Class<T> conditionClass, String alias, ConditionB<M, ML, MO, MC, MS, MG, T, TL, TO, TC, TS, TG> condition) {
         JoinTableData joinTableData = this.data.getJoinTableData(alias, conditionClass);
         TC tc = (TC) joinTableData.getTable().getWhere();
-        MC mc = (MC) this.data.getMainMainTableData().getTable().getWhere();
+        MC mc = (MC) this.data.getMainTableData().getTable().getWhere();
         WhereLink whereLink = condition.apply(new WhereLink<>(this.data), tc, mc);
         LinkWhereData linkWhereData = new LinkWhereData(LinkType.OR);
         linkWhereData.setWhereDataList(whereLink.linkWhereDataList);

@@ -24,7 +24,7 @@ public abstract class TableData {
     }
 
     public void setTableName(String tableName) {
-        if (tableName == null || tableName.trim() == "") {
+        if (tableName == null || "".equals(tableName.trim())) {
             return;
         }
         this.tableName = tableName;
@@ -35,7 +35,7 @@ public abstract class TableData {
     }
 
     public void setAlias(String alias) {
-        if (alias == null || alias.trim() == "") {
+        if (alias == null || "".equals(alias.trim())) {
             return;
         }
         this.alias = alias;
@@ -86,6 +86,13 @@ public abstract class TableData {
         for (String groupColumn : groupColumns) {
             this.groupColumns.add(groupColumn);
         }
+    }
+
+    public void addSortDataList(List<SortData> sortDataList) {
+        if (sortDataList == null || sortDataList.size() == 0) {
+            return;
+        }
+        this.sortDataList.add(sortDataList);
     }
 
     @Override

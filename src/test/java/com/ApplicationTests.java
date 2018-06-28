@@ -11,10 +11,10 @@ import com.dt.core.test.UserModel;
 public class ApplicationTests {
 
     public static void main(String[] args) throws Exception {
-        Long tst = System.currentTimeMillis();
+        Long tst = System.nanoTime();
 
-        for (int i = 0; i < 1; i++) {
-            Long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            Long startTime = System.nanoTime();
 
             DataTool dataTool = MySqlTool.SELECT(UserModel.class)
 
@@ -70,19 +70,19 @@ public class ApplicationTests {
 
                     .sort(AdminModel.class, table -> table.adminId().desc())
 
-                    .sort(AdminModel.class, "Admin2", table -> table.adminId().desc())
+                    .sort(AdminModel.class, "Admin", table -> table.adminId().desc())
 
                     .limit(1);
 
             Data data = dataTool.getData();
 
-            Long endTime = System.currentTimeMillis();
+            Long endTime = System.nanoTime() - startTime;
 
-            System.out.println(endTime - startTime);
+            System.out.println(endTime + ":" + endTime / 1000000);
         }
 
-        Long tse = System.currentTimeMillis();
-        System.out.println("总计:" + (tse - tst));
+        Long tse = System.nanoTime() - tst;
+        System.out.println("总计:" + tse + ":" + tse / 1000000);
     }
 
 }
