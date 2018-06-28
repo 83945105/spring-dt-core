@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by 白超 on 2018/6/26.
  */
-public class LinkWhereData {
+public final class LinkWhereData {
 
     private LinkType linkType;
 

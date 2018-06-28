@@ -35,7 +35,7 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
         }
 
         public Column userId() {
-            this.columns.add("user_id");
+            this.columns.add(UserModel.userId);
             return this;
         }
     }
@@ -66,21 +66,7 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
         }
 
         public WhereBuilder<Where> userId() {
-            this.whereBuilder.handler(UserModel.tableName, UserModel.alias, UserModel.userId);
-            return whereBuilder;
-        }
-
-    }
-
-    @Override
-    public SortModel getSort() {
-        return new Sort();
-    }
-
-    public static final class Sort extends SortModel<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> {
-
-        public SortBuilder<Sort> userId() {
-            return sortBuilder;
+            return this.whereBuilder.handler(UserModel.tableName, UserModel.alias, UserModel.userId);
         }
 
     }
@@ -96,7 +82,21 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
         }
 
         public Group userId() {
+            this.columns.add(UserModel.userId);
             return this;
+        }
+
+    }
+
+    @Override
+    public SortModel getSort() {
+        return new Sort();
+    }
+
+    public static final class Sort extends SortModel<UserModel, UserModel.Column, UserModel.On, Where, UserModel.Sort, UserModel.Group> {
+
+        public SortBuilder<Sort> userId() {
+            return this.sortBuilder.handler(UserModel.tableName, UserModel.alias, UserModel.userId);
         }
 
     }

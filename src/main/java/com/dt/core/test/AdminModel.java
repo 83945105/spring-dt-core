@@ -35,7 +35,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         }
 
         public Column adminId() {
-            this.columns.add("admin_id");
+            this.columns.add(AdminModel.adminId);
             return this;
         }
     }
@@ -66,21 +66,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         }
 
         public WhereBuilder<Where> adminId() {
-            this.whereBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
-            return whereBuilder;
-        }
-
-    }
-
-    @Override
-    public SortModel getSort() {
-        return new Sort();
-    }
-
-    public static final class Sort extends SortModel<AdminModel, AdminModel.Column, AdminModel.On, Where, AdminModel.Sort, AdminModel.Group> {
-
-        public SortBuilder<Sort> adminId() {
-            return sortBuilder;
+            return this.whereBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
         }
 
     }
@@ -96,7 +82,21 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         }
 
         public Group adminId() {
+            this.columns.add(AdminModel.adminId);
             return this;
+        }
+
+    }
+
+    @Override
+    public SortModel getSort() {
+        return new Sort();
+    }
+
+    public static final class Sort extends SortModel<AdminModel, AdminModel.Column, AdminModel.On, Where, AdminModel.Sort, AdminModel.Group> {
+
+        public SortBuilder<Sort> adminId() {
+            return this.sortBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
         }
 
     }

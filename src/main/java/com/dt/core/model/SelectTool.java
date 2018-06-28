@@ -13,20 +13,20 @@ public class SelectTool<M extends Model<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
-        MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends SelectColumnTool<M, ML, MO, MC, MS, MG> {
+        MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends JoinTool<M, ML, MO, MC, MS, MG> {
 
     public SelectTool(Data<M, ML, MO, MC, MS, MG> data) {
         super(data);
     }
 
-    public SelectColumnTool<M, ML, MO, MC, MS, MG> select(String tableName, Class<M> mainClass) {
+    public JoinTool<M, ML, MO, MC, MS, MG> select(String tableName, Class<M> mainClass) {
         MainTableData data = new MainTableData(mainClass);
         data.setTableName(tableName);
         this.data.setMainMainTableData(data);
         return this;
     }
 
-    public SelectColumnTool<M, ML, MO, MC, MS, MG> select(Class<M> mainClass) {
+    public JoinTool<M, ML, MO, MC, MS, MG> select(Class<M> mainClass) {
         return select(null, mainClass);
     }
 

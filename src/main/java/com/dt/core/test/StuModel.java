@@ -35,7 +35,7 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         }
 
         public Column stuId() {
-            this.columns.add("stu_id");
+            this.columns.add(StuModel.stuId);
             return this;
         }
     }
@@ -66,21 +66,7 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         }
 
         public WhereBuilder<Where> stuId() {
-            this.whereBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
-            return whereBuilder;
-        }
-
-    }
-
-    @Override
-    public SortModel getSort() {
-        return new Sort();
-    }
-
-    public static final class Sort extends SortModel<StuModel, StuModel.Column, StuModel.On, Where, StuModel.Sort, StuModel.Group> {
-
-        public SortBuilder<Sort> stuId() {
-            return sortBuilder;
+            return this.whereBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
         }
 
     }
@@ -96,7 +82,21 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         }
 
         public Group stuId() {
+            this.columns.add(StuModel.stuId);
             return this;
+        }
+
+    }
+
+    @Override
+    public SortModel getSort() {
+        return new Sort();
+    }
+
+    public static final class Sort extends SortModel<StuModel, StuModel.Column, StuModel.On, Where, StuModel.Sort, StuModel.Group> {
+
+        public SortBuilder<Sort> stuId() {
+            return this.sortBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
         }
 
     }

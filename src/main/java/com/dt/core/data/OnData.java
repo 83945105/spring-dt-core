@@ -6,7 +6,7 @@ import com.dt.core.bean.OnType;
  * 条件数据
  * Created by 白超 on 2018/6/24.
  */
-public class OnData {
+public final class OnData {
 
     private String ownerTableName;
 

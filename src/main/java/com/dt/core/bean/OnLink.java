@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by 白超 on 2018/6/17.
  */
-public class OnLink<M extends Model<M, ML, MO, MC, MS, MG>,
+public final class OnLink<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,

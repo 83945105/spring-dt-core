@@ -5,7 +5,7 @@ import com.dt.core.bean.WhereType;
 /**
  * Created by 白超 on 2018/6/26.
  */
-public class WhereData {
+public final class WhereData {
 
     private String ownerTableName;
 

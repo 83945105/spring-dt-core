@@ -22,7 +22,7 @@ public interface Model<T extends Model<T, TL, TO, TC, TS, TG>,
 
     WhereModel<T, TL, TO, TC, TS, TG> getWhere();
 
-    SortModel<T, TL, TO, TC, TS, TG> getSort();
-
     GroupModel<T, TL, TO, TC, TS, TG> getGroup();
+
+    SortModel<T, TL, TO, TC, TS, TG> getSort();
 }

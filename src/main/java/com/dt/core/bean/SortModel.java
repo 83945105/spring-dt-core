@@ -14,4 +14,7 @@ public class SortModel<T extends Model<T, TL, TO, TC, TS, TG>,
 
     protected SortBuilder<TS> sortBuilder = new SortBuilder<>((TS) this);
 
+    public SortBuilder<TS> getSortBuilder() {
+        return sortBuilder;
+    }
 }

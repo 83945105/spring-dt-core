@@ -2,8 +2,7 @@ package com.dt.core.bean;
 
 import com.dt.core.norm.Model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by 白超 on 2018/6/23.
@@ -15,9 +14,9 @@ public class ColumnModel<T extends Model<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
         TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
-    protected List<String> columns = new ArrayList<>();
+    protected Set<String> columns = new LinkedHashSet<>();
 
-    public List<String> getColumns() {
+    public Set<String> getColumns() {
         return columns;
     }
 }

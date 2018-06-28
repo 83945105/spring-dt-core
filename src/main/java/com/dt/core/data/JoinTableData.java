@@ -6,7 +6,6 @@ import com.dt.core.norm.Model;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 表数据
@@ -22,8 +21,6 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
     private T table;
 
     private Class<T> tableClass;
-
-    private String[] selectColumns;
 
     private JoinType joinType = JoinType.INNER;
 
@@ -46,16 +43,8 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         this.alias = this.table.getAlias();
     }
 
-    public String[] getSelectColumns() {
-        return selectColumns;
-    }
-
     public T getTable() {
         return table;
-    }
-
-    public void setSelectColumns(String[] selectColumns) {
-        this.selectColumns = selectColumns;
     }
 
     public JoinType getJoinType() {
@@ -66,16 +55,4 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         this.joinType = joinType;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        JoinTableData<?, ?, ?, ?, ?, ?> data = (JoinTableData<?, ?, ?, ?, ?, ?>) o;
-        return Objects.equals(getAlias(), data.getAlias());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getAlias());
-    }
 }

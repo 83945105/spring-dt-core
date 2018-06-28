@@ -2,10 +2,7 @@ package com.dt.core;
 
 import com.dt.core.bean.*;
 import com.dt.core.data.ToolData;
-import com.dt.core.model.InsertColumnTool;
-import com.dt.core.model.InsertTool;
-import com.dt.core.model.SelectColumnTool;
-import com.dt.core.model.SelectTool;
+import com.dt.core.model.*;
 import com.dt.core.norm.Model;
 
 /**
@@ -36,7 +33,7 @@ public class MySqlTool {
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TL, TO, TC, TS, TG>> SelectColumnTool<T, TL, TO, TC, TS, TG> SELECT(String tableName, Class<T> mainClass) {
+            TG extends GroupModel<T, TL, TO, TC, TS, TG>> JoinTool<T, TL, TO, TC, TS, TG> SELECT(String tableName, Class<T> mainClass) {
         return new SelectTool<T, TL, TO, TC, TS, TG>(new ToolData()).select(tableName, mainClass);
     }
 
@@ -45,7 +42,7 @@ public class MySqlTool {
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TL, TO, TC, TS, TG>> SelectColumnTool<T, TL, TO, TC, TS, TG> SELECT(Class<T> mainClass) {
+            TG extends GroupModel<T, TL, TO, TC, TS, TG>> JoinTool<T, TL, TO, TC, TS, TG> SELECT(Class<T> mainClass) {
         return SELECT(null, mainClass);
     }
 

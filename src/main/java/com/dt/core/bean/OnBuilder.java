@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by 白超 on 2018/6/17.
  */
-public class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
+public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,

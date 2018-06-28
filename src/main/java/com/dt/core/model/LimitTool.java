@@ -22,7 +22,6 @@ public abstract class LimitTool<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     public DataTool<M, ML, MO, MC, MS, MG> limit(int start, Integer end) {
-        data.setLimit(start, end);
         return this;
     }
 
