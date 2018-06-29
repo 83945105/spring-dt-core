@@ -34,4 +34,8 @@ public final class LinkWhereData {
     public void setLinkWhereDataList(List<LinkWhereData> linkWhereDataList) {
         this.linkWhereDataList = linkWhereDataList;
     }
+
+    public LinkType getLinkType() {
+        return linkType;
+    }
 }

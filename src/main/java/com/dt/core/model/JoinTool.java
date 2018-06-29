@@ -6,6 +6,7 @@ import com.dt.core.data.MainTableData;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 import com.dt.core.norm.OnA;
+import com.dt.core.parser.JoinParser;
 
 /**
  * Created by 白超 on 2018/6/18.
@@ -16,6 +17,8 @@ public abstract class JoinTool<M extends Model<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends SelectColumnTool<M, ML, MO, MC, MS, MG> {
+
+    private JoinParser joinParser = JoinParser.getInstance();
 
     public JoinTool(Data<M, ML, MO, MC, MS, MG> data) {
         super(data);
@@ -36,13 +39,13 @@ public abstract class JoinTool<M extends Model<M, ML, MO, MC, MS, MG>,
         joinTableData.setTableName(tableName);
         joinTableData.setAlias(alias);
         joinTableData.setJoinType(joinType);
-        this.data.setJoinTableData(joinTableData);
         OnLink<J, JL, JO, JC, JS, JG> onLink = new OnLink<>();
         JO jo = (JO) joinTableData.getTable().getOn();
         jo.setData(this.data);
         MO mo = (MO) mainTableData.getTable().getOn();
         OnLink link = on.apply(onLink, jo, mo);
-        joinTableData.addOnDataMap(link.getOnDataMap());
+        joinTableData.addLinkOnDataMap(link.getLinkOnDataMap());
+        this.data.setJoinTableData(joinTableData);
         return this;
     }
 
@@ -211,6 +214,11 @@ public abstract class JoinTool<M extends Model<M, ML, MO, MC, MS, MG>,
             JG extends GroupModel<J, JL, JO, JC, JS, JG>> JoinTool<M, ML, MO, MC, MS, MG> rightJoin(Class<J> joinClass,
                                                                                                     OnA<M, ML, MO, MC, MS, MG, J, JL, JO, JC, JS, JG> on) {
         return join(null, joinClass, null, JoinType.RIGHT, on);
+    }
+
+    @Override
+    public String getJoinSql() {
+        return this.joinParser.parse(this.data.getJoinTableDataAliasMap());
     }
 
 }

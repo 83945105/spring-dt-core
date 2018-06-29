@@ -1,9 +1,9 @@
 package com;
 
 import com.dt.core.MySqlTool;
+import com.dt.core.bean.ComparisonRule;
 import com.dt.core.bean.JoinType;
-import com.dt.core.norm.Data;
-import com.dt.core.norm.DataTool;
+import com.dt.core.norm.SqlTool;
 import com.dt.core.test.AdminModel;
 import com.dt.core.test.StuModel;
 import com.dt.core.test.UserModel;
@@ -11,30 +11,33 @@ import com.dt.core.test.UserModel;
 public class ApplicationTests {
 
     public static void main(String[] args) throws Exception {
+
+        String null_param = null;
+
         Long tst = System.nanoTime();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1; i++) {
             Long startTime = System.nanoTime();
 
-            DataTool dataTool = MySqlTool.SELECT(UserModel.class)
+            SqlTool dataTool = MySqlTool.SELECT(UserModel.class)
 
                     .innerJoin(StuModel.class, "stu2", (on, joinTable, mainTable) -> on
                             .and(joinTable.stuId().equalTo(mainTable.userId())))
 
                     .join("admin_10086", AdminModel.class, "Admin", JoinType.INNER, (on, joinTable, mainTable) -> on
-                            .and(joinTable.adminId().equalTo(""))
+                            .and(joinTable.adminId().equalTo(null_param))
                             .and(joinTable.adminId().equalTo(mainTable.userId()))
-                            .and(joinTable.adminId().equalTo("stu2", StuModel.class, StuModel.On::stuId)))
+                            .and(joinTable.adminId().equalTo("stu2", StuModel.class, StuModel.On::stuId))
+                            .and(joinTable.adminId().in(ComparisonRule.NULL_SKIP, "1", "2", "3", "4", "5")))
 
-                    .column(AdminModel.id, AdminModel.adminName)
-
-                    .column(UserModel.id, UserModel.userName)
-
-                    .column("stu2", StuModel.class, StuModel.id)
+                    .leftJoin(UserModel.class, "User2", (on, joinTable, mainTable) -> on
+                            .and(joinTable.userId().equalTo(mainTable.userId())))
 
                     .column(table -> table.userId().userId().userId())
 
                     .column(AdminModel.class, table -> table.adminId().adminId())
+
+                    .column(UserModel.class, "User2", table -> table.userId("userId2"))
 
                     .where((condition, mainTable) -> condition
                             .and(mainTable.userId().equalTo("")
@@ -74,7 +77,9 @@ public class ApplicationTests {
 
                     .limit(1);
 
-            Data data = dataTool.getData();
+            System.out.println(dataTool.getSelectColumnSql());
+            System.out.println(dataTool.getJoinSql());
+            System.out.println(dataTool.getWhereSql());
 
             Long endTime = System.nanoTime() - startTime;
 

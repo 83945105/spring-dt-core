@@ -4,6 +4,7 @@ import com.dt.core.bean.*;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.DataTool;
 import com.dt.core.norm.Model;
+import com.dt.core.norm.SqlTool;
 
 /**
  * Created by 白超 on 2018/6/18.
@@ -13,7 +14,7 @@ public abstract class LimitTool<M extends Model<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
-        MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends SqlTool<M, ML, MO, MC, MS, MG> {
+        MG extends GroupModel<M, ML, MO, MC, MS, MG>> implements DataTool<M, ML, MO, MC, MS, MG>, SqlTool<M, ML, MO, MC, MS, MG> {
 
     protected Data<M, ML, MO, MC, MS, MG> data;
 

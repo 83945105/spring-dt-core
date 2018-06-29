@@ -8,8 +8,11 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
     public static final String tableName = "admin";
     public static final String alias = "Admin";
     public static final String id = "id";
+    public static final String id_alias = "id";
     public static final String adminId = "admin_id";
+    public static final String adminId_alias = "adminId";
     public static final String adminName = "admin_name";
+    public static final String adminName_alias = "adminName";
 
     public AdminModel() {
     }
@@ -35,7 +38,12 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         }
 
         public Column adminId() {
-            this.columns.add(AdminModel.adminId);
+            this.columns.put(AdminModel.adminId, AdminModel.adminId_alias);
+            return this;
+        }
+
+        public Column adminId(String alias) {
+            this.columns.put(AdminModel.adminId, alias);
             return this;
         }
     }

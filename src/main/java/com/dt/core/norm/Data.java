@@ -3,10 +3,7 @@ package com.dt.core.norm;
 import com.dt.core.bean.*;
 import com.dt.core.data.*;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by 白超 on 2018/6/19.
@@ -43,28 +40,11 @@ public interface Data<M extends Model<M, ML, MO, MC, MS, MG>,
         this.setJoinTableData(joinTableData);
     }
 
+    Map<String, JoinTableData> getJoinTableDataAliasMap();
+
     Set<TableData> getColumnDataSet();
 
     void addColumnDataSet(TableData columnData);
-
-    default void addColumnDataSet(Set<TableData> columnDataSet) {
-        if (columnDataSet == null || columnDataSet.size() == 0) {
-            return;
-        }
-        Iterator<TableData> iterator = columnDataSet.iterator();
-        while (iterator.hasNext()) {
-            this.addColumnDataSet(iterator.next());
-        }
-    }
-
-    default void addColumnDataSet(TableData[] columnDatas) {
-        if (columnDatas == null || columnDatas.length == 0) {
-            return;
-        }
-        for (TableData columnData : columnDatas) {
-            this.addColumnDataSet(columnData);
-        }
-    }
 
     List<List<LinkWhereData>> getLinkWhereDataList();
 

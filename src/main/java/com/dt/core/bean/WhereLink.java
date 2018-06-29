@@ -58,7 +58,7 @@ public final class WhereLink<M extends Model<M, ML, MO, MC, MS, MG>,
         MC mc = (MC) this.data.getMainTableData().getTable().getWhere();
         WhereLink whereLink = condition.apply(new WhereLink<>(this.data), tc, mc);
         LinkWhereData linkWhereData = new LinkWhereData(LinkType.AND);
-        linkWhereData.setWhereDataList(whereLink.linkWhereDataList);
+        linkWhereData.setLinkWhereDataList(whereLink.linkWhereDataList);
         this.linkWhereDataList.add(linkWhereData);
         return this;
     }
@@ -99,7 +99,7 @@ public final class WhereLink<M extends Model<M, ML, MO, MC, MS, MG>,
         MC mc = (MC) this.data.getMainTableData().getTable().getWhere();
         WhereLink whereLink = condition.apply(new WhereLink<>(this.data), tc, mc);
         LinkWhereData linkWhereData = new LinkWhereData(LinkType.OR);
-        linkWhereData.setWhereDataList(whereLink.linkWhereDataList);
+        linkWhereData.setLinkWhereDataList(whereLink.linkWhereDataList);
         this.linkWhereDataList.add(linkWhereData);
         return this;
     }

@@ -14,9 +14,9 @@ public class ColumnModel<T extends Model<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
         TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
-    protected Set<String> columns = new LinkedHashSet<>();
+    protected Map<String, String> columns = new LinkedHashMap<>();
 
-    public Set<String> getColumns() {
+    public Map<String, String> getColumns() {
         return columns;
     }
 }

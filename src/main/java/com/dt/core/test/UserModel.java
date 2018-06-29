@@ -8,8 +8,11 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
     public static final String tableName = "user";
     public static final String alias = "User";
     public static final String id = "id";
+    public static final String id_alias = "id";
     public static final String userId = "user_id";
+    public static final String userId_alias = "userId";
     public static final String userName = "user_name";
+    public static final String userName_alias = "userName";
 
     public UserModel() {
     }
@@ -35,7 +38,12 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
         }
 
         public Column userId() {
-            this.columns.add(UserModel.userId);
+            this.columns.put(UserModel.userId, UserModel.userId_alias);
+            return this;
+        }
+
+        public Column userId(String alias) {
+            this.columns.put(UserModel.userId, alias);
             return this;
         }
     }

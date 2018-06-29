@@ -8,8 +8,11 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
     public static final String tableName = "stu";
     public static final String alias = "Stu";
     public static final String id = "id";
+    public static final String id_alias = "id";
     public static final String stuId = "stu_id";
+    public static final String stuId_alias = "stuId";
     public static final String stuName = "stu_name";
+    public static final String stuName_alias = "stuName";
 
     public StuModel() {
     }
@@ -35,7 +38,12 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         }
 
         public Column stuId() {
-            this.columns.add(StuModel.stuId);
+            this.columns.put(StuModel.stuId, StuModel.stuId_alias);
+            return this;
+        }
+
+        public Column stuId(String alias) {
+            this.columns.put(StuModel.stuId, alias);
             return this;
         }
     }

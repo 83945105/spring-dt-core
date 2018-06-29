@@ -11,7 +11,7 @@ public abstract class TableData {
 
     protected String alias;
 
-    protected Set<String> selectColumns = new LinkedHashSet<>();
+    protected Map<String, String> selectColumns = new LinkedHashMap<>();
 
     protected List<LinkWhereData> linkWhereDataList = new ArrayList<>();
 
@@ -48,24 +48,16 @@ public abstract class TableData {
         this.linkWhereDataList.addAll(linkWhereDataList);
     }
 
-    public Set<String> getSelectColumns() {
+    public Map<String, String> getSelectColumns() {
         return selectColumns;
     }
 
-    public void addSelectColumns(Collection<String> selectColumns) {
-        if (selectColumns == null || selectColumns.size() == 0) {
-            return;
-        }
-        this.selectColumns.addAll(selectColumns);
+    public void addSelectColumns(String columnName, String alias) {
+        this.selectColumns.put(columnName, alias);
     }
 
-    public void addSelectColumns(String[] selectColumns) {
-        if (selectColumns == null || selectColumns.length == 0) {
-            return;
-        }
-        for (String selectColumn : selectColumns) {
-            this.selectColumns.add(selectColumn);
-        }
+    public void addSelectColumns(Map<String, String> selectColumns) {
+        this.selectColumns.putAll(selectColumns);
     }
 
     public List<String> getGroupColumns() {

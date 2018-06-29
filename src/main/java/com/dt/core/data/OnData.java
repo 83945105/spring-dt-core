@@ -1,6 +1,7 @@
 package com.dt.core.data;
 
 import com.dt.core.bean.OnType;
+import com.dt.core.norm.OnValueType;
 
 /**
  * 条件数据
@@ -16,6 +17,8 @@ public final class OnData {
 
     private OnType onType = OnType.EQUAL;
 
+    private OnValueType onValueType = OnValueType.VALUE;
+
     private String targetTableName;
 
     private String targetAlias;
@@ -23,6 +26,10 @@ public final class OnData {
     private String targetColumnName;
 
     private Object targetValue;
+
+    private Object targetSecondValue;
+
+    private int valueCount;
 
     public String getOwnerTableName() {
         return ownerTableName;
@@ -86,5 +93,29 @@ public final class OnData {
 
     public void setTargetValue(Object targetValue) {
         this.targetValue = targetValue;
+    }
+
+    public Object getTargetSecondValue() {
+        return targetSecondValue;
+    }
+
+    public void setTargetSecondValue(Object targetSecondValue) {
+        this.targetSecondValue = targetSecondValue;
+    }
+
+    public int getValueCount() {
+        return valueCount;
+    }
+
+    public void setValueCount(int valueCount) {
+        this.valueCount = valueCount;
+    }
+
+    public OnValueType getOnValueType() {
+        return onValueType;
+    }
+
+    public void setOnValueType(OnValueType onValueType) {
+        this.onValueType = onValueType;
     }
 }

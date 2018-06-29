@@ -15,13 +15,11 @@ public final class WhereData {
 
     private WhereType whereType = WhereType.EQUAL;
 
-    private String targetTableName;
-
-    private String targetAlias;
-
     private Object targetValue;
 
     private Object targetSecondValue;
+
+    private int valueCount;
 
     public String getOwnerTableName() {
         return ownerTableName;
@@ -55,22 +53,6 @@ public final class WhereData {
         this.whereType = whereType;
     }
 
-    public String getTargetTableName() {
-        return targetTableName;
-    }
-
-    public void setTargetTableName(String targetTableName) {
-        this.targetTableName = targetTableName;
-    }
-
-    public String getTargetAlias() {
-        return targetAlias;
-    }
-
-    public void setTargetAlias(String targetAlias) {
-        this.targetAlias = targetAlias;
-    }
-
     public Object getTargetValue() {
         return targetValue;
     }
@@ -85,5 +67,13 @@ public final class WhereData {
 
     public void setTargetSecondValue(Object targetSecondValue) {
         this.targetSecondValue = targetSecondValue;
+    }
+
+    public int getValueCount() {
+        return valueCount;
+    }
+
+    public void setValueCount(int valueCount) {
+        this.valueCount = valueCount;
     }
 }

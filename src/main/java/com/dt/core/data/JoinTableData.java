@@ -24,11 +24,7 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
 
     private JoinType joinType = JoinType.INNER;
 
-    private Map<OnType, List<OnData>> onDataMap = new LinkedHashMap<>();
-
-    public void addOnDataMap(Map<OnType, List<OnData>> onDataMap) {
-        onDataMap.putAll(onDataMap);
-    }
+    private Map<LinkType, List<OnData>> linkOnDataMap = new LinkedHashMap<>();
 
     public JoinTableData(Class<T> tableClass) {
         this.tableClass = tableClass;
@@ -53,6 +49,17 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
 
     public void setJoinType(JoinType joinType) {
         this.joinType = joinType;
+    }
+
+    public Map<LinkType, List<OnData>> getLinkOnDataMap() {
+        return linkOnDataMap;
+    }
+
+    public void addLinkOnDataMap(Map<LinkType, List<OnData>> linkOnDataMap) {
+        if (linkOnDataMap == null || linkOnDataMap.size() == 0) {
+            return;
+        }
+        this.linkOnDataMap.putAll(linkOnDataMap);
     }
 
 }

@@ -19,7 +19,7 @@ public final class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
 
     private MainTableData<M, ML, MO, MC, MS, MG> mainMainTableData;
 
-    private Map<String, JoinTableData> joinTableDataAliasMap = new HashMap<>();
+    private Map<String, JoinTableData> joinTableDataAliasMap = new LinkedHashMap<>();
     private Map<String, Boolean> alias = new HashMap<>();
 
     private Set<TableData> columnDataSet = new LinkedHashSet<>();
@@ -75,6 +75,11 @@ public final class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     @Override
+    public Map<String, JoinTableData> getJoinTableDataAliasMap() {
+        return joinTableDataAliasMap;
+    }
+
+    @Override
     public Set<TableData> getColumnDataSet() {
         return this.columnDataSet;
     }
@@ -125,4 +130,5 @@ public final class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
         }
         this.sortDataList.add(sortDataList);
     }
+
 }
