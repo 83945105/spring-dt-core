@@ -28,11 +28,11 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
     }
 
     @Override
-    public ColumnModel<StuModel, StuModel.Column, StuModel.On, Where, StuModel.Sort, StuModel.Group> getColumn() {
+    public ColumnModel<StuModel, Column, On, Where, Sort, Group> getColumn() {
         return new Column();
     }
 
-    public static final class Column extends ColumnModel<StuModel, StuModel.Column, StuModel.On, Where, StuModel.Sort, StuModel.Group> {
+    public static final class Column extends ColumnModel<StuModel, Column, On, Where, Sort, Group> {
 
         private Column() {
         }
@@ -49,16 +49,16 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
     }
 
     @Override
-    public OnModel<StuModel, StuModel.Column, StuModel.On, Where, StuModel.Sort, StuModel.Group> getOn() {
+    public OnModel<StuModel, Column, On, Where, Sort, Group> getOn() {
         return new On();
     }
 
-    public static final class On extends OnModel<StuModel, StuModel.Column, StuModel.On, Where, StuModel.Sort, StuModel.Group> {
+    public static final class On extends OnModel<StuModel, Column, On, Where, Sort, Group> {
 
         private On() {
         }
 
-        public OnBuilder<StuModel, StuModel.Column, StuModel.On, Where, StuModel.Sort, StuModel.Group> stuId() {
+        public OnBuilder<StuModel, Column, On, Where, Sort, Group> stuId() {
             return this.onBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
         }
     }
@@ -73,7 +73,7 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         private Where() {
         }
 
-        public WhereBuilder<Where> stuId() {
+        public WhereBuilder<StuModel, Column, On, Where, Sort, Group> stuId() {
             return this.whereBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
         }
 
@@ -84,7 +84,7 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         return new Group();
     }
 
-    public static final class Group extends GroupModel<StuModel, StuModel.Column, StuModel.On, Where, StuModel.Sort, StuModel.Group> {
+    public static final class Group extends GroupModel<StuModel, Column, On, Where, Sort, Group> {
 
         private Group() {
         }
@@ -101,9 +101,9 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         return new Sort();
     }
 
-    public static final class Sort extends SortModel<StuModel, StuModel.Column, StuModel.On, Where, StuModel.Sort, StuModel.Group> {
+    public static final class Sort extends SortModel<StuModel, Column, On, Where, Sort, Group> {
 
-        public SortBuilder<Sort> stuId() {
+        public SortBuilder<StuModel, Column, On, Where, Sort, Group> stuId() {
             return this.sortBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
         }
 

@@ -1,6 +1,7 @@
 package com.dt.core.bean;
 
 import com.dt.core.data.SortData;
+import com.dt.core.norm.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +9,16 @@ import java.util.List;
 /**
  * Created by 白超 on 2018/6/19.
  */
-public final class SortBuilder<S extends SortModel> {
+public final class SortBuilder<S extends Model<S, SL, SO, SC, SS, SG>,
+        SL extends ColumnModel<S, SL, SO, SC, SS, SG>,
+        SO extends OnModel<S, SL, SO, SC, SS, SG>,
+        SC extends WhereModel<S, SL, SO, SC, SS, SG>,
+        SS extends SortModel<S, SL, SO, SC, SS, SG>,
+        SG extends GroupModel<S, SL, SO, SC, SS, SG>> {
 
-    private S handleModel;
+    private SS handleModel;
 
-    public SortBuilder(S handleModel) {
+    public SortBuilder(SS handleModel) {
         this.handleModel = handleModel;
     }
 
@@ -28,13 +34,13 @@ public final class SortBuilder<S extends SortModel> {
         return this;
     }
 
-    public S asc() {
+    public SS asc() {
         sortData.setSortType(SortType.ASC);
         sortDataList.add(sortData);
         return handleModel;
     }
 
-    public S desc() {
+    public SS desc() {
         sortData.setSortType(SortType.DESC);
         sortDataList.add(sortData);
         return handleModel;

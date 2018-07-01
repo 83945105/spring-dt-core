@@ -12,7 +12,7 @@ public class WhereModel<T extends Model<T, TL, TO, TC, TS, TG>,
 
     private Data data;
 
-    protected WhereBuilder<TC> whereBuilder = new WhereBuilder<>((TC) this);
+    protected WhereBuilder<T, TL, TO, TC, TS, TG> whereBuilder = new WhereBuilder<>((TC) this);
 
     public Data getData() {
         return data;
@@ -20,5 +20,9 @@ public class WhereModel<T extends Model<T, TL, TO, TC, TS, TG>,
 
     public void setData(Data data) {
         this.data = data;
+    }
+
+    public WhereBuilder<T, TL, TO, TC, TS, TG> getWhereBuilder() {
+        return whereBuilder;
     }
 }

@@ -41,14 +41,14 @@ public class ApplicationTests {
 
                     .where((condition, mainTable) -> condition
                             .and(mainTable.userId().equalTo("")
-                                    .userId().equalTo(""))
-                            .or(mainTable.userId().equalTo(""))
-                            .and((c1, mt1) -> c1.and(mt1.userId().equalTo("")))
+                                    .userId().greaterThan(""))
+                            .or(mainTable.userId().between("", "").userId().isNull())
+                            .and((c1, mt1) -> c1.and(mt1.userId().equalTo("")).or(mt1.userId().like("")))
                             .and(AdminModel.class, (c1, t1, mt1) -> c1.and(t1.adminId().equalTo(""))
                                     .and(mt1.userId().equalTo(""))))
 
                     .where((condition, mainTable) -> condition
-                            .and(mainTable.userId().equalTo("")))
+                            .and(mainTable.userId().lessThan("")))
 
                     .where(AdminModel.class, (condition, table, mainTable) -> condition
                             .and(StuModel.class, "stu2", (c1, t1, mt1) -> c1.and(t1.stuId().equalTo("")))
@@ -61,7 +61,8 @@ public class ApplicationTests {
                             .and(AdminModel.class, (c1, t1, mt1) -> c1.and((c2, mt2) -> c2.and(mt2.userId().equalTo(""))))
                             .and((c1, mt1) -> c1.and(mt1.userId().equalTo(""))
                                     .or(AdminModel.class, "Admin", (c2, t2, mt2) -> c2.and(t2.adminId().equalTo("666")))
-                                    .or(StuModel.class, "stu2", (c2, t2, mt2) -> c2.and(t2))))
+                                    .or(StuModel.class, "stu2", (c2, t2, mt2) -> c2.and(t2))
+                            ))
 
                     .group(table -> table.userId().userId().userId())
 
@@ -77,8 +78,10 @@ public class ApplicationTests {
 
                     .limit(1);
 
-            System.out.println(dataTool.getSelectColumnSql());
-            System.out.println(dataTool.getJoinSql());
+//            System.out.println(dataTool);
+
+//            System.out.println(dataTool.getSelectColumnSql());
+//            System.out.println(dataTool.getJoinSql());
             System.out.println(dataTool.getWhereSql());
 
             Long endTime = System.nanoTime() - startTime;

@@ -11,12 +11,16 @@ public final class LinkWhereData {
 
     private LinkType linkType;
 
+    public LinkWhereData(LinkType linkType) {
+        this.linkType = linkType;
+    }
+
     private List<WhereData> whereDataList;
 
     private List<LinkWhereData> linkWhereDataList;
 
-    public LinkWhereData(LinkType linkType) {
-        this.linkType = linkType;
+    public LinkType getLinkType() {
+        return linkType;
     }
 
     public List<WhereData> getWhereDataList() {
@@ -33,9 +37,5 @@ public final class LinkWhereData {
 
     public void setLinkWhereDataList(List<LinkWhereData> linkWhereDataList) {
         this.linkWhereDataList = linkWhereDataList;
-    }
-
-    public LinkType getLinkType() {
-        return linkType;
     }
 }

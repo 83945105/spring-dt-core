@@ -32,7 +32,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         return new Column();
     }
 
-    public static final class Column extends ColumnModel<AdminModel, AdminModel.Column, AdminModel.On, Where, AdminModel.Sort, AdminModel.Group> {
+    public static final class Column extends ColumnModel<AdminModel, Column, On, Where, Sort, Group> {
 
         private Column() {
         }
@@ -49,16 +49,16 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
     }
 
     @Override
-    public OnModel<AdminModel, AdminModel.Column, AdminModel.On, Where, AdminModel.Sort, AdminModel.Group> getOn() {
+    public OnModel<AdminModel, Column, On, Where, Sort, Group> getOn() {
         return new On();
     }
 
-    public static final class On extends OnModel<AdminModel, AdminModel.Column, AdminModel.On, Where, AdminModel.Sort, AdminModel.Group> {
+    public static final class On extends OnModel<AdminModel, Column, On, Where, Sort, Group> {
 
         private On() {
         }
 
-        public OnBuilder<AdminModel, AdminModel.Column, AdminModel.On, Where, AdminModel.Sort, AdminModel.Group> adminId() {
+        public OnBuilder<AdminModel, Column, On, Where, Sort, Group> adminId() {
             return this.onBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
         }
     }
@@ -73,7 +73,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         private Where() {
         }
 
-        public WhereBuilder<Where> adminId() {
+        public WhereBuilder<AdminModel, Column, On, Where, Sort, Group> adminId() {
             return this.whereBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
         }
 
@@ -84,7 +84,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         return new Group();
     }
 
-    public static final class Group extends GroupModel<AdminModel, AdminModel.Column, AdminModel.On, Where, AdminModel.Sort, AdminModel.Group> {
+    public static final class Group extends GroupModel<AdminModel, Column, On, Where, Sort, Group> {
 
         private Group() {
         }
@@ -101,9 +101,9 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         return new Sort();
     }
 
-    public static final class Sort extends SortModel<AdminModel, AdminModel.Column, AdminModel.On, Where, AdminModel.Sort, AdminModel.Group> {
+    public static final class Sort extends SortModel<AdminModel, Column, On, Where, Sort, Group> {
 
-        public SortBuilder<Sort> adminId() {
+        public SortBuilder<AdminModel, Column, On, Where, Sort, Group> adminId() {
             return this.sortBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
         }
 

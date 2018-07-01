@@ -19,11 +19,11 @@ public class WhereParser {
         return WHERE_PARSER;
     }
 
-    private String parseWhereData(List<WhereData> whereDataList, StringBuilder sql) {
+    private String parseWhereData(List<WhereData> whereDataList) {
         if (whereDataList == null || whereDataList.size() == 0) {
             return "";
         }
-        sql.replace(0, sql.length(), "");
+        StringBuilder sql = new StringBuilder(64);
         for (WhereData whereData : whereDataList) {
             sql.append(" and ")
                     .append(whereData.getOwnerAlias())
@@ -74,16 +74,55 @@ public class WhereParser {
                     continue;
             }
         }
-        return sql.replace(0, 4, "(").toString();
+        return sql.length() > 4 ? sql.substring(4) : "";
     }
 
-    private String parseLinkWhereData(List<LinkWhereData> linkWhereDataList, StringBuilder sql) {
+    private String parseLinkWhereData(List<LinkWhereData> linkWhereDataList, boolean bracket) {
         if (linkWhereDataList == null || linkWhereDataList.size() == 0) {
             return "";
         }
-        sql.replace(0, sql.length(), "");
+        boolean hasOr = false;
+        StringBuilder sql = new StringBuilder(128);
+        for (LinkWhereData linkWhereData : linkWhereDataList) {
+            List<WhereData> whereDataList = linkWhereData.getWhereDataList();
+            List<LinkWhereData> list = linkWhereData.getLinkWhereDataList();
+            if (whereDataList != null && whereDataList.size() > 0) {
+                switch (linkWhereData.getLinkType()) {
+                    case AND:
+                        sql.append(" and ").append(parseWhereData(whereDataList));
+                        continue;
+                    case OR:
+                        hasOr = true;
+                        sql.append(" or ");
+                        if (whereDataList.size() > 1) {
+                            sql.append("(").append(parseWhereData(whereDataList)).append(")");
+                        } else if (whereDataList.size() == 1) {
+                            sql.append(parseWhereData(whereDataList));
+                        }
+                        continue;
+                }
+            } else if (list != null && list.size() > 0) {
+                switch (linkWhereData.getLinkType()) {
+                    case AND:
+                        sql.append(" and ").append(parseLinkWhereData(list, true));
+                        continue;
+                    case OR:
+                        hasOr = true;
+                        if (list.size() > 1) {
+                            sql.append(" or (").append(parseLinkWhereData(list, false)).append(")");
+                            continue;
+                        } else if(list.size() == 1) {
+                            sql.append(" or ").append(parseLinkWhereData(list, false));
+                            continue;
+                        }
 
-        return sql.toString();
+                }
+            }
+        }
+        if (bracket && hasOr) {
+            return sql.length() > 4 ? sql.replace(0, 4, "(").append(")").toString() : "";
+        }
+        return sql.length() > 4 ? sql.substring(4) : "";
     }
 
     public String parse(List<List<LinkWhereData>> linkWhereDataList) {
@@ -91,25 +130,10 @@ public class WhereParser {
             return "";
         }
         StringBuilder sql = new StringBuilder(256);
-        StringBuilder link = new StringBuilder(128);
-        StringBuilder where = new StringBuilder(64);
         for (List<LinkWhereData> linkWhereData : linkWhereDataList) {
-            link.replace(0, link.length(), "");
-            sql.append(" and (");
-            for (LinkWhereData linkWhereDatum : linkWhereData) {
-                if (linkWhereDatum.getWhereDataList() != null) {
-                    link.append(parseWhereData(linkWhereDatum.getWhereDataList(), where));
-                    continue;
-                }
-                if (linkWhereDatum.getLinkWhereDataList() != null) {
-
-                    continue;
-                }
-            }
-            sql.append(link).append(")");
+            sql.append(" and ").append(parseLinkWhereData(linkWhereData, false));
         }
-
-        return sql.toString();
+        return sql.length() > 4 ? sql.substring(4) : "";
     }
 
 }

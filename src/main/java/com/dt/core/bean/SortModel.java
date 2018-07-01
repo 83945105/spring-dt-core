@@ -12,9 +12,9 @@ public class SortModel<T extends Model<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
         TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
-    protected SortBuilder<TS> sortBuilder = new SortBuilder<>((TS) this);
+    protected SortBuilder<T, TL, TO, TC, TS, TG> sortBuilder = new SortBuilder<>((TS) this);
 
-    public SortBuilder<TS> getSortBuilder() {
+    public SortBuilder<T, TL, TO, TC, TS, TG> getSortBuilder() {
         return sortBuilder;
     }
 }

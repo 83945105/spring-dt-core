@@ -1,8 +1,10 @@
 package com.dt.core.bean;
 
+import com.dt.core.data.TableData;
 import com.dt.core.data.WhereData;
 import com.dt.core.exception.ComparisonException;
 import com.dt.core.norm.ComparisonOperator;
+import com.dt.core.norm.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +13,16 @@ import java.util.List;
  * 条件构建器
  * Created by 白超 on 2018/6/7.
  */
-public final class WhereBuilder<C extends WhereModel> implements ComparisonOperator<C> {
+public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
+        CL extends ColumnModel<C, CL, CO, CC, CS, CG>,
+        CO extends OnModel<C, CL, CO, CC, CS, CG>,
+        CC extends WhereModel<C, CL, CO, CC, CS, CG>,
+        CS extends SortModel<C, CL, CO, CC, CS, CG>,
+        CG extends GroupModel<C, CL, CO, CC, CS, CG>> implements ComparisonOperator<CC> {
 
-    private C handleModel;
+    private CC handleModel;
 
-    public WhereBuilder(C handleModel) {
+    public WhereBuilder(CC handleModel) {
         this.handleModel = handleModel;
     }
 
@@ -23,193 +30,205 @@ public final class WhereBuilder<C extends WhereModel> implements ComparisonOpera
 
     private List<WhereData> whereDataList = new ArrayList<>();
 
+    public List<WhereData> getWhereDataList() {
+        List<WhereData> whereDataList = this.whereDataList;
+        /**
+         * 每次取走whereDataList,重置集合
+         */
+        this.whereDataList = new ArrayList<>();
+        return whereDataList;
+    }
+
+    private TableData ownerTableData;
+
     public WhereBuilder handler(String ownerTableName, String ownerAlias, String ownerColumnName) {
-        whereData = new WhereData();
-        whereData.setOwnerTableName(ownerTableName);
-        whereData.setOwnerAlias(ownerAlias);
-        whereData.setOwnerColumnName(ownerColumnName);
+        this.whereData = new WhereData();
+        this.whereData.setOwnerTableName(ownerTableName);
+        this.whereData.setOwnerAlias(ownerAlias);
+        this.whereData.setOwnerColumnName(ownerColumnName);
+        this.whereData.setOwnerAlias(this.ownerTableData.getAlias());
         return this;
     }
 
     @Override
-    public C isNull() {
-        whereData.setWhereType(WhereType.IS_NULL);
-        whereData.setValueCount(0);
-        this.whereDataList.add(whereData);
-        return handleModel;
+    public CC isNull() {
+        this.whereData.setWhereType(WhereType.IS_NULL);
+        this.whereData.setValueCount(0);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C isNotNull() {
-        whereData.setWhereType(WhereType.IS_NOT_NULL);
-        whereData.setValueCount(0);
-        this.whereDataList.add(whereData);
-        return handleModel;
+    public CC isNotNull() {
+        this.whereData.setWhereType(WhereType.IS_NOT_NULL);
+        this.whereData.setValueCount(0);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C equalToValue(Object value, ComparisonRule comparisonRule) {
+    public CC equalToValue(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] equalTo, the value can not be null.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] equalTo, the value can not be null.");
             }
         }
-        whereData.setWhereType(WhereType.EQUAL);
-        whereData.setValueCount(1);
-        whereData.setTargetValue(value);
-        whereDataList.add(whereData);
-        return handleModel;
+        this.whereData.setWhereType(WhereType.EQUAL);
+        this.whereData.setValueCount(1);
+        this.whereData.setTargetValue(value);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C notEqualToValue(Object value, ComparisonRule comparisonRule) {
+    public CC notEqualToValue(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] notEqualTo, the value can not be null.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] notEqualTo, the value can not be null.");
             }
         }
-        whereData.setWhereType(WhereType.NOT_EQUAL);
-        whereData.setValueCount(1);
-        whereData.setTargetValue(value);
-        whereDataList.add(whereData);
-        return handleModel;
+        this.whereData.setWhereType(WhereType.NOT_EQUAL);
+        this.whereData.setValueCount(1);
+        this.whereData.setTargetValue(value);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C greaterThanValue(Object value, ComparisonRule comparisonRule) {
+    public CC greaterThanValue(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] greaterThan, the value can not be null.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] greaterThan, the value can not be null.");
             }
         }
-        whereData.setWhereType(WhereType.GREATER);
-        whereData.setValueCount(1);
-        whereData.setTargetValue(value);
-        whereDataList.add(whereData);
-        return handleModel;
+        this.whereData.setWhereType(WhereType.GREATER);
+        this.whereData.setValueCount(1);
+        this.whereData.setTargetValue(value);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C greaterThanAndEqualToValue(Object value, ComparisonRule comparisonRule) {
+    public CC greaterThanAndEqualToValue(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] greaterThanAndEqualTo, the value can not be null.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] greaterThanAndEqualTo, the value can not be null.");
             }
         }
-        whereData.setWhereType(WhereType.GREATER_EQUAL);
-        whereData.setValueCount(1);
-        whereData.setTargetValue(value);
-        whereDataList.add(whereData);
-        return handleModel;
+        this.whereData.setWhereType(WhereType.GREATER_EQUAL);
+        this.whereData.setValueCount(1);
+        this.whereData.setTargetValue(value);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C lessThanValue(Object value, ComparisonRule comparisonRule) {
+    public CC lessThanValue(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] lessThan, the value can not be null.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] lessThan, the value can not be null.");
             }
         }
-        whereData.setWhereType(WhereType.LESS);
-        whereData.setValueCount(1);
-        whereData.setTargetValue(value);
-        whereDataList.add(whereData);
-        return handleModel;
+        this.whereData.setWhereType(WhereType.LESS);
+        this.whereData.setValueCount(1);
+        this.whereData.setTargetValue(value);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C lessThanAndEqualToValue(Object value, ComparisonRule comparisonRule) {
+    public CC lessThanAndEqualToValue(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] lessThanAndEqualTo, the value can not be null.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] lessThanAndEqualTo, the value can not be null.");
             }
         }
-        whereData.setWhereType(WhereType.LESS_EQUAL);
-        whereData.setValueCount(1);
-        whereData.setTargetValue(value);
-        whereDataList.add(whereData);
-        return handleModel;
+        this.whereData.setWhereType(WhereType.LESS_EQUAL);
+        this.whereData.setValueCount(1);
+        this.whereData.setTargetValue(value);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C betweenValue(Object value, Object secondValue, ComparisonRule comparisonRule) {
+    public CC betweenValue(Object value, Object secondValue, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] between, the value can not be null.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] between, the value can not be null.");
             }
         }
         if (secondValue == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] between, the secondValue can not be null.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] between, the secondValue can not be null.");
             }
         }
-        whereData.setWhereType(WhereType.LESS_EQUAL);
-        whereData.setValueCount(2);
-        whereData.setTargetValue(value);
-        whereData.setTargetSecondValue(secondValue);
-        whereDataList.add(whereData);
-        return handleModel;
+        this.whereData.setWhereType(WhereType.BETWEEN);
+        this.whereData.setValueCount(2);
+        this.whereData.setTargetValue(value);
+        this.whereData.setTargetSecondValue(secondValue);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C likeValue(Object value, ComparisonRule comparisonRule) {
+    public CC likeValue(Object value, ComparisonRule comparisonRule) {
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] like, the value can not be null.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] like, the value can not be null.");
             }
         }
-        whereData.setWhereType(WhereType.LIKE);
-        whereData.setValueCount(1);
-        whereData.setTargetValue(value);
-        whereDataList.add(whereData);
-        return handleModel;
+        this.whereData.setWhereType(WhereType.LIKE);
+        this.whereData.setValueCount(1);
+        this.whereData.setTargetValue(value);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
     @Override
-    public C inValue(Object[] values, ComparisonRule comparisonRule) {
+    public CC inValue(Object[] values, ComparisonRule comparisonRule) {
         if (values == null || values.length == 0) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("table alias [" + whereData.getOwnerAlias() + "] column [" + whereData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
             }
         }
-        whereData.setWhereType(WhereType.IN);
-        whereData.setValueCount(values.length);
-        whereData.setTargetValue(values);
-        whereDataList.add(whereData);
-        return handleModel;
+        this.whereData.setWhereType(WhereType.IN);
+        this.whereData.setValueCount(values.length);
+        this.whereData.setTargetValue(values);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
     }
 
-    public List<WhereData> getWhereDataList() {
-        return whereDataList;
+    public void setOwnerTableData(TableData ownerTableData) {
+        this.ownerTableData = ownerTableData;
     }
 }
