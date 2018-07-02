@@ -46,7 +46,7 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
         this.whereData.setOwnerTableName(ownerTableName);
         this.whereData.setOwnerAlias(ownerAlias);
         this.whereData.setOwnerColumnName(ownerColumnName);
-        this.whereData.setOwnerAlias(this.ownerTableData.getAlias());
+        this.whereData.setOwnerAlias(this.ownerTableData.getTableAlias());
         return this;
     }
 

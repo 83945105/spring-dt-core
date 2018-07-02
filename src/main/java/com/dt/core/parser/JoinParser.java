@@ -43,7 +43,7 @@ public class JoinParser {
                     sql.append(", right join ");
                     break;
             }
-            sql.append(joinTableData.getTableName()).append(" ").append(joinTableData.getAlias());
+            sql.append(joinTableData.getTableName()).append(" ").append(joinTableData.getTableAlias());
             Map<LinkType, List<OnData>> onDataMap = joinTableData.getLinkOnDataMap();
             if (onDataMap != null && onDataMap.size() > 0) {
                 onSql.replace(0, onSql.length(), "");
@@ -60,7 +60,7 @@ public class JoinParser {
                     }
                     for (OnData onData : onEntry.getValue()) {
                         on.append(" and ")
-                                .append(joinTableData.getAlias())
+                                .append(joinTableData.getTableAlias())
                                 .append(".")
                                 .append(onData.getOwnerColumnName());
                         switch (onData.getOnType()) {

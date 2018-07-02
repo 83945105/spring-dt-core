@@ -1,4 +1,4 @@
-package com.dt.core.model;
+package com.dt.core.engine;
 
 import com.dt.core.bean.*;
 import com.dt.core.data.JoinTableData;
@@ -15,20 +15,24 @@ import java.util.List;
 /**
  * Created by 白超 on 2018/6/18.
  */
-public abstract class WhereTool<M extends Model<M, ML, MO, MC, MS, MG>,
+public abstract class WhereEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
-        MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends GroupTool<M, ML, MO, MC, MS, MG> {
+        MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends GroupEngine<M, ML, MO, MC, MS, MG> {
 
     private WhereParser whereParser = WhereParser.getInstance();
 
-    public WhereTool(Data<M, ML, MO, MC, MS, MG> data) {
-        super(data);
+    public WhereEngine(Class<M> mainClass) {
+        super(mainClass);
     }
 
-    public WhereTool<M, ML, MO, MC, MS, MG> where(ConditionA<M, ML, MO, MC, MS, MG> condition) {
+    public WhereEngine(Class<M> mainClass, String tableName) {
+        super(mainClass, tableName);
+    }
+
+    public WhereEngine<M, ML, MO, MC, MS, MG> where(ConditionA<M, ML, MO, MC, MS, MG> condition) {
         MainTableData mainTableData = this.data.getMainTableData();
         MC mc = (MC) mainTableData.getTable().getWhere();
         mc.getWhereBuilder().setOwnerTableData(mainTableData);
@@ -44,7 +48,7 @@ public abstract class WhereTool<M extends Model<M, ML, MO, MC, MS, MG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TL, TO, TC, TS, TG>> WhereTool<M, ML, MO, MC, MS, MG> where(Class<T> conditionClass, String alias, ConditionB<M, ML, MO, MC, MS, MG, T, TL, TO, TC, TS, TG> condition) {
+            TG extends GroupModel<T, TL, TO, TC, TS, TG>> WhereEngine<M, ML, MO, MC, MS, MG> where(Class<T> conditionClass, String alias, ConditionB<M, ML, MO, MC, MS, MG, T, TL, TO, TC, TS, TG> condition) {
         MainTableData mainTableData = this.data.getMainTableData();
         JoinTableData joinTableData = this.data.getJoinTableData(alias, conditionClass);
         MC mc = (MC) mainTableData.getTable().getWhere();
@@ -63,7 +67,7 @@ public abstract class WhereTool<M extends Model<M, ML, MO, MC, MS, MG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TL, TO, TC, TS, TG>> WhereTool<M, ML, MO, MC, MS, MG> where(Class<T> conditionClass, ConditionB<M, ML, MO, MC, MS, MG, T, TL, TO, TC, TS, TG> condition) {
+            TG extends GroupModel<T, TL, TO, TC, TS, TG>> WhereEngine<M, ML, MO, MC, MS, MG> where(Class<T> conditionClass, ConditionB<M, ML, MO, MC, MS, MG, T, TL, TO, TC, TS, TG> condition) {
         return where(conditionClass, null, condition);
     }
 

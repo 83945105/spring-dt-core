@@ -11,14 +11,14 @@ import java.util.Set;
  * 查询字段解析器
  * Created by 白超 on 2018/6/28.
  */
-public class SelectColumnParser {
+public class ColumnParser {
 
-    private SelectColumnParser() {
+    private ColumnParser() {
     }
 
-    private static final SelectColumnParser COLUMN_PARSER = new SelectColumnParser();
+    private static final ColumnParser COLUMN_PARSER = new ColumnParser();
 
-    public static SelectColumnParser getInstance() {
+    public static ColumnParser getInstance() {
         return COLUMN_PARSER;
     }
 
@@ -32,25 +32,25 @@ public class SelectColumnParser {
         for (TableData tableData : columnDataSet) {
             columnNames = tableData.getSelectColumns();
             if (columnNames.size() == 0) {
-                sql.append(", ")
-                        .append(tableData.getAlias())
+                sql.append(" , ")
+                        .append(tableData.getTableAlias())
                         .append(".")
-                        .append("* ");
+                        .append("*");
                 continue;
             }
             for (Map.Entry<String, String> entry : columnNames.entrySet()) {
                 if (cache.get(entry.getValue()) != null) {
-                    throw new TableDataException("table alias [" + tableData.getAlias() + "] column alias [" + entry.getValue() + "] is already be used, please set another alias.");
+                    throw new TableDataException("table alias [" + tableData.getTableAlias() + "] column alias [" + entry.getValue() + "] is already be used, please set another alias.");
                 }
-                sql.append(", ")
-                        .append(tableData.getAlias())
+                sql.append(" , ")
+                        .append(tableData.getTableAlias())
                         .append(".")
                         .append(entry.getKey())
                         .append(" ").append(entry.getValue());
                 cache.put(entry.getValue(), true);
             }
         }
-        return sql.substring(2);
+        return sql.substring(3);
     }
 
 }

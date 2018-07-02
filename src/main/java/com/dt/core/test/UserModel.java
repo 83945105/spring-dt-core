@@ -6,7 +6,9 @@ import com.dt.core.norm.Model;
 public final class UserModel implements Model<UserModel, UserModel.Column, UserModel.On, UserModel.Where, UserModel.Sort, UserModel.Group> {
 
     public static final String tableName = "user";
-    public static final String alias = "User";
+    public static final String tableAlias = "User";
+    public static final String primaryKeyName = "id";
+    public static final String primaryKeyAlias = "id";
     public static final String id = "id";
     public static final String id_alias = "id";
     public static final String userId = "user_id";
@@ -23,8 +25,18 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
     }
 
     @Override
-    public String getAlias() {
-        return alias;
+    public String getTableAlias() {
+        return tableAlias;
+    }
+
+    @Override
+    public String getPrimaryKeyName() {
+        return primaryKeyName;
+    }
+
+    @Override
+    public String getPrimaryKeyAlias() {
+        return primaryKeyAlias;
     }
 
     @Override
@@ -59,7 +71,7 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
         }
 
         public OnBuilder<UserModel, Column, On, Where, Sort, Group> userId() {
-            return this.onBuilder.handler(UserModel.tableName, UserModel.alias, UserModel.userId);
+            return this.onBuilder.handler(UserModel.tableName, UserModel.tableAlias, UserModel.userId);
         }
     }
 
@@ -74,7 +86,7 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
         }
 
         public WhereBuilder<UserModel, Column, On, Where, Sort, Group> userId() {
-            return this.whereBuilder.handler(UserModel.tableName, UserModel.alias, UserModel.userId);
+            return this.whereBuilder.handler(UserModel.tableName, UserModel.tableAlias, UserModel.userId);
         }
 
     }

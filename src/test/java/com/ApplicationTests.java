@@ -1,9 +1,11 @@
 package com;
 
-import com.dt.core.MySqlTool;
+import com.dt.core.engine.ColumnEngine;
+import com.dt.core.engine.MySqlEngine;
 import com.dt.core.bean.ComparisonRule;
 import com.dt.core.bean.JoinType;
-import com.dt.core.norm.SqlTool;
+import com.dt.core.engine.SelectEngine;
+import com.dt.core.engine.SqlEngine;
 import com.dt.core.test.AdminModel;
 import com.dt.core.test.StuModel;
 import com.dt.core.test.UserModel;
@@ -11,7 +13,27 @@ import com.dt.core.test.UserModel;
 public class ApplicationTests {
 
     public static void main(String[] args) throws Exception {
+        ApplicationTests.method2();
+    }
 
+    public static void method2() {
+        ColumnEngine engine = MySqlEngine.column(UserModel.class)
+                .column(table -> table.userId());
+
+        System.out.println(engine.getColumnSql());
+
+        SelectEngine selectEngine = new SelectEngine();
+
+        for (int i = 0; i < 1; i++) {
+            Long startTime = System.nanoTime();
+
+            System.out.println(selectEngine.selectByPrimaryKey(engine));
+            Long tse = System.nanoTime() - startTime;
+            System.out.println("总计:" + tse + ":" + tse / 1000000);
+        }
+    }
+
+    public static void method1() {
         String null_param = null;
 
         Long tst = System.nanoTime();
@@ -19,7 +41,7 @@ public class ApplicationTests {
         for (int i = 0; i < 1; i++) {
             Long startTime = System.nanoTime();
 
-            SqlTool dataTool = MySqlTool.SELECT(UserModel.class)
+            SqlEngine engine = MySqlEngine.main(UserModel.class)
 
                     .innerJoin(StuModel.class, "stu2", (on, joinTable, mainTable) -> on
                             .and(joinTable.stuId().equalTo(mainTable.userId())))
@@ -80,13 +102,11 @@ public class ApplicationTests {
 
                     .limit(1);
 
-//            System.out.println(dataTool);
-
-            System.out.println(dataTool.getSelectColumnSql());
-            System.out.println(dataTool.getJoinSql());
-            System.out.println(dataTool.getWhereSql());
-            System.out.println(dataTool.getGroupSql());
-            System.out.println(dataTool.getSortSql());
+            System.out.println(engine.getColumnSql());
+            System.out.println(engine.getJoinSql());
+            System.out.println(engine.getWhereSql());
+            System.out.println(engine.getGroupSql());
+            System.out.println(engine.getSortSql());
 
             Long endTime = System.nanoTime() - startTime;
 

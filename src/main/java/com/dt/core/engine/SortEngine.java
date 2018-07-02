@@ -1,4 +1,4 @@
-package com.dt.core.model;
+package com.dt.core.engine;
 
 import com.dt.core.bean.*;
 import com.dt.core.data.JoinTableData;
@@ -14,20 +14,24 @@ import java.util.List;
 /**
  * Created by 白超 on 2018/6/18.
  */
-public abstract class SortTool<M extends Model<M, ML, MO, MC, MS, MG>,
+public abstract class SortEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
-        MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends LimitTool<M, ML, MO, MC, MS, MG> {
+        MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends LimitEngine<M, ML, MO, MC, MS, MG> {
 
     private SortParser sortParser = SortParser.getInstance();
 
-    public SortTool(Data<M, ML, MO, MC, MS, MG> data) {
-        super(data);
+    public SortEngine(Class<M> mainClass) {
+        super(mainClass);
     }
 
-    public SortTool<M, ML, MO, MC, MS, MG> sort(Sort<M, ML, MO, MC, MS, MG> sort) {
+    public SortEngine(Class<M> mainClass, String tableName) {
+        super(mainClass, tableName);
+    }
+
+    public SortEngine<M, ML, MO, MC, MS, MG> sort(Sort<M, ML, MO, MC, MS, MG> sort) {
         MainTableData mainTableData = this.data.getMainTableData();
         MS ms = (MS) mainTableData.getTable().getSort();
         ms.getSortBuilder().setOwnerTableData(mainTableData);
@@ -42,7 +46,7 @@ public abstract class SortTool<M extends Model<M, ML, MO, MC, MS, MG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TL, TO, TC, TS, TG>> SortTool<M, ML, MO, MC, MS, MG> sort(Class<T> sortClass, String alias, Sort<T, TL, TO, TC, TS, TG> sort) {
+            TG extends GroupModel<T, TL, TO, TC, TS, TG>> SortEngine<M, ML, MO, MC, MS, MG> sort(Class<T> sortClass, String alias, Sort<T, TL, TO, TC, TS, TG> sort) {
         JoinTableData joinTableData = this.data.getJoinTableData(alias, sortClass);
         TS ts = (TS) joinTableData.getTable().getSort();
         ts.getSortBuilder().setOwnerTableData(joinTableData);
@@ -57,7 +61,7 @@ public abstract class SortTool<M extends Model<M, ML, MO, MC, MS, MG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
-            TG extends GroupModel<T, TL, TO, TC, TS, TG>> SortTool<M, ML, MO, MC, MS, MG> sort(Class<T> sortClass, Sort<T, TL, TO, TC, TS, TG> sort) {
+            TG extends GroupModel<T, TL, TO, TC, TS, TG>> SortEngine<M, ML, MO, MC, MS, MG> sort(Class<T> sortClass, Sort<T, TL, TO, TC, TS, TG> sort) {
         return sort(sortClass, null, sort);
     }
 

@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Created by 白超 on 2018/6/18.
  */
-public final class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
+public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
@@ -49,7 +49,7 @@ public final class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
             JG extends GroupModel<J, JL, JO, JC, JS, JG>> JoinTableData<J, JL, JO, JC, JS, JG> getJoinTableData(String alias, Class<J> joinClass) {
         if (alias == null || alias.trim() == "") {
             try {
-                alias = joinClass.newInstance().getAlias();
+                alias = joinClass.newInstance().getTableAlias();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -67,11 +67,11 @@ public final class ToolData<M extends Model<M, ML, MO, MC, MS, MG>,
 
     @Override
     public void setJoinTableData(JoinTableData joinTableData) {
-        if (this.alias.get(joinTableData.getAlias()) != null) {
-            throw new TableDataException("alias table [" + joinTableData.getAlias() + "] is already join, you can not join it two times, please change another alias.");
+        if (this.alias.get(joinTableData.getTableAlias()) != null) {
+            throw new TableDataException("alias table [" + joinTableData.getTableAlias() + "] is already join, you can not join it two times, please change another alias.");
         }
-        this.joinTableDataAliasMap.put(joinTableData.getAlias(), joinTableData);
-        this.alias.put(joinTableData.getAlias(), true);
+        this.joinTableDataAliasMap.put(joinTableData.getTableAlias(), joinTableData);
+        this.alias.put(joinTableData.getTableAlias(), true);
     }
 
     @Override

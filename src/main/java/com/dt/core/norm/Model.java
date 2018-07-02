@@ -14,7 +14,11 @@ public interface Model<T extends Model<T, TL, TO, TC, TS, TG>,
 
     String getTableName();
 
-    String getAlias();
+    String getTableAlias();
+
+    String getPrimaryKeyName();
+
+    String getPrimaryKeyAlias();
 
     ColumnModel<T, TL, TO, TC, TS, TG> getColumn();
 

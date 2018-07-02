@@ -20,14 +20,11 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
 
     private T table;
 
-    private Class<T> tableClass;
-
     private JoinType joinType = JoinType.INNER;
 
     private Map<LinkType, List<OnData>> linkOnDataMap = new LinkedHashMap<>();
 
     public JoinTableData(Class<T> tableClass) {
-        this.tableClass = tableClass;
         try {
             this.table = tableClass.newInstance();
         } catch (InstantiationException e) {
@@ -36,7 +33,9 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
             e.printStackTrace();
         }
         this.tableName = this.table.getTableName();
-        this.alias = this.table.getAlias();
+        this.tableAlias = this.table.getTableAlias();
+        this.primaryKeyName = this.table.getPrimaryKeyName();
+        this.primaryKeyAlias = this.table.getPrimaryKeyAlias();
     }
 
     public T getTable() {

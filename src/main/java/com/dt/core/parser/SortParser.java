@@ -30,7 +30,7 @@ public class SortParser {
             for (SortData data : sortData) {
                 tableData = data.getTableData();
                 sql.append(", ")
-                        .append(tableData.getAlias())
+                        .append(tableData.getTableAlias())
                         .append(".")
                         .append(data.getColumnName());
                 switch (data.getSortType()) {

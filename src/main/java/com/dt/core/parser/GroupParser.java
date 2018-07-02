@@ -25,7 +25,7 @@ public class GroupParser {
         StringBuilder sql = new StringBuilder(64);
         String alias;
         for (GroupData groupData : groupDataList) {
-            alias = groupData.getTableData().getAlias();
+            alias = groupData.getTableData().getTableAlias();
             for (String columnName : groupData.getColumnNames()) {
                 sql.append(", ").append(alias).append(".").append(columnName);
             }

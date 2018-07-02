@@ -312,7 +312,7 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
         onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getAlias());
+        onData.setTargetAlias(joinTableData.getTableAlias());
         onData.setTargetColumnName(targetOnData.getOwnerColumnName());
         onDataList.add(onData);
         return handleModel;
@@ -331,7 +331,7 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
         onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getAlias());
+        onData.setTargetAlias(joinTableData.getTableAlias());
         onData.setTargetColumnName(targetOnData.getOwnerColumnName());
         onDataList.add(onData);
         return handleModel;
@@ -350,7 +350,7 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
         onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getAlias());
+        onData.setTargetAlias(joinTableData.getTableAlias());
         onData.setTargetColumnName(targetOnData.getOwnerColumnName());
         onDataList.add(onData);
         return handleModel;
@@ -369,7 +369,7 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
         onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getAlias());
+        onData.setTargetAlias(joinTableData.getTableAlias());
         onData.setTargetColumnName(targetOnData.getOwnerColumnName());
         onDataList.add(onData);
         return handleModel;
@@ -388,7 +388,7 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
         onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getAlias());
+        onData.setTargetAlias(joinTableData.getTableAlias());
         onData.setTargetColumnName(targetOnData.getOwnerColumnName());
         onDataList.add(onData);
         return handleModel;
@@ -407,7 +407,7 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
         onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getAlias());
+        onData.setTargetAlias(joinTableData.getTableAlias());
         onData.setTargetColumnName(targetOnData.getOwnerColumnName());
         onDataList.add(onData);
         return handleModel;

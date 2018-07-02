@@ -63,6 +63,14 @@ public final class OnData {
         this.onType = onType;
     }
 
+    public OnValueType getOnValueType() {
+        return onValueType;
+    }
+
+    public void setOnValueType(OnValueType onValueType) {
+        this.onValueType = onValueType;
+    }
+
     public String getTargetTableName() {
         return targetTableName;
     }
@@ -109,13 +117,5 @@ public final class OnData {
 
     public void setValueCount(int valueCount) {
         this.valueCount = valueCount;
-    }
-
-    public OnValueType getOnValueType() {
-        return onValueType;
-    }
-
-    public void setOnValueType(OnValueType onValueType) {
-        this.onValueType = onValueType;
     }
 }

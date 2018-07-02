@@ -6,7 +6,9 @@ import com.dt.core.norm.Model;
 public final class AdminModel implements Model<AdminModel, AdminModel.Column, AdminModel.On, AdminModel.Where, AdminModel.Sort, AdminModel.Group> {
 
     public static final String tableName = "admin";
-    public static final String alias = "Admin";
+    public static final String tableAlias = "Admin";
+    public static final String primaryKeyName = "id";
+    public static final String primaryKeyAlias = "id";
     public static final String id = "id";
     public static final String id_alias = "id";
     public static final String adminId = "admin_id";
@@ -23,8 +25,18 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
     }
 
     @Override
-    public String getAlias() {
-        return alias;
+    public String getTableAlias() {
+        return tableAlias;
+    }
+
+    @Override
+    public String getPrimaryKeyName() {
+        return primaryKeyName;
+    }
+
+    @Override
+    public String getPrimaryKeyAlias() {
+        return primaryKeyAlias;
     }
 
     @Override
@@ -35,6 +47,11 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
     public static final class Column extends ColumnModel<AdminModel, Column, On, Where, Sort, Group> {
 
         private Column() {
+        }
+
+        public Column primaryKey() {
+            this.columns.put(AdminModel.primaryKeyName, AdminModel.primaryKeyAlias);
+            return this;
         }
 
         public Column adminId() {
@@ -59,7 +76,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         }
 
         public OnBuilder<AdminModel, Column, On, Where, Sort, Group> adminId() {
-            return this.onBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
+            return this.onBuilder.handler(AdminModel.tableName, AdminModel.tableAlias, AdminModel.adminId);
         }
     }
 
@@ -74,7 +91,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
         }
 
         public WhereBuilder<AdminModel, Column, On, Where, Sort, Group> adminId() {
-            return this.whereBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
+            return this.whereBuilder.handler(AdminModel.tableName, AdminModel.tableAlias, AdminModel.adminId);
         }
 
     }

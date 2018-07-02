@@ -6,7 +6,9 @@ import com.dt.core.norm.Model;
 public final class StuModel implements Model<StuModel, StuModel.Column, StuModel.On, StuModel.Where, StuModel.Sort, StuModel.Group> {
 
     public static final String tableName = "stu";
-    public static final String alias = "Stu";
+    public static final String tableAlias = "Stu";
+    public static final String primaryKeyName = "id";
+    public static final String primaryKeyAlias = "id";
     public static final String id = "id";
     public static final String id_alias = "id";
     public static final String stuId = "stu_id";
@@ -23,8 +25,18 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
     }
 
     @Override
-    public String getAlias() {
-        return alias;
+    public String getTableAlias() {
+        return tableAlias;
+    }
+
+    @Override
+    public String getPrimaryKeyName() {
+        return primaryKeyName;
+    }
+
+    @Override
+    public String getPrimaryKeyAlias() {
+        return primaryKeyAlias;
     }
 
     @Override
@@ -59,7 +71,7 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         }
 
         public OnBuilder<StuModel, Column, On, Where, Sort, Group> stuId() {
-            return this.onBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
+            return this.onBuilder.handler(StuModel.tableName, StuModel.tableAlias, StuModel.stuId);
         }
     }
 
@@ -74,7 +86,7 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
         }
 
         public WhereBuilder<StuModel, Column, On, Where, Sort, Group> stuId() {
-            return this.whereBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
+            return this.whereBuilder.handler(StuModel.tableName, StuModel.tableAlias, StuModel.stuId);
         }
 
     }

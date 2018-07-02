@@ -9,7 +9,11 @@ public abstract class TableData {
 
     protected String tableName;
 
-    protected String alias;
+    protected String tableAlias;
+
+    protected String primaryKeyName;
+
+    protected String primaryKeyAlias;
 
     protected Map<String, String> selectColumns = new LinkedHashMap<>();
 
@@ -30,15 +34,41 @@ public abstract class TableData {
         this.tableName = tableName;
     }
 
-    public String getAlias() {
-        return alias;
+    public String getTableAlias() {
+        return tableAlias;
     }
 
-    public void setAlias(String alias) {
-        if (alias == null || "".equals(alias.trim())) {
+    public void setTableAlias(String tableAlias) {
+        if (tableAlias == null || "".equals(tableAlias.trim())) {
             return;
         }
-        this.alias = alias;
+        this.tableAlias = tableAlias;
+    }
+
+    public String getPrimaryKeyName() {
+        return primaryKeyName;
+    }
+
+    public void setPrimaryKeyName(String primaryKeyName) {
+        if (primaryKeyName == null || "".equals(primaryKeyName)) {
+            return;
+        }
+        this.primaryKeyName = primaryKeyName;
+    }
+
+    public String getPrimaryKeyAlias() {
+        return primaryKeyAlias;
+    }
+
+    public void setPrimaryKeyAlias(String primaryKeyAlias) {
+        if (primaryKeyAlias == null || "".equals(primaryKeyAlias)) {
+            return;
+        }
+        this.primaryKeyAlias = primaryKeyAlias;
+    }
+
+    public List<LinkWhereData> getLinkWhereDataList() {
+        return linkWhereDataList;
     }
 
     public void addLinkWhereDataList(List<LinkWhereData> linkWhereDataList) {
@@ -92,11 +122,11 @@ public abstract class TableData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TableData tableData = (TableData) o;
-        return Objects.equals(alias, tableData.alias);
+        return Objects.equals(tableAlias, tableData.tableAlias);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(alias);
+        return Objects.hash(tableAlias);
     }
 }
