@@ -3,6 +3,7 @@ package com.dt.core.parser;
 import com.dt.core.bean.LinkType;
 import com.dt.core.data.JoinTableData;
 import com.dt.core.data.OnData;
+import com.dt.core.exception.DtException;
 
 import java.util.List;
 import java.util.Map;
@@ -64,10 +65,10 @@ public class JoinParser {
                                 .append(onData.getOwnerColumnName());
                         switch (onData.getOnType()) {
                             case IS_NULL:
-                                on.append(" is null ");
+                                on.append(" is null");
                                 continue;
                             case IS_NOT_NULL:
-                                on.append(" is not null ");
+                                on.append(" is not null");
                                 continue;
                             case EQUAL:
                                 on.append(" = ");
@@ -88,10 +89,10 @@ public class JoinParser {
                                 on.append(" <= ");
                                 break;
                             case BETWEEN:
-                                on.append(" between ? and ? ");
+                                on.append(" between ? and ?");
                                 continue;
                             case LIKE:
-                                on.append(" like ? ");
+                                on.append(" like ?");
                                 continue;
                             case IN:
                                 int count = onData.getValueCount();
@@ -105,6 +106,8 @@ public class JoinParser {
                                 }
                                 on.append(")");
                                 continue;
+                            default:
+                                throw new DtException("the WhereType is wrong.");
                         }
                         switch (onData.getOnValueType()) {
                             case VALUE:
@@ -118,12 +121,12 @@ public class JoinParser {
                         }
 
                     }
-                    onSql.append(on.substring(4)).append(" ");
+                    onSql.append(on.substring(5));
                 }
-                sql.append(onSql.substring(4));
+                sql.append(onSql.substring(5));
             }
         }
-        return sql.substring(1);
+        return sql.substring(2);
     }
 
 }

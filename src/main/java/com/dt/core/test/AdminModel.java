@@ -104,7 +104,7 @@ public final class AdminModel implements Model<AdminModel, AdminModel.Column, Ad
     public static final class Sort extends SortModel<AdminModel, Column, On, Where, Sort, Group> {
 
         public SortBuilder<AdminModel, Column, On, Where, Sort, Group> adminId() {
-            return this.sortBuilder.handler(AdminModel.tableName, AdminModel.alias, AdminModel.adminId);
+            return this.sortBuilder.handler(AdminModel.adminId);
         }
 
     }

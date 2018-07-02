@@ -24,7 +24,7 @@ public class SelectColumnParser {
 
     public String parse(Set<TableData> columnDataSet) {
         if (columnDataSet == null || columnDataSet.size() == 0) {
-            return " * ";
+            return "*";
         }
         StringBuilder sql = new StringBuilder(32);
         Map<String, String> columnNames;
@@ -50,7 +50,7 @@ public class SelectColumnParser {
                 cache.put(entry.getValue(), true);
             }
         }
-        return sql.substring(1);
+        return sql.substring(2);
     }
 
 }

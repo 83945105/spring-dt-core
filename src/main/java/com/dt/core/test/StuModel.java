@@ -104,7 +104,7 @@ public final class StuModel implements Model<StuModel, StuModel.Column, StuModel
     public static final class Sort extends SortModel<StuModel, Column, On, Where, Sort, Group> {
 
         public SortBuilder<StuModel, Column, On, Where, Sort, Group> stuId() {
-            return this.sortBuilder.handler(StuModel.tableName, StuModel.alias, StuModel.stuId);
+            return this.sortBuilder.handler(StuModel.stuId);
         }
 
     }

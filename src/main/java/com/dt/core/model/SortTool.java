@@ -7,6 +7,7 @@ import com.dt.core.data.SortData;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 import com.dt.core.norm.Sort;
+import com.dt.core.parser.SortParser;
 
 import java.util.List;
 
@@ -20,13 +21,17 @@ public abstract class SortTool<M extends Model<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends LimitTool<M, ML, MO, MC, MS, MG> {
 
+    private SortParser sortParser = SortParser.getInstance();
+
     public SortTool(Data<M, ML, MO, MC, MS, MG> data) {
         super(data);
     }
 
     public SortTool<M, ML, MO, MC, MS, MG> sort(Sort<M, ML, MO, MC, MS, MG> sort) {
         MainTableData mainTableData = this.data.getMainTableData();
-        List<SortData> sortDataList = sort.apply((MS) mainTableData.getTable().getSort()).getSortBuilder().getSortDataList();
+        MS ms = (MS) mainTableData.getTable().getSort();
+        ms.getSortBuilder().setOwnerTableData(mainTableData);
+        List<SortData> sortDataList = sort.apply(ms).getSortBuilder().getSortDataList();
         mainTableData.addSortDataList(sortDataList);
         this.data.addSortDataList(sortDataList);
         return this;
@@ -39,7 +44,9 @@ public abstract class SortTool<M extends Model<M, ML, MO, MC, MS, MG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> SortTool<M, ML, MO, MC, MS, MG> sort(Class<T> sortClass, String alias, Sort<T, TL, TO, TC, TS, TG> sort) {
         JoinTableData joinTableData = this.data.getJoinTableData(alias, sortClass);
-        List<SortData> sortDataList = sort.apply((TS) joinTableData.getTable().getSort()).getSortBuilder().getSortDataList();
+        TS ts = (TS) joinTableData.getTable().getSort();
+        ts.getSortBuilder().setOwnerTableData(joinTableData);
+        List<SortData> sortDataList = sort.apply(ts).getSortBuilder().getSortDataList();
         joinTableData.addSortDataList(sortDataList);
         this.data.addSortDataList(sortDataList);
         return this;
@@ -52,6 +59,11 @@ public abstract class SortTool<M extends Model<M, ML, MO, MC, MS, MG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> SortTool<M, ML, MO, MC, MS, MG> sort(Class<T> sortClass, Sort<T, TL, TO, TC, TS, TG> sort) {
         return sort(sortClass, null, sort);
+    }
+
+    @Override
+    public String getSortSql() {
+        return this.sortParser.parse(this.getData().getSortDataList());
     }
 
 }

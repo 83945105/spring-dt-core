@@ -104,7 +104,7 @@ public final class UserModel implements Model<UserModel, UserModel.Column, UserM
     public static final class Sort extends SortModel<UserModel, Column, On, Where, Sort, Group> {
 
         public SortBuilder<UserModel, Column, On, Where, Sort, Group> userId() {
-            return this.sortBuilder.handler(UserModel.tableName, UserModel.alias, UserModel.userId);
+            return this.sortBuilder.handler(UserModel.userId);
         }
 
     }

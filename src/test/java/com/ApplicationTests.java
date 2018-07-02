@@ -60,7 +60,7 @@ public class ApplicationTests {
                             .and(AdminModel.class, (c1, t1, mt1) -> c1.and(t1.adminId().equalTo("")).and(mt1.userId().equalTo("")))
                             .and(AdminModel.class, (c1, t1, mt1) -> c1.and((c2, mt2) -> c2.and(mt2.userId().equalTo(""))))
                             .and((c1, mt1) -> c1.and(mt1.userId().equalTo(""))
-                                    .or(AdminModel.class, "Admin", (c2, t2, mt2) -> c2.and(t2.adminId().equalTo("666")))
+                                    .or(AdminModel.class, "Admin", (c2, t2, mt2) -> c2.and(t2.adminId().equalTo("666").adminId().isNull()))
                                     .or(StuModel.class, "stu2", (c2, t2, mt2) -> c2.and(t2))
                             ))
 
@@ -68,7 +68,7 @@ public class ApplicationTests {
 
                     .group(AdminModel.class, table -> table.adminId())
 
-                    .group(AdminModel.class, "Admin", table -> table.adminId())
+                    .group(StuModel.class, "stu2", table -> table.stuId())
 
                     .sort(table -> table.userId().asc().userId().desc())
 
@@ -76,13 +76,17 @@ public class ApplicationTests {
 
                     .sort(AdminModel.class, "Admin", table -> table.adminId().desc())
 
+                    .sort(StuModel.class, "stu2", table -> table.stuId().desc())
+
                     .limit(1);
 
 //            System.out.println(dataTool);
 
-//            System.out.println(dataTool.getSelectColumnSql());
-//            System.out.println(dataTool.getJoinSql());
+            System.out.println(dataTool.getSelectColumnSql());
+            System.out.println(dataTool.getJoinSql());
             System.out.println(dataTool.getWhereSql());
+            System.out.println(dataTool.getGroupSql());
+            System.out.println(dataTool.getSortSql());
 
             Long endTime = System.nanoTime() - startTime;
 

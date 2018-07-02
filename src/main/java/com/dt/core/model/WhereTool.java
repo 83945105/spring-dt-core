@@ -32,7 +32,7 @@ public abstract class WhereTool<M extends Model<M, ML, MO, MC, MS, MG>,
         MainTableData mainTableData = this.data.getMainTableData();
         MC mc = (MC) mainTableData.getTable().getWhere();
         mc.getWhereBuilder().setOwnerTableData(mainTableData);
-        WhereLink<M, ML, MO, MC, MS, MG> whereLink = condition.apply(new WhereLink<>(this.data), mc);
+        WhereLink<M, ML, MO, MC, MS, MG> whereLink = condition.apply(new WhereLinkReal<>(this.data), mc);
         List<LinkWhereData> linkWhereDataList = whereLink.getLinkWhereDataList();
         mainTableData.addLinkWhereDataList(linkWhereDataList);
         this.data.addLinkWhereDataList(linkWhereDataList);
@@ -51,7 +51,7 @@ public abstract class WhereTool<M extends Model<M, ML, MO, MC, MS, MG>,
         mc.getWhereBuilder().setOwnerTableData(mainTableData);
         TC tc = (TC) joinTableData.getTable().getWhere();
         tc.getWhereBuilder().setOwnerTableData(joinTableData);
-        WhereLink<M, ML, MO, MC, MS, MG> whereLink = condition.apply(new WhereLink<>(this.data), tc, mc);
+        WhereLink<M, ML, MO, MC, MS, MG> whereLink = condition.apply(new WhereLinkReal<>(this.data), tc, mc);
         List<LinkWhereData> linkWhereDataList = whereLink.getLinkWhereDataList();
         joinTableData.addLinkWhereDataList(linkWhereDataList);
         this.data.addLinkWhereDataList(linkWhereDataList);

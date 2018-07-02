@@ -8,36 +8,26 @@ import com.dt.core.bean.SortType;
  */
 public final class SortData {
 
-    private String ownerTableName;
+    private TableData tableData;
 
-    private String ownerAlias;
-
-    private String ownerColumnName;
+    private String columnName;
 
     private SortType sortType = SortType.ASC;
 
-    public String getOwnerTableName() {
-        return ownerTableName;
+    public TableData getTableData() {
+        return tableData;
     }
 
-    public void setOwnerTableName(String ownerTableName) {
-        this.ownerTableName = ownerTableName;
+    public void setTableData(TableData tableData) {
+        this.tableData = tableData;
     }
 
-    public String getOwnerAlias() {
-        return ownerAlias;
+    public String getColumnName() {
+        return columnName;
     }
 
-    public void setOwnerAlias(String ownerAlias) {
-        this.ownerAlias = ownerAlias;
-    }
-
-    public String getOwnerColumnName() {
-        return ownerColumnName;
-    }
-
-    public void setOwnerColumnName(String ownerColumnName) {
-        this.ownerColumnName = ownerColumnName;
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
     }
 
     public SortType getSortType() {

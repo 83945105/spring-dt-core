@@ -6,6 +6,7 @@ import com.dt.core.data.TableData;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Group;
 import com.dt.core.norm.Model;
+import com.dt.core.parser.GroupParser;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,6 +20,8 @@ public abstract class GroupTool<M extends Model<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> extends SortTool<M, ML, MO, MC, MS, MG> {
+
+    private GroupParser groupParser = GroupParser.getInstance();
 
     public GroupTool(Data<M, ML, MO, MC, MS, MG> data) {
         super(data);
@@ -115,6 +118,11 @@ public abstract class GroupTool<M extends Model<M, ML, MO, MC, MS, MG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> GroupTool<M, ML, MO, MC, MS, MG> group(Class<T> groupClass, Group<T, TL, TO, TC, TS, TG> group) {
         return group(groupClass, null, group);
+    }
+
+    @Override
+    public String getGroupSql() {
+        return this.groupParser.parse(this.getData().getGroupDataList());
     }
 
 }

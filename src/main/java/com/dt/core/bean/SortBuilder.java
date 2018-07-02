@@ -1,6 +1,7 @@
 package com.dt.core.bean;
 
 import com.dt.core.data.SortData;
+import com.dt.core.data.TableData;
 import com.dt.core.norm.Model;
 
 import java.util.ArrayList;
@@ -26,11 +27,12 @@ public final class SortBuilder<S extends Model<S, SL, SO, SC, SS, SG>,
 
     private List<SortData> sortDataList = new ArrayList<>();
 
-    public SortBuilder handler(String ownerTableName, String ownerAlias, String ownerColumnName) {
+    private TableData ownerTableData;
+
+    public SortBuilder handler(String ownerColumnName) {
         sortData = new SortData();
-        sortData.setOwnerTableName(ownerTableName);
-        sortData.setOwnerAlias(ownerAlias);
-        sortData.setOwnerColumnName(ownerColumnName);
+        sortData.setTableData(ownerTableData);
+        sortData.setColumnName(ownerColumnName);
         return this;
     }
 
@@ -48,5 +50,9 @@ public final class SortBuilder<S extends Model<S, SL, SO, SC, SS, SG>,
 
     public List<SortData> getSortDataList() {
         return sortDataList;
+    }
+
+    public void setOwnerTableData(TableData ownerTableData) {
+        this.ownerTableData = ownerTableData;
     }
 }

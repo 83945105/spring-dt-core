@@ -21,4 +21,8 @@ public interface SqlTool<M extends Model<M, ML, MO, MC, MS, MG>,
 
     String getWhereSql();
 
+    String getGroupSql();
+
+    String getSortSql();
+
 }
