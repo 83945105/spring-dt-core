@@ -20,7 +20,7 @@ public class GroupParser {
 
     public String parse(List<GroupData> groupDataList) {
         if (groupDataList == null || groupDataList.size() == 0) {
-            return "";
+            return null;
         }
         StringBuilder sql = new StringBuilder(64);
         String alias;
@@ -30,6 +30,6 @@ public class GroupParser {
                 sql.append(", ").append(alias).append(".").append(columnName);
             }
         }
-        return sql.replace(0, 2, "group by ").toString();
+        return sql.length() > 2 ? sql.replace(0, 2, "group by ").toString() : null;
     }
 }

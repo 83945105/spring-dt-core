@@ -5,7 +5,7 @@ import com.dt.core.engine.MySqlEngine;
 import com.dt.core.bean.ComparisonRule;
 import com.dt.core.bean.JoinType;
 import com.dt.core.engine.SelectEngine;
-import com.dt.core.engine.SqlEngine;
+import com.dt.core.norm.Engine;
 import com.dt.core.test.AdminModel;
 import com.dt.core.test.StuModel;
 import com.dt.core.test.UserModel;
@@ -13,7 +13,7 @@ import com.dt.core.test.UserModel;
 public class ApplicationTests {
 
     public static void main(String[] args) throws Exception {
-        ApplicationTests.method2();
+        ApplicationTests.method1();
     }
 
     public static void method2() {
@@ -41,7 +41,7 @@ public class ApplicationTests {
         for (int i = 0; i < 1; i++) {
             Long startTime = System.nanoTime();
 
-            SqlEngine engine = MySqlEngine.main(UserModel.class)
+            Engine engine = MySqlEngine.main(UserModel.class)
 
                     .innerJoin(StuModel.class, "stu2", (on, joinTable, mainTable) -> on
                             .and(joinTable.stuId().equalTo(mainTable.userId())))
@@ -54,6 +54,8 @@ public class ApplicationTests {
 
                     .leftJoin(UserModel.class, "User2", (on, joinTable, mainTable) -> on
                             .and(joinTable.userId().equalTo(mainTable.userId())))
+
+                    .virtualColumn(1, "virtual")
 
                     .column(table -> table.userId().userId().userId())
 
@@ -102,11 +104,14 @@ public class ApplicationTests {
 
                     .limit(1);
 
-            System.out.println(engine.getColumnSql());
-            System.out.println(engine.getJoinSql());
-            System.out.println(engine.getWhereSql());
-            System.out.println(engine.getGroupSql());
-            System.out.println(engine.getSortSql());
+//            System.out.println(engine.getColumnSql());
+//            System.out.println(engine.getJoinSql());
+//            System.out.println(engine.getWhereSql());
+//            System.out.println(engine.getGroupSql());
+//            System.out.println(engine.getSortSql());
+
+            SelectEngine selectEngine = new SelectEngine();
+            System.out.println(selectEngine.selectList(engine));
 
             Long endTime = System.nanoTime() - startTime;
 

@@ -43,7 +43,11 @@ public interface Data<M extends Model<M, ML, MO, MC, MS, MG>,
 
     Set<TableData> getColumnDataSet();
 
-    void addColumnDataSet(TableData columnData);
+    void addColumnData(TableData columnData);
+
+    Set<VirtualFieldData> getVirtualFieldDataSet();
+
+    void addVirtualFieldData(VirtualFieldData virtualFieldData);
 
     List<List<LinkWhereData>> getLinkWhereDataList();
 
@@ -51,10 +55,18 @@ public interface Data<M extends Model<M, ML, MO, MC, MS, MG>,
 
     List<GroupData> getGroupDataList();
 
-    void addGroupDataList(GroupData groupData);
+    void addGroupData(GroupData groupData);
 
     List<List<SortData>> getSortDataList();
 
     void addSortDataList(List<SortData> sortDataList);
+
+    Integer getLimitStart();
+
+    void setLimitStart(Integer limitStart);
+
+    Integer getLimitEnd();
+
+    void setLimitEnd(Integer limitEnd);
 
 }

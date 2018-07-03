@@ -4,6 +4,7 @@ import com.dt.core.bean.*;
 import com.dt.core.data.JoinTableData;
 import com.dt.core.data.LinkWhereData;
 import com.dt.core.data.MainTableData;
+import com.dt.core.data.ParseData;
 import com.dt.core.norm.ConditionA;
 import com.dt.core.norm.ConditionB;
 import com.dt.core.norm.Data;
@@ -72,7 +73,7 @@ public abstract class WhereEngine<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     @Override
-    public String getWhereSql() {
+    public ParseData getWhereParseData() {
         return this.whereParser.parse(this.getData().getLinkWhereDataList());
     }
 

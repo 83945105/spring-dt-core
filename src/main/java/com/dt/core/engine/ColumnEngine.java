@@ -2,6 +2,7 @@ package com.dt.core.engine;
 
 import com.dt.core.bean.*;
 import com.dt.core.data.MainTableData;
+import com.dt.core.data.VirtualFieldData;
 import com.dt.core.norm.Column;
 import com.dt.core.norm.Model;
 import com.dt.core.parser.ColumnParser;
@@ -32,13 +33,47 @@ public class ColumnEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         MainTableData tableData = this.data.getMainTableData();
         Map<String, String> columns = column.apply((ML) tableData.getTable().getColumn()).getColumns();
         tableData.addSelectColumns(columns);
-        this.data.addColumnDataSet(tableData);
+        this.data.addColumnData(tableData);
+        return this;
+    }
+
+    public ColumnEngine<M, ML, MO, MC, MS, MG> virtualColumn(String value, String alias) {
+        VirtualFieldData virtualFieldData = new VirtualFieldData();
+        virtualFieldData.setValue(value);
+        virtualFieldData.setAlias(alias);
+        this.data.addVirtualFieldData(virtualFieldData);
+        return this;
+    }
+
+    public ColumnEngine<M, ML, MO, MC, MS, MG> virtualColumn(int value, String alias) {
+        VirtualFieldData virtualFieldData = new VirtualFieldData();
+        virtualFieldData.setValue(value);
+        virtualFieldData.setAlias(alias);
+        this.data.addVirtualFieldData(virtualFieldData);
+        return this;
+    }
+
+    public ColumnEngine<M, ML, MO, MC, MS, MG> virtualColumn(long value, String alias) {
+        VirtualFieldData virtualFieldData = new VirtualFieldData();
+        virtualFieldData.setValue(value);
+        virtualFieldData.setAlias(alias);
+        this.data.addVirtualFieldData(virtualFieldData);
+        return this;
+    }
+
+    public ColumnEngine<M, ML, MO, MC, MS, MG> virtualColumn(double value, String alias) {
+        VirtualFieldData virtualFieldData = new VirtualFieldData();
+        virtualFieldData.setValue(value);
+        virtualFieldData.setAlias(alias);
+        this.data.addVirtualFieldData(virtualFieldData);
         return this;
     }
 
     @Override
     public String getColumnSql() {
-        return this.columnParser.parse(this.getData().getColumnDataSet());
+        return this.columnParser.parse(this.getData().getMainTableData(),
+                this.getData().getVirtualFieldDataSet(),
+                this.getData().getColumnDataSet());
     }
 
 }

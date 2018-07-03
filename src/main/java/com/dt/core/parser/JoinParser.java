@@ -3,8 +3,10 @@ package com.dt.core.parser;
 import com.dt.core.bean.LinkType;
 import com.dt.core.data.JoinTableData;
 import com.dt.core.data.OnData;
+import com.dt.core.data.ParseData;
 import com.dt.core.exception.DtException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +24,14 @@ public class JoinParser {
         return JOIN_PARSER;
     }
 
-    public String parse(Map<String, JoinTableData> joinTableDataAliasMap) {
+    public ParseData parse(Map<String, JoinTableData> joinTableDataAliasMap) {
         if (joinTableDataAliasMap == null || joinTableDataAliasMap.size() == 0) {
-            return "";
+            return null;
         }
         StringBuilder sql = new StringBuilder(64);
         StringBuilder onSql = new StringBuilder(64);
         StringBuilder on = new StringBuilder(32);
+        List<Object> args = new ArrayList<>();
         JoinTableData joinTableData;
         for (Map.Entry<String, JoinTableData> entry : joinTableDataAliasMap.entrySet()) {
             joinTableData = entry.getValue();
@@ -90,9 +93,12 @@ public class JoinParser {
                                 break;
                             case BETWEEN:
                                 on.append(" between ? and ?");
+                                args.add(onData.getTargetValue());
+                                args.add(onData.getTargetSecondValue());
                                 continue;
                             case LIKE:
                                 on.append(" like ?");
+                                args.add(onData.getTargetValue());
                                 continue;
                             case IN:
                                 int count = onData.getValueCount();
@@ -105,6 +111,9 @@ public class JoinParser {
                                     }
                                 }
                                 on.append(")");
+                                for (Object arg : (Object[]) onData.getTargetValue()) {
+                                    args.add(arg);
+                                }
                                 continue;
                             default:
                                 throw new DtException("the WhereType is wrong.");
@@ -112,6 +121,7 @@ public class JoinParser {
                         switch (onData.getOnValueType()) {
                             case VALUE:
                                 on.append("? ");
+                                args.add(onData.getTargetValue());
                                 continue;
                             case JOIN:
                                 on.append(onData.getTargetAlias())
@@ -119,14 +129,16 @@ public class JoinParser {
                                         .append(onData.getTargetColumnName());
                                 continue;
                         }
-
                     }
                     onSql.append(on.substring(5));
                 }
                 sql.append(onSql.substring(5));
             }
         }
-        return sql.substring(2);
+        ParseData parseData = new ParseData();
+        parseData.setSql(sql.length() > 2 ? sql.substring(2) : null);
+        parseData.setArgs(args);
+        return parseData;
     }
 
 }

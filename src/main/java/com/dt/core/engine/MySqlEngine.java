@@ -33,8 +33,17 @@ public class MySqlEngine {
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
+            TG extends GroupModel<T, TL, TO, TC, TS, TG>> ColumnEngine<T, TL, TO, TC, TS, TG> column(String tableName, Class<T> columnClass) {
+        return new ColumnEngine<>(columnClass, tableName);
+    }
+
+    public static <T extends Model<T, TL, TO, TC, TS, TG>,
+            TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
+            TO extends OnModel<T, TL, TO, TC, TS, TG>,
+            TC extends WhereModel<T, TL, TO, TC, TS, TG>,
+            TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> ColumnEngine<T, TL, TO, TC, TS, TG> column(Class<T> columnClass) {
-        return new ColumnEngine<>(columnClass);
+        return column(null, columnClass);
     }
 
 }

@@ -3,6 +3,7 @@ package com.dt.core.engine;
 import com.dt.core.bean.*;
 import com.dt.core.data.JoinTableData;
 import com.dt.core.data.MainTableData;
+import com.dt.core.data.ParseData;
 import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 import com.dt.core.norm.OnA;
@@ -221,7 +222,7 @@ public class JoinEngine<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     @Override
-    public String getJoinSql() {
+    public ParseData getJoinParseData() {
         return this.joinParser.parse(this.data.getJoinTableDataAliasMap());
     }
 

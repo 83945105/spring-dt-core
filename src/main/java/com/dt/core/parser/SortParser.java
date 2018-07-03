@@ -22,7 +22,7 @@ public class SortParser {
 
     public String parse(List<List<SortData>> sortDataList) {
         if (sortDataList == null || sortDataList.size() == 0) {
-            return "";
+            return null;
         }
         StringBuilder sql = new StringBuilder(64);
         TableData tableData;
@@ -45,6 +45,6 @@ public class SortParser {
                 }
             }
         }
-        return sql.replace(0, 2, "order by ").toString();
+        return sql.length() > 2 ? sql.replace(0, 2, "order by ").toString() : null;
     }
 }

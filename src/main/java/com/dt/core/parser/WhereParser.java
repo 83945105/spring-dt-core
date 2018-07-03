@@ -2,10 +2,11 @@ package com.dt.core.parser;
 
 import com.dt.core.bean.LinkType;
 import com.dt.core.data.LinkWhereData;
+import com.dt.core.data.ParseData;
 import com.dt.core.data.WhereData;
-import com.dt.core.exception.ComparisonException;
 import com.dt.core.exception.DtException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,11 +23,12 @@ public class WhereParser {
         return WHERE_PARSER;
     }
 
-    private String parseWhereData(List<WhereData> whereDataList, LinkType ownerLinkType) {
+    private ParseData parseWhereData(List<WhereData> whereDataList, LinkType ownerLinkType) {
         if (whereDataList == null || whereDataList.size() == 0) {
             return null;
         }
         StringBuilder sql = new StringBuilder(64);
+        List<Object> args = new ArrayList<>();
         for (WhereData whereData : whereDataList) {
             sql.append(" and ")
                     .append(whereData.getOwnerAlias())
@@ -41,27 +43,36 @@ public class WhereParser {
                     continue;
                 case EQUAL:
                     sql.append(" = ?");
+                    args.add(whereData.getTargetValue());
                     continue;
                 case NOT_EQUAL:
                     sql.append(" != ?");
+                    args.add(whereData.getTargetValue());
                     continue;
                 case GREATER:
                     sql.append(" > ?");
+                    args.add(whereData.getTargetValue());
                     continue;
                 case GREATER_EQUAL:
                     sql.append(" >= ?");
+                    args.add(whereData.getTargetValue());
                     continue;
                 case LESS:
                     sql.append(" < ?");
+                    args.add(whereData.getTargetValue());
                     continue;
                 case LESS_EQUAL:
                     sql.append(" <= ?");
+                    args.add(whereData.getTargetValue());
                     continue;
                 case BETWEEN:
                     sql.append(" between ? and ?");
+                    args.add(whereData.getTargetValue());
+                    args.add(whereData.getTargetSecondValue());
                     continue;
                 case LIKE:
                     sql.append(" like ?");
+                    args.add(whereData.getTargetValue());
                     continue;
                 case IN:
                     int count = whereData.getValueCount();
@@ -74,48 +85,61 @@ public class WhereParser {
                         }
                     }
                     sql.append(")");
+                    for (Object arg : (Object[]) whereData.getTargetValue()) {
+                        args.add(arg);
+                    }
                     continue;
                 default:
                     throw new DtException("the WhereType is wrong.");
             }
         }
+        ParseData parseData = null;
         switch (ownerLinkType) {
             case AND:
-                return sql.length() > 4 ? sql.substring(5) : null;
+                parseData = new ParseData();
+                parseData.setSql(sql.length() > 4 ? sql.substring(5) : null);
+                parseData.setArgs(args);
+                break;
             case OR:
+                parseData = new ParseData();
+                parseData.setArgs(args);
                 if (whereDataList.size() > 1) {
-                    return sql.length() > 4 ? sql.replace(0, 5, "(").append(")").toString() : null;
+                    parseData.setSql(sql.length() > 4 ? sql.replace(0, 5, "(").append(")").toString() : null);
+                } else {
+                    parseData.setSql(sql.length() > 4 ? sql.substring(5) : null);
                 }
-                return sql.length() > 4 ? sql.substring(5) : null;
-            default:
-                return null;
+                break;
         }
+        return parseData;
     }
 
-    private String parseLinkWhereData(List<LinkWhereData> linkWhereDataList, LinkType ownerLinkType) {
+    private ParseData parseLinkWhereData(List<LinkWhereData> linkWhereDataList, LinkType ownerLinkType) {
         if (linkWhereDataList == null || linkWhereDataList.size() == 0) {
             return null;
         }
-        String str;
+        ParseData data;
         int i = 0;
         int orCount = 0;
         StringBuilder sql = new StringBuilder(128);
+        List<Object> args = new ArrayList<>();
         for (LinkWhereData linkWhereData : linkWhereDataList) {
             List<WhereData> whereDataList = linkWhereData.getWhereDataList();
             List<LinkWhereData> list = linkWhereData.getLinkWhereDataList();
             if (whereDataList != null && whereDataList.size() > 0) {
                 switch (linkWhereData.getLinkType()) {
                     case AND:
-                        str = parseWhereData(whereDataList, LinkType.AND);
-                        if (str != null) {
-                            sql.append(" and ").append(str);
+                        data = parseWhereData(whereDataList, LinkType.AND);
+                        if (data != null) {
+                            sql.append(" and ").append(data.getSql());
+                            args.addAll(data.getArgs());
                             i++;
                         }
                         continue;
                     case OR:
-                        str = parseWhereData(whereDataList, LinkType.OR);
-                        if (str != null) {
-                            sql.append(" or ").append(str);
+                        data = parseWhereData(whereDataList, LinkType.OR);
+                        if (data != null) {
+                            sql.append(" or ").append(data.getSql());
+                            args.addAll(data.getArgs());
                             i++;
                             orCount++;
                         }
@@ -124,16 +148,18 @@ public class WhereParser {
             } else if (list != null && list.size() > 0) {
                 switch (linkWhereData.getLinkType()) {
                     case AND:
-                        str = parseLinkWhereData(list, LinkType.AND);
-                        if (str != null) {
-                            sql.append(" and ").append(str);
+                        data = parseLinkWhereData(list, LinkType.AND);
+                        if (data != null) {
+                            sql.append(" and ").append(data.getSql());
+                            args.addAll(data.getArgs());
                             i++;
                         }
                         continue;
                     case OR:
-                        str = parseLinkWhereData(list, LinkType.OR);
-                        if (str != null) {
-                            sql.append(" or ").append(str);
+                        data = parseLinkWhereData(list, LinkType.OR);
+                        if (data != null) {
+                            sql.append(" or ").append(data.getSql());
+                            args.addAll(data.getArgs());
                             i++;
                             orCount++;
                         }
@@ -141,35 +167,48 @@ public class WhereParser {
                 }
             }
         }
+        ParseData parseData = null;
         switch (ownerLinkType) {
             case AND:
+                parseData = new ParseData();
+                parseData.setArgs(args);
                 if (orCount > 0) {
-                    return sql.length() > 4 ? sql.replace(0, 5, "(").append(")").toString() : null;
+                    parseData.setSql(sql.length() > 4 ? sql.replace(0, 5, "(").append(")").toString() : null);
+                } else {
+                    parseData.setSql(sql.length() > 4 ? sql.substring(5) : null);
                 }
-                return sql.length() > 4 ? sql.substring(5) : null;
+                break;
             case OR:
+                parseData = new ParseData();
+                parseData.setArgs(args);
                 if (i > 1) {
-                    return sql.length() > 4 ? sql.replace(0, 5, "(").append(")").toString() : null;
+                    parseData.setSql(sql.length() > 4 ? sql.replace(0, 5, "(").append(")").toString() : null);
+                } else {
+                    parseData.setSql(sql.length() > 4 ? sql.substring(5) : null);
                 }
-                return sql.length() > 4 ? sql.substring(5) : null;
-            default:
-                return null;
+                break;
         }
+        return parseData;
     }
 
-    public String parse(List<List<LinkWhereData>> linkWhereDataList) {
+    public ParseData parse(List<List<LinkWhereData>> linkWhereDataList) {
         if (linkWhereDataList == null || linkWhereDataList.size() == 0) {
-            return "";
+            return null;
         }
         StringBuilder sql = new StringBuilder(256);
-        String str;
+        ParseData data;
+        List<Object> args = new ArrayList<>();
         for (List<LinkWhereData> linkWhereData : linkWhereDataList) {
-            str = parseLinkWhereData(linkWhereData, LinkType.AND);
-            if (str != null) {
-                sql.append(" and ").append(str);
+            data = parseLinkWhereData(linkWhereData, LinkType.AND);
+            if (data != null) {
+                sql.append(" and ").append(data.getSql());
+                args.addAll(data.getArgs());
             }
         }
-        return sql.length() > 5 ? sql.substring(5) : "";
+        ParseData parseData = new ParseData();
+        parseData.setSql(sql.length() > 5 ? sql.substring(5) : null);
+        parseData.setArgs(args);
+        return parseData;
     }
 
 }

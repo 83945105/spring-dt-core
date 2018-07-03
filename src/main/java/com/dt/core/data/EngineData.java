@@ -23,12 +23,17 @@ public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
     private Map<String, Boolean> alias = new HashMap<>();
 
     private Set<TableData> columnDataSet = new LinkedHashSet<>();
+    private Set<VirtualFieldData> virtualFieldDataSet = new LinkedHashSet<>();
 
     private List<List<LinkWhereData>> linkWhereDataList = new ArrayList<>();
 
     private List<GroupData> groupDataList = new ArrayList<>();
 
     private List<List<SortData>> sortDataList = new ArrayList<>();
+
+    private Integer limitStart;
+
+    private Integer limitEnd;
 
     @Override
     public MainTableData<M, ML, MO, MC, MS, MG> getMainTableData() {
@@ -85,11 +90,21 @@ public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     @Override
-    public void addColumnDataSet(TableData columnData) {
+    public void addColumnData(TableData columnData) {
         if (columnData == null) {
             return;
         }
         this.columnDataSet.add(columnData);
+    }
+
+    @Override
+    public Set<VirtualFieldData> getVirtualFieldDataSet() {
+        return virtualFieldDataSet;
+    }
+
+    @Override
+    public void addVirtualFieldData(VirtualFieldData virtualFieldData) {
+        this.virtualFieldDataSet.add(virtualFieldData);
     }
 
     @Override
@@ -111,7 +126,7 @@ public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     @Override
-    public void addGroupDataList(GroupData groupData) {
+    public void addGroupData(GroupData groupData) {
         if (groupData == null) {
             return;
         }
@@ -131,4 +146,23 @@ public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
         this.sortDataList.add(sortDataList);
     }
 
+    @Override
+    public Integer getLimitStart() {
+        return limitStart;
+    }
+
+    @Override
+    public void setLimitStart(Integer limitStart) {
+        this.limitStart = limitStart;
+    }
+
+    @Override
+    public Integer getLimitEnd() {
+        return limitEnd;
+    }
+
+    @Override
+    public void setLimitEnd(Integer limitEnd) {
+        this.limitEnd = limitEnd;
+    }
 }

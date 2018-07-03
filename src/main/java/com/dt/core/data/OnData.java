@@ -1,7 +1,7 @@
 package com.dt.core.data;
 
 import com.dt.core.bean.OnType;
-import com.dt.core.norm.OnValueType;
+import com.dt.core.bean.OnValueType;
 
 /**
  * 条件数据
