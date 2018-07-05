@@ -64,12 +64,129 @@ public class UnderLineString2Camel {
         return sb.toString().toUpperCase();
     }
 
-    public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            long start = System.nanoTime();
-            camelNamesb("QW_ABD_XYZN");
-            System.out.println(System.nanoTime() - start);
+    /**
+     * 将字段名转为属性名<br/>
+     * 例:abc_def_ghi ==> abcDefGhi<br/>
+     *
+     * @param columnName 数据字段名
+     */
+    public static String columnNameToFieldName(String columnName) {
+        String[] names = columnName.trim().split("_");
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].length() == 0) {
+                continue;
+            }
+            char[] cs = names[i].toLowerCase().toCharArray();
+            cs[0] -= 32;
+            sb.append(String.valueOf(cs));
         }
+        char[] cs = sb.toString().toCharArray();
+        cs[0] += 32;
+        return String.valueOf(cs);
+    }
+
+    //首字母大写
+    public static String initialsCapital(String name) {
+        char[] cs = name.toCharArray();
+        cs[0] -= 32;
+        return String.valueOf(cs);
+    }
+
+    //首字母小写
+    public static String initialsLetter(String name) {
+        char[] cs = name.toCharArray();
+        cs[0] += 32;
+        return String.valueOf(cs);
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("开始");
+
+        String column = "WER_WERW_WER_BDFHB_WTW_WERWR_WERW_WER";
+        String field = "userIdTermQuestion";
+
+        int count = 100000;
+
+        long time = 0;
+        for (int i = 0; i < count; i++) {
+            long start = System.nanoTime();
+            Camel2Underline2(column);
+            time += (System.nanoTime() - start);
+        }
+        System.out.println(time / count);
+
+        System.out.println("-----------------------");
+
+        time = 0;
+        for (int i = 0; i < count; i++) {
+            long start = System.nanoTime();
+            camelNamesb(column);
+            time += (System.nanoTime() - start);
+        }
+        System.out.println(time / count);
+
+        System.out.println("-----------------------");
+
+        time = 0;
+        for (int i = 0; i < count; i++) {
+            long start = System.nanoTime();
+            underline2Camel(column);
+            time += (System.nanoTime() - start);
+        }
+        System.out.println(time / count);
+
+        System.out.println("-----------------------");
+
+        time = 0;
+        for (int i = 0; i < count; i++) {
+            long start = System.nanoTime();
+            Camel2Underline(column);
+            time += (System.nanoTime() - start);
+        }
+        System.out.println(time / count);
+
+        System.out.println("-----------------------");
+
+        time = 0;
+        for (int i = 0; i < count; i++) {
+            long start = System.nanoTime();
+            camelName(column);
+            time += (System.nanoTime() - start);
+        }
+        System.out.println(time / count);
+
+        System.out.println("-----------------------");
+
+        time = 0;
+        for (int i = 0; i < count; i++) {
+            long start = System.nanoTime();
+            columnNameToFieldName(column);
+            time += (System.nanoTime() - start);
+        }
+        System.out.println(time / count);
+
+
+        System.out.println("======================================");
+
+        time = 0;
+        for (int i = 0; i < count; i++) {
+            long start = System.nanoTime();
+            underscoreName(field);
+            time += (System.nanoTime() - start);
+        }
+        System.out.println(time / count);
+
+        System.out.println("-----------------------");
+
+        time = 0;
+        for (int i = 0; i < count; i++) {
+            long start = System.nanoTime();
+            camelToUnderline(field);
+            time += (System.nanoTime() - start);
+        }
+        System.out.println(time / count);
     }
 
     public static String camelName(String name) {

@@ -6,27 +6,25 @@ import com.dt.core.norm.Model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public final class [[${setting.TableAlias}+${setting.templateSuffix}]] implements Model<[[${setting.TableAlias}+${setting.templateSuffix}]], [[${setting.TableAlias}+${setting.templateSuffix}]].Column, [[${setting.TableAlias}+${setting.templateSuffix}]].On, [[${setting.TableAlias}+${setting.templateSuffix}]].Where, [[${setting.TableAlias}+${setting.templateSuffix}]].Sort, [[${setting.TableAlias}+${setting.templateSuffix}]].Group> {
+public final class [[${setting.tableAlias}+${setting.templateSuffix}]] implements Model<[[${setting.tableAlias}+${setting.templateSuffix}]], [[${setting.tableAlias}+${setting.templateSuffix}]].Column, [[${setting.tableAlias}+${setting.templateSuffix}]].On, [[${setting.tableAlias}+${setting.templateSuffix}]].Where, [[${setting.tableAlias}+${setting.templateSuffix}]].Sort, [[${setting.tableAlias}+${setting.templateSuffix}]].Group> {
 
-    public static final String tableName = "pub_user";
-    public static final String tableAlias = "PubUser";
-    public static final String primaryKeyName = "id";
-    public static final String primaryKeyAlias = "id";
-    public static final String id = "id";
-    public static final String id_alias = "id";
-    public static final String loginName = "login_name";
-    public static final String loginName_alias = "loginName";
-
-    public static final String[] columns = {id, loginName};
-    public static final String[] aliases = {id_alias, loginName_alias};
+    public static final String tableName = [('"' + ${setting.tableName} + '"')];
+    public static final String tableAlias = [('"' + ${setting.tableAlias} + '"')];
+[# th:if="${setting.primaryKeyColumn != null}"]
+    public static final String primaryKeyName = [('"' + ${setting.primaryKeyColumn.name} + '"')];
+    public static final String primaryKeyAlias = [('"' + ${setting.primaryKeyColumn.alias} + '"')];
+[/]
+[# th:each="column : ${columns}"]
+    [('public static final String '+ ${column.alias} + ' = "' + ${column.name} + '";')]
+    [('public static final String '+ ${column.alias} + '_alias = "' + ${column.alias} + '";')]
+[/]
     public static final Map<String, String> columnAliasMap = new LinkedHashMap<>();
 
-    static {
-        columnAliasMap.put(id, id_alias);
-        columnAliasMap.put(loginName, loginName_alias);
-    }
+    static {[# th:each="column : ${columns}"]
+        [('columnAliasMap.put(' + ${column.alias} + ', ' + ${column.alias} + '_alias);')]
+    [/]}
 
-    public PubUserModel() {
+    public [[${setting.tableAlias}+${setting.templateSuffix}]]() {
     }
 
     @Override
@@ -54,21 +52,22 @@ public final class [[${setting.TableAlias}+${setting.templateSuffix}]] implement
         return new Column();
     }
 
-    public static final class Column extends ColumnModel<PubUserModel, Column, On, Where, Sort, Group> {
+    public static final class Column extends ColumnModel<[[${setting.tableAlias}+${setting.templateSuffix}]], Column, On, Where, Sort, Group> {
 
         private Column() {
         }
+[# th:each="column : ${columns}"]
+        [('public Column '+ ${column.alias} +'() {')]
+            [('this.columns.put(' + ${setting.tableAlias}+${setting.templateSuffix} + '.' + ${column.alias} + ', ' + ${setting.tableAlias}+${setting.templateSuffix} + '.' + ${column.alias} + '_alias);')]
+            [['return this;']]
+        [['}']]
 
-        public Column id() {
-            this.columns.put(PubUserModel.id, PubUserModel.id_alias);
-            return this;
-        }
+        [('public Column '+ ${column.alias} +'(String alias) {')]
+            [('this.columns.put(' + ${setting.tableAlias}+${setting.templateSuffix} + '.' + ${column.alias} + ', alias);')]
+            [['return this;']]
+        [['}']]
 
-        public Column loginName() {
-            this.columns.put(PubUserModel.loginName, loginName_alias);
-            return this;
-        }
-    }
+    [/]}
 
     @Override
     public OnModel<PubUserModel, Column, On, Where, Sort, Group> getOn() {
