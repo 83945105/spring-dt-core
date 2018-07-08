@@ -37,7 +37,6 @@ public class SelectEngine {
                 .append(engine.getTableName())
                 .append(" ")
                 .append(engine.getTableAlias());
-
         parseData = engine.getJoinParseData();
         if (parseData != null && parseData.getSql() != null) {
             sql.append(" ").append(parseData.getSql());

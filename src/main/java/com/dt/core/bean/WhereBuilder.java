@@ -41,7 +41,7 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
 
     private TableData ownerTableData;
 
-    public WhereBuilder handler(String ownerTableName, String ownerAlias, String ownerColumnName) {
+    public WhereBuilder<C, CL, CO, CC, CS, CG> handler(String ownerTableName, String ownerAlias, String ownerColumnName) {
         this.whereData = new WhereData();
         this.whereData.setOwnerTableName(ownerTableName);
         this.whereData.setOwnerAlias(ownerAlias);

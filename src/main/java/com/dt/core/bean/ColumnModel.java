@@ -14,9 +14,14 @@ public class ColumnModel<T extends Model<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
         TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
-    protected Map<String, String> columns = new LinkedHashMap<>();
+    protected Map<String, String> columnAliasMap = new LinkedHashMap<>();
 
-    public Map<String, String> getColumns() {
-        return columns;
+    public Map<String, String> getColumnAliasMap() {
+        return columnAliasMap;
+    }
+
+    public ColumnModel<T, TL, TO, TC, TS, TG> addColumnAlias(String column, String alias) {
+        this.columnAliasMap.put(column, alias);
+        return this;
     }
 }

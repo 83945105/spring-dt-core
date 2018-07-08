@@ -28,7 +28,7 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
 
     private List<OnData> onDataList = new ArrayList<>();
 
-    public OnBuilder handler(String ownerTableName, String ownerAlias, String ownerColumnName) {
+    public OnBuilder<M, ML, MO, MC, MS, MG> handler(String ownerTableName, String ownerAlias, String ownerColumnName) {
         onData = new OnData();
         onData.setOwnerTableName(ownerTableName);
         onData.setOwnerAlias(ownerAlias);

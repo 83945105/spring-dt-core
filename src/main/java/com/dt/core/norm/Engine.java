@@ -2,10 +2,16 @@ package com.dt.core.norm;
 
 import com.dt.core.data.ParseData;
 
+import java.util.Map;
+
 /**
  * Created by 白超 on 2018/7/3.
  */
 public interface Engine {
+
+    default Class getTableClass() {
+        return null;
+    }
 
     default String getTableName() {
         return null;
@@ -20,6 +26,10 @@ public interface Engine {
     }
 
     default String getPrimaryKeyAlias() {
+        return null;
+    }
+
+    default Map<String, String> getColumnAliasMap() {
         return null;
     }
 

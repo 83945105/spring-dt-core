@@ -7,6 +7,8 @@ import java.util.*;
  */
 public abstract class TableData {
 
+    protected Class tableClass;
+
     protected String tableName;
 
     protected String tableAlias;
@@ -15,7 +17,7 @@ public abstract class TableData {
 
     protected String primaryKeyAlias;
 
-    protected Map<String, String> selectColumns = new LinkedHashMap<>();
+    protected Map<String, String> columnAliasMap = new LinkedHashMap<>();
 
     protected List<LinkWhereData> linkWhereDataList = new ArrayList<>();
 
@@ -78,16 +80,16 @@ public abstract class TableData {
         this.linkWhereDataList.addAll(linkWhereDataList);
     }
 
-    public Map<String, String> getSelectColumns() {
-        return selectColumns;
+    public Map<String, String> getColumnAliasMap() {
+        return this.columnAliasMap;
     }
 
-    public void addSelectColumns(String columnName, String alias) {
-        this.selectColumns.put(columnName, alias);
+    public void addColumnAlias(String columnName, String alias) {
+        this.columnAliasMap.put(columnName, alias);
     }
 
-    public void addSelectColumns(Map<String, String> selectColumns) {
-        this.selectColumns.putAll(selectColumns);
+    public void addColumnAliasMap(Map<String, String> selectColumns) {
+        this.columnAliasMap.putAll(selectColumns);
     }
 
     public List<String> getGroupColumns() {
@@ -115,6 +117,10 @@ public abstract class TableData {
             return;
         }
         this.sortDataList.add(sortDataList);
+    }
+
+    public Class getTableClass() {
+        return this.tableClass;
     }
 
     @Override

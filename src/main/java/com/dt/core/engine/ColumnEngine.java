@@ -31,8 +31,8 @@ public class ColumnEngine<M extends Model<M, ML, MO, MC, MS, MG>,
 
     public ColumnEngine<M, ML, MO, MC, MS, MG> column(Column<M, ML, MO, MC, MS, MG> column) {
         MainTableData tableData = this.data.getMainTableData();
-        Map<String, String> columns = column.apply((ML) tableData.getTable().getColumn()).getColumns();
-        tableData.addSelectColumns(columns);
+        Map<String, String> columns = column.apply((ML) tableData.getTable().getColumn()).getColumnAliasMap();
+        tableData.addColumnAliasMap(columns);
         this.data.addColumnData(tableData);
         return this;
     }
@@ -67,6 +67,11 @@ public class ColumnEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         virtualFieldData.setAlias(alias);
         this.data.addVirtualFieldData(virtualFieldData);
         return this;
+    }
+
+    @Override
+    public Map<String, String> getColumnAliasMap() {
+        return this.data.getMainTableData().getColumnAliasMap();
     }
 
     @Override

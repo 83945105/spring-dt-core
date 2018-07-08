@@ -75,7 +75,7 @@ public class ColumnParser {
 
         Map<String, String> columnNames;
         for (TableData tableData : columnDataSet) {
-            columnNames = tableData.getSelectColumns();
+            columnNames = tableData.getColumnAliasMap();
             if (columnNames.size() == 0) {
                 sql.append(", ")
                         .append(tableData.getTableAlias())

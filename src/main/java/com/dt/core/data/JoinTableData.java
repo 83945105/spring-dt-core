@@ -25,6 +25,7 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
     private Map<LinkType, List<OnData>> linkOnDataMap = new LinkedHashMap<>();
 
     public JoinTableData(Class<T> tableClass) {
+        this.tableClass = tableClass;
         try {
             this.table = tableClass.newInstance();
         } catch (InstantiationException e) {

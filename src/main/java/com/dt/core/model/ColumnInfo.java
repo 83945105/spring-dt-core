@@ -3,7 +3,7 @@ package com.dt.core.model;
 /**
  * Created by 白超 on 2018/7/5.
  */
-public class Column {
+public class ColumnInfo {
 
     private String name;
 
@@ -34,6 +34,27 @@ public class Column {
     private String extra;
 
     private String comment;
+
+    public ColumnInfo() {
+    }
+
+    public ColumnInfo(String name, String alias, String catalog, String label, boolean currency, boolean readOnly, boolean autoIncrement, int typeInt, String typeString, String collation, String nullString, String keyString, String defaultString, String extra, String comment) {
+        this.name = name;
+        this.alias = alias;
+        this.catalog = catalog;
+        this.label = label;
+        this.currency = currency;
+        this.readOnly = readOnly;
+        this.autoIncrement = autoIncrement;
+        this.typeInt = typeInt;
+        this.typeString = typeString;
+        this.collation = collation;
+        this.nullString = nullString;
+        this.keyString = keyString;
+        this.defaultString = defaultString;
+        this.extra = extra;
+        this.comment = comment;
+    }
 
     public String getName() {
         return name;

@@ -29,7 +29,7 @@ public final class SortBuilder<S extends Model<S, SL, SO, SC, SS, SG>,
 
     private TableData ownerTableData;
 
-    public SortBuilder handler(String ownerColumnName) {
+    public SortBuilder<S, SL, SO, SC, SS, SG> handler(String ownerColumnName) {
         sortData = new SortData();
         sortData.setTableData(ownerTableData);
         sortData.setColumnName(ownerColumnName);

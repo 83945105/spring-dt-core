@@ -17,6 +17,7 @@ public final class MainTableData<T extends Model<T, TL, TO, TC, TS, TG>,
     private T table;
 
     public MainTableData(Class<T> tableClass) {
+        this.tableClass = tableClass;
         try {
             this.table = tableClass.newInstance();
         } catch (InstantiationException e) {

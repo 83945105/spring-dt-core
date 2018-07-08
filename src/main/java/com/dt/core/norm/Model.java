@@ -2,6 +2,8 @@ package com.dt.core.norm;
 
 import com.dt.core.bean.*;
 
+import java.util.Map;
+
 /**
  * Created by 白超 on 2018/6/16.
  */
@@ -19,6 +21,10 @@ public interface Model<T extends Model<T, TL, TO, TC, TS, TG>,
     String getPrimaryKeyName();
 
     String getPrimaryKeyAlias();
+
+    Map<String, String> getColumnAliasMap();
+
+    Map<String, String> getAliasColumnMap();
 
     ColumnModel<T, TL, TO, TC, TS, TG> getColumn();
 
