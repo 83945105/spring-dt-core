@@ -28,16 +28,29 @@ public class ColumnParser {
     public String parse(MainTableData mainTableData, Set<VirtualFieldData> virtualFieldDataSet, Set<TableData> columnDataSet) {
         boolean hasV = virtualFieldDataSet != null && virtualFieldDataSet.size() != 0;
         boolean hasC = columnDataSet != null && columnDataSet.size() != 0;
-        if (!hasV && !hasC) {
-            return "*";
-        }
         StringBuilder sql = new StringBuilder(64);
+        Map<String, String> columnAliasMap;
+        String tableAlias;
+        if (!hasV && !hasC) {
+            columnAliasMap = mainTableData.getTable().getColumnAliasMap();
+            tableAlias = mainTableData.getTableAlias();
+            for (Map.Entry<String, String> entry : columnAliasMap.entrySet()) {
+                sql.append(",")
+                        .append(tableAlias)
+                        .append(".`")
+                        .append(entry.getKey())
+                        .append("` `")
+                        .append(entry.getValue())
+                        .append("`");
+            }
+            return sql.substring(1);
+        }
         Map<String, Boolean> cache = new HashMap<>();
         if (hasV) {
             Object value;
             String alias;
             for (VirtualFieldData data : virtualFieldDataSet) {
-                sql.append(", ");
+                sql.append(",");
                 value = data.getValue();
                 alias = data.getAlias();
                 if (cache.get(alias) != null) {
@@ -57,7 +70,7 @@ public class ColumnParser {
                     throw new DtException("the VirtualFieldData value type is wrong.");
                 }
                 if (alias != null) {
-                    sql.append(" ").append(alias);
+                    sql.append(" `").append(alias).append("`");
                     cache.put(alias, true);
                 } else {
                     cache.put(value + "", true);
@@ -66,36 +79,61 @@ public class ColumnParser {
         }
 
         if (!hasC) {
-            sql.append(", ")
-                    .append(mainTableData.getTableAlias())
-                    .append(".")
-                    .append("*");
-            return sql.substring(2);
+            columnAliasMap = mainTableData.getTable().getColumnAliasMap();
+            tableAlias = mainTableData.getTableAlias();
+            for (Map.Entry<String, String> entry : columnAliasMap.entrySet()) {
+                sql.append(",")
+                        .append(tableAlias)
+                        .append(".`")
+                        .append(entry.getKey())
+                        .append("` `")
+                        .append(entry.getValue())
+                        .append("`");
+            }
+            return sql.substring(1);
         }
 
-        Map<String, String> columnNames;
         for (TableData tableData : columnDataSet) {
-            columnNames = tableData.getColumnAliasMap();
-            if (columnNames.size() == 0) {
-                sql.append(", ")
-                        .append(tableData.getTableAlias())
-                        .append(".")
-                        .append("*");
+            columnAliasMap = tableData.getColumnAliasMap();
+            if (columnAliasMap.size() == 0) {
+                columnAliasMap = tableData.getTable().getColumnAliasMap();
+                tableAlias = tableData.getTableAlias();
+                if (tableData.getTableClass() == mainTableData.getTableClass()) {
+                    for (Map.Entry<String, String> entry : columnAliasMap.entrySet()) {
+                        sql.append(",")
+                                .append(tableAlias)
+                                .append(".`")
+                                .append(entry.getKey())
+                                .append("` `")
+                                .append(entry.getValue())
+                                .append("`");
+                    }
+                } else {
+                    for (Map.Entry<String, String> entry : columnAliasMap.entrySet()) {
+                        sql.append(",")
+                                .append(tableAlias)
+                                .append(".`")
+                                .append(entry.getKey())
+                                .append("`");
+                    }
+                }
                 continue;
             }
-            for (Map.Entry<String, String> entry : columnNames.entrySet()) {
+            for (Map.Entry<String, String> entry : columnAliasMap.entrySet()) {
                 if (cache.get(entry.getValue()) != null) {
                     throw new TableDataException("table alias [" + tableData.getTableAlias() + "] column alias [" + entry.getValue() + "] is already be used, please set another alias.");
                 }
                 sql.append(", ")
                         .append(tableData.getTableAlias())
-                        .append(".")
+                        .append(".`")
                         .append(entry.getKey())
-                        .append(" ").append(entry.getValue());
+                        .append("` `")
+                        .append(entry.getValue())
+                        .append("`");
                 cache.put(entry.getValue(), true);
             }
         }
-        return sql.substring(2);
+        return sql.substring(1);
     }
 
 }

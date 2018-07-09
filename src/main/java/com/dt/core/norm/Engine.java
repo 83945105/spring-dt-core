@@ -9,6 +9,10 @@ import java.util.Map;
  */
 public interface Engine {
 
+    default Model getTable() {
+        return null;
+    }
+
     default Class getTableClass() {
         return null;
     }

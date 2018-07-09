@@ -16,31 +16,14 @@ public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         TO extends OnModel<T, TL, TO, TC, TS, TG>,
         TC extends WhereModel<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
-        TG extends GroupModel<T, TL, TO, TC, TS, TG>> extends TableData {
-
-    private T table;
+        TG extends GroupModel<T, TL, TO, TC, TS, TG>> extends TableData<T, TL, TO, TC, TS, TG> {
 
     private JoinType joinType = JoinType.INNER;
 
     private Map<LinkType, List<OnData>> linkOnDataMap = new LinkedHashMap<>();
 
     public JoinTableData(Class<T> tableClass) {
-        this.tableClass = tableClass;
-        try {
-            this.table = tableClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        this.tableName = this.table.getTableName();
-        this.tableAlias = this.table.getTableAlias();
-        this.primaryKeyName = this.table.getPrimaryKeyName();
-        this.primaryKeyAlias = this.table.getPrimaryKeyAlias();
-    }
-
-    public T getTable() {
-        return table;
+        super(tableClass);
     }
 
     public JoinType getJoinType() {

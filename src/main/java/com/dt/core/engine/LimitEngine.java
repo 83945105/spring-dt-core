@@ -49,6 +49,11 @@ public class LimitEngine<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     @Override
+    public Model getTable() {
+        return this.data.getMainTableData().getTable();
+    }
+
+    @Override
     public Class getTableClass() {
         return this.data.getMainTableData().getTableClass();
     }

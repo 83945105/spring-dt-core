@@ -1,11 +1,21 @@
 package com.dt.core.data;
 
+import com.dt.core.bean.*;
+import com.dt.core.norm.Model;
+
 import java.util.*;
 
 /**
  * Created by 白超 on 2018/6/25.
  */
-public abstract class TableData {
+public abstract class TableData<T extends Model<T, TL, TO, TC, TS, TG>,
+        TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
+        TO extends OnModel<T, TL, TO, TC, TS, TG>,
+        TC extends WhereModel<T, TL, TO, TC, TS, TG>,
+        TS extends SortModel<T, TL, TO, TC, TS, TG>,
+        TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
+
+    private T table;
 
     protected Class tableClass;
 
@@ -25,8 +35,27 @@ public abstract class TableData {
 
     protected List<List<SortData>> sortDataList = new ArrayList<>();
 
+    public TableData(Class<T> tableClass) {
+        this.tableClass = tableClass;
+        try {
+            this.table = tableClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        this.tableName = this.table.getTableName();
+        this.tableAlias = this.table.getTableAlias();
+        this.primaryKeyName = this.table.getPrimaryKeyName();
+        this.primaryKeyAlias = this.table.getPrimaryKeyAlias();
+    }
+
+    public T getTable() {
+        return this.table;
+    }
+
     public String getTableName() {
-        return tableName;
+        return this.tableName;
     }
 
     public void setTableName(String tableName) {
@@ -37,7 +66,7 @@ public abstract class TableData {
     }
 
     public String getTableAlias() {
-        return tableAlias;
+        return this.tableAlias;
     }
 
     public void setTableAlias(String tableAlias) {
@@ -48,7 +77,7 @@ public abstract class TableData {
     }
 
     public String getPrimaryKeyName() {
-        return primaryKeyName;
+        return this.primaryKeyName;
     }
 
     public void setPrimaryKeyName(String primaryKeyName) {
@@ -59,7 +88,7 @@ public abstract class TableData {
     }
 
     public String getPrimaryKeyAlias() {
-        return primaryKeyAlias;
+        return this.primaryKeyAlias;
     }
 
     public void setPrimaryKeyAlias(String primaryKeyAlias) {
@@ -70,7 +99,7 @@ public abstract class TableData {
     }
 
     public List<LinkWhereData> getLinkWhereDataList() {
-        return linkWhereDataList;
+        return this.linkWhereDataList;
     }
 
     public void addLinkWhereDataList(List<LinkWhereData> linkWhereDataList) {
@@ -93,7 +122,7 @@ public abstract class TableData {
     }
 
     public List<String> getGroupColumns() {
-        return groupColumns;
+        return this.groupColumns;
     }
 
     public void addGroupColumns(Collection<String> groupColumns) {

@@ -64,8 +64,9 @@ public class JoinParser {
                     for (OnData onData : onEntry.getValue()) {
                         on.append(" and ")
                                 .append(joinTableData.getTableAlias())
-                                .append(".")
-                                .append(onData.getOwnerColumnName());
+                                .append(".`")
+                                .append(onData.getOwnerColumnName())
+                                .append("`");
                         switch (onData.getOnType()) {
                             case IS_NULL:
                                 on.append(" is null");
@@ -125,8 +126,9 @@ public class JoinParser {
                                 continue;
                             case JOIN:
                                 on.append(onData.getTargetAlias())
-                                        .append(".")
-                                        .append(onData.getTargetColumnName());
+                                        .append(".`")
+                                        .append(onData.getTargetColumnName())
+                                        .append("`");
                                 continue;
                         }
                     }
