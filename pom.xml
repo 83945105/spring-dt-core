@@ -5,7 +5,7 @@
 
     <groupId>com.github.83945105</groupId>
     <artifactId>spring-dt-core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>spring-dt-core</name>
@@ -61,11 +61,11 @@
             <artifactId>reflectasm</artifactId>
             <version>${reflectasm.version}</version>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

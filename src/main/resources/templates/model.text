@@ -168,7 +168,7 @@ public final class [[${setting.tableAlias}+${setting.templateSuffix}]] implement
          * 主键
          */
         public OnBuilder<[[${setting.tableAlias}+${setting.templateSuffix}]], Column, On, Where, Sort, Group> primaryKey() {
-            return this.onBuilder.handler([[${setting.tableAlias}+${setting.templateSuffix}]].tableName, JurRoleModel.tableAlias, [[${setting.tableAlias}+${setting.templateSuffix}]].primaryKeyName);
+            return this.onBuilder.handler([[${setting.tableAlias}+${setting.templateSuffix}]].tableName, [[${setting.tableAlias}+${setting.templateSuffix}]].tableAlias, [[${setting.tableAlias}+${setting.templateSuffix}]].primaryKeyName);
         }
     [# th:each="columnInfo : ${columnInfoCollection}"]
         /**
@@ -207,7 +207,7 @@ public final class [[${setting.tableAlias}+${setting.templateSuffix}]] implement
     [/]}
 
     @Override
-    public GroupModel getGroup() {
+    public GroupModel<[[${setting.tableAlias}+${setting.templateSuffix}]], Column, On, Where, Sort, Group> getGroup() {
         return new Group();
     }
 
@@ -235,7 +235,7 @@ public final class [[${setting.tableAlias}+${setting.templateSuffix}]] implement
     [/]}
 
     @Override
-    public SortModel getSort() {
+    public SortModel<[[${setting.tableAlias}+${setting.templateSuffix}]], Column, On, Where, Sort, Group> getSort() {
         return new Sort();
     }
 
