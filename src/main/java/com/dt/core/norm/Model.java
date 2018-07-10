@@ -5,7 +5,11 @@ import com.dt.core.bean.*;
 import java.util.Map;
 
 /**
- * Created by 白超 on 2018/6/16.
+ * 模组
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public interface Model<T extends Model<T, TL, TO, TC, TS, TG>,
         TL extends ColumnModel<T, TL, TO, TC, TS, TG>,

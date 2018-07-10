@@ -1,10 +1,20 @@
 package com.dt.beans;
 
 /**
- * Created by 白超 on 2018/7/7.
+ * 实体工具类
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class BeanUtils {
 
+    /**
+     * 根据属性名获取对应的get方法名
+     * @param property 属性名
+     * @param isBooleanType 是否是boolean类型属性
+     * @return get方法名
+     */
     public static String getGetterMethodName(String property, boolean isBooleanType) {
         if (property == null || property.trim().length() == 0) {
             return null;

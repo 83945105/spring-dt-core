@@ -10,7 +10,11 @@ import com.dt.core.norm.Model;
 import com.dt.core.parser.LimitParser;
 
 /**
- * Created by 白超 on 2018/6/18.
+ * 分页引擎
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class LimitEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -23,12 +27,14 @@ public class LimitEngine<M extends Model<M, ML, MO, MC, MS, MG>,
 
     protected Data<M, ML, MO, MC, MS, MG> data = new EngineData<>();
 
-    public LimitEngine(Class<M> mainClass) {
+    @SuppressWarnings("unchecked")
+    LimitEngine(Class<M> mainClass) {
         MainTableData data = new MainTableData(mainClass);
         this.data.setMainTableData(data);
     }
 
-    public LimitEngine(Class<M> mainClass, String tableName) {
+    @SuppressWarnings("unchecked")
+    LimitEngine(Class<M> mainClass, String tableName) {
         MainTableData data = new MainTableData(mainClass);
         data.setTableName(tableName);
         this.data.setMainTableData(data);

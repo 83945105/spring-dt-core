@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 白超 on 2018/6/17.
+ * On条件连接器
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class OnLink<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -17,15 +21,31 @@ public final class OnLink<M extends Model<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> {
 
+    /**
+     * 存储连接类型-连接条件集合
+     * key {@link LinkType}
+     * value {@link OnData}
+     */
     private Map<LinkType, List<OnData>> linkOnDataMap = new LinkedHashMap<>();
 
+    /**
+     * 且条件
+     *
+     * @param onModel On模组
+     * @return On条件连接器 {@link OnLink}
+     */
     public OnLink<M, ML, MO, MC, MS, MG> and(OnModel<M, ML, MO, MC, MS, MG> onModel) {
-        linkOnDataMap.put(LinkType.AND, onModel.onBuilder.getOnDataList());
+        this.linkOnDataMap.put(LinkType.AND, onModel.onBuilder.getOnDataList());
         return this;
     }
 
+    /**
+     * 获取连接信息集合
+     *
+     * @return LinkedHashMap {@link LinkedHashMap}
+     */
     public Map<LinkType, List<OnData>> getLinkOnDataMap() {
-        return linkOnDataMap;
+        return this.linkOnDataMap;
     }
 
 }

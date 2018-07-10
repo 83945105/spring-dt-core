@@ -4,7 +4,6 @@ import com.dt.core.bean.*;
 import com.dt.core.data.JoinTableData;
 import com.dt.core.data.MainTableData;
 import com.dt.core.data.SortData;
-import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 import com.dt.core.norm.Sort;
 import com.dt.core.parser.SortParser;
@@ -12,7 +11,11 @@ import com.dt.core.parser.SortParser;
 import java.util.List;
 
 /**
- * Created by 白超 on 2018/6/18.
+ * 排序引擎
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public abstract class SortEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -23,14 +26,15 @@ public abstract class SortEngine<M extends Model<M, ML, MO, MC, MS, MG>,
 
     private SortParser sortParser = SortParser.getInstance();
 
-    public SortEngine(Class<M> mainClass) {
+    SortEngine(Class<M> mainClass) {
         super(mainClass);
     }
 
-    public SortEngine(Class<M> mainClass, String tableName) {
+    SortEngine(Class<M> mainClass, String tableName) {
         super(mainClass, tableName);
     }
 
+    @SuppressWarnings("unchecked")
     public SortEngine<M, ML, MO, MC, MS, MG> sort(Sort<M, ML, MO, MC, MS, MG> sort) {
         MainTableData mainTableData = this.data.getMainTableData();
         MS ms = (MS) mainTableData.getTable().getSort();
@@ -41,6 +45,7 @@ public abstract class SortEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,

@@ -4,7 +4,10 @@ import com.dt.core.bean.ComparisonRule;
 
 /**
  * 比较运算符
- * Created by 白超 on 2018/6/29.
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public interface ComparisonOperator<T> {
 

@@ -3,7 +3,11 @@ package com.dt.core.norm;
 import com.dt.core.bean.*;
 
 /**
- * Created by 白超 on 2018/6/20.
+ * 分组处理
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 @FunctionalInterface
 public interface Group<T extends Model<T, TL, TO, TC, TS, TG>,

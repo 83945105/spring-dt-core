@@ -4,7 +4,10 @@ import com.dt.core.bean.*;
 
 /**
  * 连接查询On条件
- * Created by 白超 on 2018/6/16.
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 @FunctionalInterface
 public interface OnA<M extends Model<M, ML, MO, MC, MS, MG>,

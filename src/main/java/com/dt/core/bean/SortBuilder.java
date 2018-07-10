@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 白超 on 2018/6/19.
+ * 排序构建器
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class SortBuilder<S extends Model<S, SL, SO, SC, SS, SG>,
         SL extends ColumnModel<S, SL, SO, SC, SS, SG>,
@@ -30,26 +34,36 @@ public final class SortBuilder<S extends Model<S, SL, SO, SC, SS, SG>,
     private TableData ownerTableData;
 
     public SortBuilder<S, SL, SO, SC, SS, SG> handler(String ownerColumnName) {
-        sortData = new SortData();
-        sortData.setTableData(ownerTableData);
-        sortData.setColumnName(ownerColumnName);
+        this.sortData = new SortData();
+        this.sortData.setTableData(this.ownerTableData);
+        this.sortData.setColumnName(ownerColumnName);
         return this;
     }
 
+    /**
+     * 升序
+     *
+     * @return 当前操作的排序模组
+     */
     public SS asc() {
-        sortData.setSortType(SortType.ASC);
-        sortDataList.add(sortData);
-        return handleModel;
+        this.sortData.setSortType(SortType.ASC);
+        this.sortDataList.add(this.sortData);
+        return this.handleModel;
     }
 
+    /**
+     * 降序
+     *
+     * @return 当前操作的排序模组
+     */
     public SS desc() {
-        sortData.setSortType(SortType.DESC);
-        sortDataList.add(sortData);
-        return handleModel;
+        this.sortData.setSortType(SortType.DESC);
+        this.sortDataList.add(this.sortData);
+        return this.handleModel;
     }
 
     public List<SortData> getSortDataList() {
-        return sortDataList;
+        return this.sortDataList;
     }
 
     public void setOwnerTableData(TableData ownerTableData) {

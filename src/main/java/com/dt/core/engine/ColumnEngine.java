@@ -10,7 +10,11 @@ import com.dt.core.parser.ColumnParser;
 import java.util.Map;
 
 /**
- * Created by 白超 on 2018/6/23.
+ * 列引擎
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class ColumnEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -25,10 +29,11 @@ public class ColumnEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         super(mainClass);
     }
 
-    public ColumnEngine(Class<M> mainClass, String tableName) {
+    ColumnEngine(Class<M> mainClass, String tableName) {
         super(mainClass, tableName);
     }
 
+    @SuppressWarnings("unchecked")
     public ColumnEngine<M, ML, MO, MC, MS, MG> column(Column<M, ML, MO, MC, MS, MG> column) {
         MainTableData tableData = this.data.getMainTableData();
         Map<String, String> columns = column.apply((ML) tableData.getTable().getColumn()).getColumnAliasMap();

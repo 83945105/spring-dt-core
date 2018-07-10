@@ -11,7 +11,10 @@ import java.util.List;
 
 /**
  * 条件构建器
- * Created by 白超 on 2018/6/7.
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
         CL extends ColumnModel<C, CL, CO, CC, CS, CG>,

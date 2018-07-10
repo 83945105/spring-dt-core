@@ -220,7 +220,7 @@ public final class [[${setting.tableAlias}+${setting.templateSuffix}]] implement
          * 主键
          */
         public Group primaryKey() {
-            this.columns.add([[${setting.tableAlias}+${setting.templateSuffix}]].primaryKeyName);
+            this.addColumn([[${setting.tableAlias}+${setting.templateSuffix}]].primaryKeyName);
             return this;
         }
     [# th:each="columnInfo : ${columnInfoCollection}"]
@@ -228,7 +228,7 @@ public final class [[${setting.tableAlias}+${setting.templateSuffix}]] implement
          * [[${columnInfo.comment}]]
          */
         [('public Group ' + ${columnInfo.alias} + '() {')]
-            [('this.columns.add(' + ${setting.tableAlias}+${setting.templateSuffix} + '.' + ${columnInfo.alias} + ');')]
+            [('this.addColumn(' + ${setting.tableAlias}+${setting.templateSuffix} + '.' + ${columnInfo.alias} + ');')]
             [['return this;']]
         [['}']]
 

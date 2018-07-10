@@ -11,7 +11,11 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by 白超 on 2018/6/18.
+ * 分组引擎
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class GroupEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -22,11 +26,11 @@ public class GroupEngine<M extends Model<M, ML, MO, MC, MS, MG>,
 
     private GroupParser groupParser = GroupParser.getInstance();
 
-    public GroupEngine(Class<M> mainClass) {
+    GroupEngine(Class<M> mainClass) {
         super(mainClass);
     }
 
-    public GroupEngine(Class<M> mainClass, String tableName) {
+    GroupEngine(Class<M> mainClass, String tableName) {
         super(mainClass, tableName);
     }
 
@@ -98,12 +102,13 @@ public class GroupEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         return group(null, columnClass, columnNames);
     }
 
-
+    @SuppressWarnings("unchecked")
     public GroupEngine<M, ML, MO, MC, MS, MG> group(Group<M, ML, MO, MC, MS, MG> group) {
         List<String> columns = group.apply((MG) this.data.getMainTableData().getTable().getGroup()).getColumns();
         return group(columns);
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,

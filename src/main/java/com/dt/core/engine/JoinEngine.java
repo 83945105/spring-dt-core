@@ -10,7 +10,11 @@ import com.dt.core.norm.OnA;
 import com.dt.core.parser.JoinParser;
 
 /**
- * Created by 白超 on 2018/6/18.
+ * 连接引擎
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class JoinEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -25,10 +29,11 @@ public class JoinEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         super(mainClass);
     }
 
-    public JoinEngine(Class<M> mainClass, String tableName) {
+    JoinEngine(Class<M> mainClass, String tableName) {
         super(mainClass, tableName);
     }
 
+    @SuppressWarnings("unchecked")
     public <J extends Model<J, JL, JO, JC, JS, JG>,
             JL extends ColumnModel<J, JL, JO, JC, JS, JG>,
             JO extends OnModel<J, JL, JO, JC, JS, JG>,

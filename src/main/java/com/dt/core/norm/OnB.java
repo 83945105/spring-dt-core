@@ -3,7 +3,11 @@ package com.dt.core.norm;
 import com.dt.core.bean.*;
 
 /**
- * Created by 白超 on 2018/6/24.
+ * 连接查询On条件
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 @FunctionalInterface
 public interface OnB<M extends Model<M, ML, MO, MC, MS, MG>,

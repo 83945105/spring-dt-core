@@ -4,7 +4,12 @@ import com.dt.core.norm.Data;
 import com.dt.core.norm.Model;
 
 /**
- * Created by 白超 on 2018/6/16.
+ * On模组
+ * 用于记录连接条件信息
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class OnModel<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -15,6 +20,7 @@ public class OnModel<M extends Model<M, ML, MO, MC, MS, MG>,
 
     private Data data;
 
+    @SuppressWarnings("unchecked")
     protected OnBuilder<M, ML, MO, MC, MS, MG> onBuilder = new OnBuilder<>((MO) this);
 
     public Data getData() {

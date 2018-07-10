@@ -8,7 +8,11 @@ import com.dt.core.norm.Model;
 import java.util.*;
 
 /**
- * Created by 白超 on 2018/6/18.
+ * 数据引擎
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -46,22 +50,21 @@ public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <J extends Model<J, JL, JO, JC, JS, JG>,
             JL extends ColumnModel<J, JL, JO, JC, JS, JG>,
             JO extends OnModel<J, JL, JO, JC, JS, JG>,
             JC extends WhereModel<J, JL, JO, JC, JS, JG>,
             JS extends SortModel<J, JL, JO, JC, JS, JG>,
             JG extends GroupModel<J, JL, JO, JC, JS, JG>> JoinTableData<J, JL, JO, JC, JS, JG> getJoinTableData(String alias, Class<J> joinClass) {
-        if (alias == null || alias.trim() == "") {
+        if (alias == null || alias.trim().length() == 0) {
             try {
                 alias = joinClass.newInstance().getTableAlias();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        if (alias == null || alias.trim() == "") {
+        if (alias == null || alias.trim().length() == 0) {
             throw new TableDataException("alias can not be null or empty.");
         }
         if (this.alias.get(alias) == null) {

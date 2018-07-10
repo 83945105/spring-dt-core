@@ -4,7 +4,10 @@ import com.dt.core.bean.SortType;
 
 /**
  * 排序数据
- * Created by 白超 on 2018/6/28.
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class SortData {
 

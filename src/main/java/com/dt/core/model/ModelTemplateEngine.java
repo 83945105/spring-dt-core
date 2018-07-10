@@ -15,7 +15,11 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * Created by 白超 on 2018/7/3.
+ * 模组模板引擎
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class ModelTemplateEngine {
 

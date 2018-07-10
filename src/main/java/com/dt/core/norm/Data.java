@@ -6,7 +6,11 @@ import com.dt.core.data.*;
 import java.util.*;
 
 /**
- * Created by 白超 on 2018/6/19.
+ * 数据
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public interface Data<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,

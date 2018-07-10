@@ -3,7 +3,11 @@ package com.dt.core.data;
 import com.dt.core.bean.WhereType;
 
 /**
- * Created by 白超 on 2018/6/26.
+ * 条件数据
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class WhereData {
 

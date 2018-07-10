@@ -7,12 +7,17 @@ import com.dt.core.data.WhereData;
 import com.dt.core.exception.DtException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by 白超 on 2018/6/29.
+ * 条件数据解析器
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
-public class WhereParser {
+public final class WhereParser {
 
     private WhereParser() {
     }
@@ -85,9 +90,7 @@ public class WhereParser {
                         }
                     }
                     sql.append(")");
-                    for (Object arg : (Object[]) whereData.getTargetValue()) {
-                        args.add(arg);
-                    }
+                    args.addAll(Arrays.asList((Object[]) whereData.getTargetValue()));
                     continue;
                 default:
                     throw new DtException("the WhereType is wrong.");

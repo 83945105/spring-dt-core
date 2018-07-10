@@ -6,7 +6,11 @@ import com.dt.core.norm.Model;
 import java.util.*;
 
 /**
- * Created by 白超 on 2018/6/25.
+ * 表数据
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public abstract class TableData<T extends Model<T, TL, TO, TC, TS, TG>,
         TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
@@ -17,31 +21,29 @@ public abstract class TableData<T extends Model<T, TL, TO, TC, TS, TG>,
 
     private T table;
 
-    protected Class tableClass;
+    private Class tableClass;
 
     protected String tableName;
 
     protected String tableAlias;
 
-    protected String primaryKeyName;
+    private String primaryKeyName;
 
-    protected String primaryKeyAlias;
+    private String primaryKeyAlias;
 
-    protected Map<String, String> columnAliasMap = new LinkedHashMap<>();
+    private Map<String, String> columnAliasMap = new LinkedHashMap<>();
 
-    protected List<LinkWhereData> linkWhereDataList = new ArrayList<>();
+    private List<LinkWhereData> linkWhereDataList = new ArrayList<>();
 
-    protected List<String> groupColumns = new ArrayList<>();
+    private List<String> groupColumns = new ArrayList<>();
 
-    protected List<List<SortData>> sortDataList = new ArrayList<>();
+    private List<List<SortData>> sortDataList = new ArrayList<>();
 
     public TableData(Class<T> tableClass) {
         this.tableClass = tableClass;
         try {
             this.table = tableClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
         this.tableName = this.table.getTableName();
@@ -136,9 +138,7 @@ public abstract class TableData<T extends Model<T, TL, TO, TC, TS, TG>,
         if (groupColumns == null || groupColumns.length == 0) {
             return;
         }
-        for (String groupColumn : groupColumns) {
-            this.groupColumns.add(groupColumn);
-        }
+        Collections.addAll(this.groupColumns, groupColumns);
     }
 
     public void addSortDataList(List<SortData> sortDataList) {

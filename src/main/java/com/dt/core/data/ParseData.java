@@ -3,7 +3,11 @@ package com.dt.core.data;
 import java.util.List;
 
 /**
- * Created by 白超 on 2018/7/3.
+ * 解析数据
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class ParseData {
 

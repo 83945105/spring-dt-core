@@ -7,13 +7,18 @@ import com.dt.core.data.ParseData;
 import com.dt.core.exception.DtException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 白超 on 2018/6/29.
+ * 连接数据解析器
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
-public class JoinParser {
+public final class JoinParser {
 
     private JoinParser() {
     }
@@ -112,9 +117,7 @@ public class JoinParser {
                                     }
                                 }
                                 on.append(")");
-                                for (Object arg : (Object[]) onData.getTargetValue()) {
-                                    args.add(arg);
-                                }
+                                Collections.addAll(args, (Object[]) onData.getTargetValue());
                                 continue;
                             default:
                                 throw new DtException("the WhereType is wrong.");

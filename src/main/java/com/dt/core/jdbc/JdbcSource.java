@@ -3,7 +3,11 @@ package com.dt.core.jdbc;
 import java.sql.*;
 
 /**
- * Created by 白超 on 2018/7/5.
+ * jdbc
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public abstract class JdbcSource {
 

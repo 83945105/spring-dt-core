@@ -1,9 +1,13 @@
 package com.dt.core.model;
 
 /**
- * Created by 白超 on 2018/7/5.
+ * 表字段信息
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
-public class ColumnInfo {
+public final class ColumnInfo {
 
     private String name;
 

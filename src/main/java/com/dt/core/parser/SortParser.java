@@ -7,9 +7,13 @@ import com.dt.core.exception.DtException;
 import java.util.List;
 
 /**
- * Created by 白超 on 2018/7/2.
+ * 排序数据解析器
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
-public class SortParser {
+public final class SortParser {
 
     private SortParser() {
     }

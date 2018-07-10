@@ -6,7 +6,11 @@ import com.dt.core.engine.*;
 import com.dt.core.norm.Model;
 
 /**
- * Created by 白超 on 2018/5/29.
+ * MySql引擎
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class MySqlEngine {
 

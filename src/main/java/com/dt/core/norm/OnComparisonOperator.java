@@ -3,7 +3,11 @@ package com.dt.core.norm;
 import com.dt.core.bean.*;
 
 /**
- * Created by 白超 on 2018/6/29.
+ * On比较条件
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public interface OnComparisonOperator<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,

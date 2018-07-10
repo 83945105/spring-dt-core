@@ -9,7 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 白超 on 2018/6/17.
+ * On条件构建器
+ *
+ * @author 白超
+ * @version 1.0
+ * @see ComparisonOperator
+ * @see OnComparisonOperator
+ * @since 2018/7/10
  */
 public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -18,40 +24,54 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         MS extends SortModel<M, ML, MO, MC, MS, MG>,
         MG extends GroupModel<M, ML, MO, MC, MS, MG>> implements ComparisonOperator<MO>, OnComparisonOperator<M, ML, MO, MC, MS, MG> {
 
-    protected MO handleModel;
+    /**
+     * 当然操作的模组
+     */
+    private MO handleModel;
 
     public OnBuilder(MO handleModel) {
         this.handleModel = handleModel;
     }
 
+    /**
+     * 待构建的OnData
+     */
     private OnData onData;
 
     private List<OnData> onDataList = new ArrayList<>();
 
-    public OnBuilder<M, ML, MO, MC, MS, MG> handler(String ownerTableName, String ownerAlias, String ownerColumnName) {
-        onData = new OnData();
-        onData.setOwnerTableName(ownerTableName);
-        onData.setOwnerAlias(ownerAlias);
-        onData.setOwnerColumnName(ownerColumnName);
+    /**
+     * 用于新建OnData并预先存于一部分信息
+     *
+     * @param ownerTableName  所属表名
+     * @param ownerTableAlias 所属表别名
+     * @param ownerColumnName 所属字段名
+     * @return 当前On条件构建起 {@link OnBuilder}
+     */
+    public OnBuilder<M, ML, MO, MC, MS, MG> handler(String ownerTableName, String ownerTableAlias, String ownerColumnName) {
+        this.onData = new OnData();
+        this.onData.setOwnerTableName(ownerTableName);
+        this.onData.setOwnerTableAlias(ownerTableAlias);
+        this.onData.setOwnerColumnName(ownerColumnName);
         return this;
     }
 
     @Override
     public MO isNull() {
-        onData.setOnType(OnType.IS_NULL);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(0);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.IS_NULL);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(0);
+        this.onDataList.add(onData);
+        return this.handleModel;
     }
 
     @Override
     public MO isNotNull() {
-        onData.setOnType(OnType.IS_NOT_NULL);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(0);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.IS_NOT_NULL);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(0);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
@@ -59,17 +79,17 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] equalTo, the value can not be null.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] equalTo, the value can not be null.");
             }
         }
-        onData.setOnType(OnType.EQUAL);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(1);
-        onData.setTargetValue(value);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.EQUAL);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(1);
+        this.onData.setTargetValue(value);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
@@ -77,17 +97,17 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] notEqualTo, the value can not be null.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] notEqualTo, the value can not be null.");
             }
         }
-        onData.setOnType(OnType.NOT_EQUAL);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(1);
-        onData.setTargetValue(value);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.NOT_EQUAL);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(1);
+        this.onData.setTargetValue(value);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
@@ -95,17 +115,17 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] greaterThan, the value can not be null.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] greaterThan, the value can not be null.");
             }
         }
-        onData.setOnType(OnType.GREATER);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(1);
-        onData.setTargetValue(value);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.GREATER);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(1);
+        this.onData.setTargetValue(value);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
@@ -113,17 +133,17 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] greaterThanAndEqualTo, the value can not be null.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] greaterThanAndEqualTo, the value can not be null.");
             }
         }
-        onData.setOnType(OnType.GREATER_EQUAL);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(1);
-        onData.setTargetValue(value);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.GREATER_EQUAL);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(1);
+        this.onData.setTargetValue(value);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
@@ -131,17 +151,17 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] lessThan, the value can not be null.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] lessThan, the value can not be null.");
             }
         }
-        onData.setOnType(OnType.LESS);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(1);
-        onData.setTargetValue(value);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.LESS);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(1);
+        this.onData.setTargetValue(value);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
@@ -149,17 +169,17 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] lessThanAndEqualTo, the value can not be null.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] lessThanAndEqualTo, the value can not be null.");
             }
         }
-        onData.setOnType(OnType.LESS_EQUAL);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(1);
-        onData.setTargetValue(value);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.LESS_EQUAL);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(1);
+        this.onData.setTargetValue(value);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
@@ -167,26 +187,26 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] between, the value can not be null.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] between, the value can not be null.");
             }
         }
         if (secondValue == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] between, the secondValue can not be null.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] between, the secondValue can not be null.");
             }
         }
-        onData.setOnType(OnType.BETWEEN);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(2);
-        onData.setTargetValue(value);
-        onData.setTargetSecondValue(secondValue);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.BETWEEN);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(2);
+        this.onData.setTargetValue(value);
+        this.onData.setTargetSecondValue(secondValue);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
@@ -194,17 +214,17 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         if (value == null) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] like, the value can not be null.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] like, the value can not be null.");
             }
         }
-        onData.setOnType(OnType.LIKE);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(1);
-        onData.setTargetValue(value);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.LIKE);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(1);
+        this.onData.setTargetValue(value);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
@@ -212,92 +232,93 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         if (values == null || values.length == 0) {
             switch (comparisonRule) {
                 case NULL_SKIP:
-                    return handleModel;
+                    return this.handleModel;
                 case NOT_NULL:
-                    throw new ComparisonException("join table alias [" + onData.getOwnerAlias() + "] column [" + onData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
             }
         }
-        onData.setOnType(OnType.IN);
-        onData.setOnValueType(OnValueType.VALUE);
-        onData.setValueCount(values.length);
-        onData.setTargetValue(values);
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setOnType(OnType.IN);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(values.length);
+        this.onData.setTargetValue(values);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
     public MO equalTo(OnBuilder onBuilder) {
-        onData.setOnType(OnType.EQUAL);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.EQUAL);
+        this.onData.setOnValueType(OnValueType.JOIN);
         OnData targetOnData = onBuilder.onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(targetOnData.getOwnerAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(targetOnData.getOwnerTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
     public MO notEqualTo(OnBuilder onBuilder) {
-        onData.setOnType(OnType.NOT_EQUAL);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.NOT_EQUAL);
+        this.onData.setOnValueType(OnValueType.JOIN);
         OnData targetOnData = onBuilder.onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(targetOnData.getOwnerAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(targetOnData.getOwnerTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
     public MO greaterThan(OnBuilder onBuilder) {
-        onData.setOnType(OnType.GREATER);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.GREATER);
+        this.onData.setOnValueType(OnValueType.JOIN);
         OnData targetOnData = onBuilder.onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(targetOnData.getOwnerAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(targetOnData.getOwnerTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
     public MO greaterThanAndEqualTo(OnBuilder onBuilder) {
-        onData.setOnType(OnType.GREATER_EQUAL);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.GREATER_EQUAL);
+        this.onData.setOnValueType(OnValueType.JOIN);
         OnData targetOnData = onBuilder.onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(targetOnData.getOwnerAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(targetOnData.getOwnerTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
     public MO lessThan(OnBuilder onBuilder) {
-        onData.setOnType(OnType.LESS);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.LESS);
+        this.onData.setOnValueType(OnValueType.JOIN);
         OnData targetOnData = onBuilder.onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(targetOnData.getOwnerAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(targetOnData.getOwnerTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
     public MO lessThanAndEqualTo(OnBuilder onBuilder) {
-        onData.setOnType(OnType.LESS_EQUAL);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.LESS_EQUAL);
+        this.onData.setOnValueType(OnValueType.JOIN);
         OnData targetOnData = onBuilder.onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(targetOnData.getOwnerAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(targetOnData.getOwnerTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
@@ -306,114 +327,124 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> MO equalTo(String alias,
                                                                      Class<T> onClass,
                                                                      OnB<T, TL, TO, TC, TS, TG> on) {
-        onData.setOnType(OnType.EQUAL);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.EQUAL);
+        this.onData.setOnValueType(OnValueType.JOIN);
         JoinTableData<T, TL, TO, TC, TS, TG> joinTableData = this.handleModel.getData().getJoinTableData(alias, onClass);
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getTableAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(joinTableData.getTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> MO notEqualTo(String alias, Class<T> onClass, OnB<T, TL, TO, TC, TS, TG> on) {
-        onData.setOnType(OnType.NOT_EQUAL);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.NOT_EQUAL);
+        this.onData.setOnValueType(OnValueType.JOIN);
         JoinTableData<T, TL, TO, TC, TS, TG> joinTableData = this.handleModel.getData().getJoinTableData(alias, onClass);
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getTableAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(joinTableData.getTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> MO greaterThan(String alias, Class<T> onClass, OnB<T, TL, TO, TC, TS, TG> on) {
-        onData.setOnType(OnType.GREATER);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.GREATER);
+        this.onData.setOnValueType(OnValueType.JOIN);
         JoinTableData<T, TL, TO, TC, TS, TG> joinTableData = this.handleModel.getData().getJoinTableData(alias, onClass);
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getTableAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(joinTableData.getTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> MO greaterThanAndEqualTo(String alias, Class<T> onClass, OnB<T, TL, TO, TC, TS, TG> on) {
-        onData.setOnType(OnType.GREATER_EQUAL);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.GREATER_EQUAL);
+        this.onData.setOnValueType(OnValueType.JOIN);
         JoinTableData<T, TL, TO, TC, TS, TG> joinTableData = this.handleModel.getData().getJoinTableData(alias, onClass);
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getTableAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(joinTableData.getTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> MO lessThan(String alias, Class<T> onClass, OnB<T, TL, TO, TC, TS, TG> on) {
-        onData.setOnType(OnType.LESS);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.LESS);
+        this.onData.setOnValueType(OnValueType.JOIN);
         JoinTableData<T, TL, TO, TC, TS, TG> joinTableData = this.handleModel.getData().getJoinTableData(alias, onClass);
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getTableAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(joinTableData.getTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,
             TC extends WhereModel<T, TL, TO, TC, TS, TG>,
             TS extends SortModel<T, TL, TO, TC, TS, TG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> MO lessThanAndEqualTo(String alias, Class<T> onClass, OnB<T, TL, TO, TC, TS, TG> on) {
-        onData.setOnType(OnType.LESS_EQUAL);
-        onData.setOnValueType(OnValueType.JOIN);
+        this.onData.setOnType(OnType.LESS_EQUAL);
+        this.onData.setOnValueType(OnValueType.JOIN);
         JoinTableData<T, TL, TO, TC, TS, TG> joinTableData = this.handleModel.getData().getJoinTableData(alias, onClass);
         TO to = (TO) joinTableData.getTable().getOn();
         OnData targetOnData = on.apply(to).onData;
-        onData.setTargetTableName(targetOnData.getOwnerTableName());
-        onData.setTargetAlias(joinTableData.getTableAlias());
-        onData.setTargetColumnName(targetOnData.getOwnerColumnName());
-        onDataList.add(onData);
-        return handleModel;
+        this.onData.setTargetTableName(targetOnData.getOwnerTableName());
+        this.onData.setTargetAlias(joinTableData.getTableAlias());
+        this.onData.setTargetColumnName(targetOnData.getOwnerColumnName());
+        this.onDataList.add(this.onData);
+        return this.handleModel;
     }
 
+    /**
+     * 获取OnData集合
+     *
+     * @return ArrayList {@link ArrayList}
+     */
     public List<OnData> getOnDataList() {
-        return onDataList;
+        return this.onDataList;
     }
 }

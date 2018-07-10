@@ -11,7 +11,11 @@ import com.dt.core.parser.ColumnParser;
 import java.util.Map;
 
 /**
- * Created by 白超 on 2018/6/23.
+ * 列引擎
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class ColumnIntactEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
@@ -22,11 +26,11 @@ public class ColumnIntactEngine<M extends Model<M, ML, MO, MC, MS, MG>,
 
     private ColumnParser columnParser = ColumnParser.getInstance();
 
-    public ColumnIntactEngine(Class<M> mainClass) {
+    ColumnIntactEngine(Class<M> mainClass) {
         super(mainClass);
     }
 
-    public ColumnIntactEngine(Class<M> mainClass, String tableName) {
+    ColumnIntactEngine(Class<M> mainClass, String tableName) {
         super(mainClass, tableName);
     }
 
@@ -38,6 +42,7 @@ public class ColumnIntactEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends Model<T, TL, TO, TC, TS, TG>,
             TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
             TO extends OnModel<T, TL, TO, TC, TS, TG>,

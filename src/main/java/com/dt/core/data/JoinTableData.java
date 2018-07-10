@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 表数据
- * Created by 白超 on 2018/6/24.
+ * 连接表数据
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class JoinTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         TL extends ColumnModel<T, TL, TO, TC, TS, TG>,

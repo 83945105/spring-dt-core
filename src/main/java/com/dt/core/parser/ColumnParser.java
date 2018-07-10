@@ -11,10 +11,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 查询字段解析器
- * Created by 白超 on 2018/6/28.
+ * 字段数据解析器
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
-public class ColumnParser {
+public final class ColumnParser {
 
     private ColumnParser() {
     }

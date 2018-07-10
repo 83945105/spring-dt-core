@@ -1,7 +1,11 @@
 package com.dt.core.exception;
 
 /**
- * Created by 白超 on 2018/6/29.
+ * 比较异常
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public class ComparisonException extends DtException {
 

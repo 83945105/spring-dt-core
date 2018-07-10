@@ -2,19 +2,22 @@ package com.dt.core.converter;
 
 /**
  * 驼峰转换器
- * Created by 白超 on 2018/6/28.
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class HumpConverter implements ColumnFieldConverter {
 
     @Override
     public String columnToField(String column) {
         String[] names = column.trim().split("_");
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < names.length; i++) {
-            if (names[i].length() == 0) {
+        StringBuilder sb = new StringBuilder();
+        for (String name : names) {
+            if (name.length() == 0) {
                 continue;
             }
-            char[] cs = names[i].toLowerCase().toCharArray();
+            char[] cs = name.toLowerCase().toCharArray();
             cs[0] -= 32;
             sb.append(String.valueOf(cs));
         }

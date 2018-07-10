@@ -2,7 +2,10 @@ package com.dt.core.bean;
 
 /**
  * 比较规则
- * Created by 白超 on 2018/6/29.
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public enum ComparisonRule {
 

@@ -5,13 +5,16 @@ import com.dt.core.bean.OnValueType;
 
 /**
  * 条件数据
- * Created by 白超 on 2018/6/24.
+ *
+ * @author 白超
+ * @version 1.0
+ * @since 2018/7/10
  */
 public final class OnData {
 
     private String ownerTableName;
 
-    private String ownerAlias;
+    private String ownerTableAlias;
 
     private String ownerColumnName;
 
@@ -39,12 +42,12 @@ public final class OnData {
         this.ownerTableName = ownerTableName;
     }
 
-    public String getOwnerAlias() {
-        return ownerAlias;
+    public String getOwnerTableAlias() {
+        return ownerTableAlias;
     }
 
-    public void setOwnerAlias(String ownerAlias) {
-        this.ownerAlias = ownerAlias;
+    public void setOwnerTableAlias(String ownerTableAlias) {
+        this.ownerTableAlias = ownerTableAlias;
     }
 
     public String getOwnerColumnName() {
