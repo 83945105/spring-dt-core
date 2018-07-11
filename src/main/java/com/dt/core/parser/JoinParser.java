@@ -141,7 +141,7 @@ public final class JoinParser {
             }
         }
         ParseData parseData = new ParseData();
-        parseData.setSql(sql.length() > 2 ? sql.substring(2) : null);
+        parseData.setSql(sql.length() > 2 ? sql.substring(2) : "");
         parseData.setArgs(args);
         return parseData;
     }

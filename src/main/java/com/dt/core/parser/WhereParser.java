@@ -209,7 +209,7 @@ public final class WhereParser {
             }
         }
         ParseData parseData = new ParseData();
-        parseData.setSql(sql.length() > 5 ? sql.substring(5) : null);
+        parseData.setSql(sql.length() > 4 ? sql.replace(0, 4, "where").toString() : "");
         parseData.setArgs(args);
         return parseData;
     }

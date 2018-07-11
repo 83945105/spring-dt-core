@@ -49,6 +49,6 @@ public final class SortParser {
                 }
             }
         }
-        return sql.length() > 2 ? sql.replace(0, 2, "order by ").toString() : null;
+        return sql.length() > 2 ? sql.replace(0, 2, "order by ").toString() : "";
     }
 }

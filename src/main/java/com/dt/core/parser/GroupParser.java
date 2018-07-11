@@ -34,6 +34,6 @@ public final class GroupParser {
                 sql.append(", ").append(alias).append(".").append(columnName);
             }
         }
-        return sql.length() > 2 ? sql.replace(0, 2, "group by ").toString() : null;
+        return sql.length() > 2 ? sql.replace(0, 2, "group by ").toString() : "";
     }
 }
