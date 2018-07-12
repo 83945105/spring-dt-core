@@ -203,7 +203,7 @@ public final class WhereParser {
         List<Object> args = new ArrayList<>();
         for (List<LinkWhereData> linkWhereData : linkWhereDataList) {
             data = parseLinkWhereData(linkWhereData, LinkType.AND);
-            if (data != null) {
+            if (data != null && data.getSql() != null) {
                 sql.append(" and ").append(data.getSql());
                 args.addAll(data.getArgs());
             }
