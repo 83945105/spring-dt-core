@@ -1,5 +1,6 @@
 package com.dt.core.parser;
 
+import com.dt.core.data.FunctionColumnData;
 import com.dt.core.data.MainTableData;
 import com.dt.core.data.TableData;
 import com.dt.core.data.VirtualFieldData;
@@ -28,13 +29,14 @@ public final class ColumnParser {
         return COLUMN_PARSER;
     }
 
-    public String parse(MainTableData mainTableData, Set<VirtualFieldData> virtualFieldDataSet, Set<TableData> columnDataSet) {
+    public String parse(MainTableData mainTableData, Set<FunctionColumnData> functionColumnDataSet, Set<VirtualFieldData> virtualFieldDataSet, Set<TableData> columnDataSet) {
+        boolean hasF = functionColumnDataSet != null && functionColumnDataSet.size() != 0;
         boolean hasV = virtualFieldDataSet != null && virtualFieldDataSet.size() != 0;
         boolean hasC = columnDataSet != null && columnDataSet.size() != 0;
         StringBuilder sql = new StringBuilder(64);
         Map<String, String> columnAliasMap;
         String tableAlias;
-        if (!hasV && !hasC) {
+        if (!hasF && !hasV && !hasC) {
             columnAliasMap = mainTableData.getTable().getColumnAliasMap();
             tableAlias = mainTableData.getTableAlias();
             for (Map.Entry<String, String> entry : columnAliasMap.entrySet()) {
@@ -49,6 +51,41 @@ public final class ColumnParser {
             return sql.substring(1);
         }
         Map<String, Boolean> cache = new HashMap<>();
+
+        if (hasF) {
+            TableData tableData;
+            String alias;
+            for (FunctionColumnData data : functionColumnDataSet) {
+                tableData = data.getTableData();
+                for (Map.Entry<String, String> entry : data.getColumnAliasMap().entrySet()) {
+                    alias = entry.getValue();
+                    if (cache.get(alias) != null) {
+                        throw new TableDataException("FunctionColumn alias [" + alias + "] is already be used, please set another alias.");
+                    }
+                    sql.append(",");
+                    switch (data.getFunctionColumnType()) {
+                        case MIN:
+                            sql.append("min(");
+                            break;
+                        case MAX:
+                            sql.append("max(");
+                            break;
+                        case COUNT:
+                            sql.append("count(");
+                            break;
+                        default:
+                            throw new DtException("the functionColumnType is wrong.");
+                    }
+                    sql.append(tableData.getTableAlias())
+                            .append(".")
+                            .append(entry.getKey())
+                            .append(") ")
+                            .append(alias);
+                    cache.put(alias, true);
+                }
+            }
+        }
+
         if (hasV) {
             Object value;
             String alias;
@@ -84,7 +121,12 @@ public final class ColumnParser {
         if (!hasC) {
             columnAliasMap = mainTableData.getTable().getColumnAliasMap();
             tableAlias = mainTableData.getTableAlias();
+            String alias;
             for (Map.Entry<String, String> entry : columnAliasMap.entrySet()) {
+                alias = entry.getValue();
+                if (cache.get(alias) != null) {
+                    throw new TableDataException("FunctionColumn alias [" + alias + "] is already be used, please set another alias.");
+                }
                 sql.append(",")
                         .append(tableAlias)
                         .append(".`")
@@ -92,6 +134,7 @@ public final class ColumnParser {
                         .append("` `")
                         .append(entry.getValue())
                         .append("`");
+                cache.put(alias, true);
             }
             return sql.substring(1);
         }

@@ -28,6 +28,7 @@ public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
 
     private Set<TableData> columnDataSet = new LinkedHashSet<>();
     private Set<VirtualFieldData> virtualFieldDataSet = new LinkedHashSet<>();
+    private Set<FunctionColumnData> functionColumnDataSet = new LinkedHashSet<>();
 
     private List<List<LinkWhereData>> linkWhereDataList = new ArrayList<>();
 
@@ -108,6 +109,16 @@ public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
     @Override
     public void addVirtualFieldData(VirtualFieldData virtualFieldData) {
         this.virtualFieldDataSet.add(virtualFieldData);
+    }
+
+    @Override
+    public Set<FunctionColumnData> getFunctionColumnDataSet() {
+        return functionColumnDataSet;
+    }
+
+    @Override
+    public void addFunctionColumnData(FunctionColumnData functionColumnData) {
+        this.functionColumnDataSet.add(functionColumnData);
     }
 
     @Override

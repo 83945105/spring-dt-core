@@ -1,5 +1,8 @@
 package com.dt.beans;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * 实体工具类
  *
@@ -9,15 +12,23 @@ package com.dt.beans;
  */
 public class BeanUtils {
 
+    private static final Map<String, String> GETTER_METHOD_NAME_CACHE = new ConcurrentHashMap<>();
+    private static final Map<String, String> SETTER_METHOD_NAME_CACHE = new ConcurrentHashMap<>();
+
     /**
      * 根据属性名获取对应的get方法名
-     * @param property 属性名
+     *
+     * @param property      属性名
      * @param isBooleanType 是否是boolean类型属性
      * @return get方法名
      */
     public static String getGetterMethodName(String property, boolean isBooleanType) {
         if (property == null || property.trim().length() == 0) {
             return null;
+        }
+        String name = GETTER_METHOD_NAME_CACHE.get(property);
+        if (name != null) {
+            return name;
         }
         StringBuilder sb = new StringBuilder();
         sb.append(property);
@@ -31,6 +42,33 @@ public class BeanUtils {
         } else {
             sb.insert(0, "get");
         }
+        GETTER_METHOD_NAME_CACHE.put(property, sb.toString());
+        return sb.toString();
+    }
+
+    /**
+     * 根据属性名称获取对应的setter方法名称
+     *
+     * @param property 属性名称
+     * @return
+     */
+    public static String getSetterMethodName(String property) {
+        if (property == null || property.trim().trim().length() == 0) {
+            return null;
+        }
+        String name = SETTER_METHOD_NAME_CACHE.get(property);
+        if (name != null) {
+            return name;
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(property);
+        if (Character.isLowerCase(sb.charAt(0))) {
+            if (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1))) {
+                sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+            }
+        }
+        sb.insert(0, "set");
+        SETTER_METHOD_NAME_CACHE.put(property, sb.toString());
         return sb.toString();
     }
 }

@@ -53,6 +53,10 @@ public interface Data<M extends Model<M, ML, MO, MC, MS, MG>,
 
     void addVirtualFieldData(VirtualFieldData virtualFieldData);
 
+    Set<FunctionColumnData> getFunctionColumnDataSet();
+
+    void addFunctionColumnData(FunctionColumnData functionColumnData);
+
     List<List<LinkWhereData>> getLinkWhereDataList();
 
     void addLinkWhereDataList(List<LinkWhereData> linkWhereDataList);
