@@ -8,6 +8,7 @@ import com.dt.core.exception.DtException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -90,7 +91,14 @@ public final class WhereParser {
                         }
                     }
                     sql.append(")");
-                    args.addAll(Arrays.asList((Object[]) whereData.getTargetValue()));
+                    Object value = whereData.getTargetValue();
+                    if (value instanceof Collection) {
+                        args.addAll((Collection<?>) value);
+                    } else if (value.getClass().isArray()) {
+                        for (Object o : (Object[]) value) {
+                            args.add(o);
+                        }
+                    }
                     continue;
                 default:
                     throw new DtException("the WhereType is wrong.");

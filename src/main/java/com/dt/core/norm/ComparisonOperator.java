@@ -2,6 +2,8 @@ package com.dt.core.norm;
 
 import com.dt.core.bean.ComparisonRule;
 
+import java.util.Collection;
+
 /**
  * 比较运算符
  *
@@ -337,4 +339,37 @@ public interface ComparisonOperator<T> {
         return inValue(values, comparisonRule);
     }
 
+    T inValue(Collection<?> values, ComparisonRule comparisonRule);
+
+    default T inS(Collection<String> values) {
+        return inValue(values, ComparisonRule.NULL_SKIP);
+    }
+
+    default T inI(Collection<Integer> values) {
+        return inValue(values, ComparisonRule.NULL_SKIP);
+    }
+
+    default T inL(Collection<Long> values) {
+        return inValue(values, ComparisonRule.NULL_SKIP);
+    }
+
+    default T inD(Collection<Double> values) {
+        return inValue(values, ComparisonRule.NULL_SKIP);
+    }
+
+    default T inS(Collection<String> values, ComparisonRule comparisonRule) {
+        return inValue(values, comparisonRule);
+    }
+
+    default T inI(Collection<Integer> values, ComparisonRule comparisonRule) {
+        return inValue(values, comparisonRule);
+    }
+
+    default T inL(Collection<Long> values, ComparisonRule comparisonRule) {
+        return inValue(values, comparisonRule);
+    }
+
+    default T inD(Collection<Double> values, ComparisonRule comparisonRule) {
+        return inValue(values, comparisonRule);
+    }
 }

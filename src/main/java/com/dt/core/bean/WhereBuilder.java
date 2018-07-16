@@ -7,6 +7,7 @@ import com.dt.core.norm.ComparisonOperator;
 import com.dt.core.norm.Model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -226,6 +227,23 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
         }
         this.whereData.setWhereType(WhereType.IN);
         this.whereData.setValueCount(values.length);
+        this.whereData.setTargetValue(values);
+        this.whereDataList.add(this.whereData);
+        return this.handleModel;
+    }
+
+    @Override
+    public CC inValue(Collection<?> values, ComparisonRule comparisonRule) {
+        if (values == null || values.size() == 0) {
+            switch (comparisonRule) {
+                case NULL_SKIP:
+                    return this.handleModel;
+                case NOT_NULL:
+                    throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
+            }
+        }
+        this.whereData.setWhereType(WhereType.IN);
+        this.whereData.setValueCount(values.size());
         this.whereData.setTargetValue(values);
         this.whereDataList.add(this.whereData);
         return this.handleModel;

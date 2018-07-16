@@ -6,6 +6,7 @@ import com.dt.core.exception.ComparisonException;
 import com.dt.core.norm.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -240,6 +241,24 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
         this.onData.setOnType(OnType.IN);
         this.onData.setOnValueType(OnValueType.VALUE);
         this.onData.setValueCount(values.length);
+        this.onData.setTargetValue(values);
+        this.onDataList.add(this.onData);
+        return this.handleModel;
+    }
+
+    @Override
+    public MO inValue(Collection<?> values, ComparisonRule comparisonRule) {
+        if (values == null || values.size() == 0) {
+            switch (comparisonRule) {
+                case NULL_SKIP:
+                    return this.handleModel;
+                case NOT_NULL:
+                    throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
+            }
+        }
+        this.onData.setOnType(OnType.IN);
+        this.onData.setOnValueType(OnValueType.VALUE);
+        this.onData.setValueCount(values.size());
         this.onData.setTargetValue(values);
         this.onDataList.add(this.onData);
         return this.handleModel;
