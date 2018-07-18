@@ -3,6 +3,7 @@ package com.dt.beans;
 import com.esotericsoftware.reflectasm.FieldAccess;
 import com.esotericsoftware.reflectasm.MethodAccess;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -19,13 +20,13 @@ public class ClassAccessCache {
      * MethodAccess缓存
      * {@link MethodAccess}
      */
-    private ConcurrentHashMap<Class, MethodAccess> methodAccessConcurrentCache = new ConcurrentHashMap<>();
+    private static final Map<Class, MethodAccess> METHOD_ACCESS_MAP = new ConcurrentHashMap<>();
 
     /**
      * FieldAccess缓存
      * {@link FieldAccess}
      */
-    private ConcurrentHashMap<Class, FieldAccess> fieldAccessConcurrentCache = new ConcurrentHashMap<>();
+    private static final Map<Class, FieldAccess> FIELD_ACCESS_MAP = new ConcurrentHashMap<>();
 
     /**
      * 获取指定类的MethodAccess
@@ -34,11 +35,11 @@ public class ClassAccessCache {
      * @param clazz 类的Class属性
      * @return {@link MethodAccess}
      */
-    public MethodAccess getMethodAccess(Class clazz) {
-        MethodAccess methodAccess = this.methodAccessConcurrentCache.get(clazz);
+    public static MethodAccess getMethodAccess(Class clazz) {
+        MethodAccess methodAccess = METHOD_ACCESS_MAP.get(clazz);
         if (methodAccess == null) {
             methodAccess = MethodAccess.get(clazz);
-            this.methodAccessConcurrentCache.put(clazz, methodAccess);
+            METHOD_ACCESS_MAP.put(clazz, methodAccess);
         }
         return methodAccess;
     }
@@ -51,10 +52,10 @@ public class ClassAccessCache {
      * @return {@link FieldAccess}
      */
     public FieldAccess getFieldAccess(Class clazz) {
-        FieldAccess fieldAccess = this.fieldAccessConcurrentCache.get(clazz);
+        FieldAccess fieldAccess = FIELD_ACCESS_MAP.get(clazz);
         if (fieldAccess == null) {
             fieldAccess = FieldAccess.get(clazz);
-            this.fieldAccessConcurrentCache.put(clazz, fieldAccess);
+            FIELD_ACCESS_MAP.put(clazz, fieldAccess);
         }
         return fieldAccess;
     }

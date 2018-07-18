@@ -37,6 +37,9 @@ public class ColumnEngine<M extends Model<M, ML, MO, MC, MS, MG>,
     public ColumnEngine<M, ML, MO, MC, MS, MG> column(Column<M, ML, MO, MC, MS, MG> column) {
         MainTableData tableData = this.data.getMainTableData();
         Map<String, String> columns = column.apply((ML) tableData.getTable().getColumn()).getColumnAliasMap();
+        if(columns.size() == 0) {
+            columns = tableData.getTable().getColumnAliasMap();
+        }
         tableData.addColumnAliasMap(columns);
         this.data.addColumnData(tableData);
         return this;

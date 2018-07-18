@@ -39,6 +39,9 @@ public class ColumnIntactEngine<M extends Model<M, ML, MO, MC, MS, MG>,
     public ColumnIntactEngine<M, ML, MO, MC, MS, MG> column(Column<M, ML, MO, MC, MS, MG> column) {
         MainTableData tableData = this.data.getMainTableData();
         Map<String, String> columns = column.apply((ML) tableData.getTable().getColumn()).getColumnAliasMap();
+        if(columns.size() == 0) {
+            columns = tableData.getTable().getColumnAliasMap();
+        }
         tableData.addColumnAliasMap(columns);
         this.data.addColumnData(tableData);
         return this;
@@ -53,6 +56,9 @@ public class ColumnIntactEngine<M extends Model<M, ML, MO, MC, MS, MG>,
             TG extends GroupModel<T, TL, TO, TC, TS, TG>> ColumnIntactEngine<M, ML, MO, MC, MS, MG> column(Class<T> columnClass, String alias, Column<T, TL, TO, TC, TS, TG> column) {
         JoinTableData joinTableData = this.data.getJoinTableData(alias, columnClass);
         Map<String, String> columns = column.apply((TL) joinTableData.getTable().getColumn()).getColumnAliasMap();
+        if(columns.size() == 0) {
+            columns = joinTableData.getTable().getColumnAliasMap();
+        }
         joinTableData.addColumnAliasMap(columns);
         this.data.addColumnData(joinTableData);
         return this;
