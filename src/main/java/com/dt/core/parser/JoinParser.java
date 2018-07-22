@@ -42,13 +42,13 @@ public final class JoinParser {
             joinTableData = entry.getValue();
             switch (joinTableData.getJoinType()) {
                 case INNER:
-                    sql.append(", inner join ");
+                    sql.append(" inner join ");
                     break;
                 case LEFT:
-                    sql.append(", left join ");
+                    sql.append(" left join ");
                     break;
                 case RIGHT:
-                    sql.append(", right join ");
+                    sql.append(" right join ");
                     break;
             }
             sql.append(joinTableData.getTableName()).append(" ").append(joinTableData.getTableAlias());
@@ -141,7 +141,7 @@ public final class JoinParser {
             }
         }
         ParseData parseData = new ParseData();
-        parseData.setSql(sql.length() > 2 ? sql.substring(2) : "");
+        parseData.setSql(sql.length() > 1 ? sql.substring(1) : "");
         parseData.setArgs(args);
         return parseData;
     }
