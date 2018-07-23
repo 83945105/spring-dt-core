@@ -1,5 +1,7 @@
 package com.dt.beans;
 
+import com.esotericsoftware.reflectasm.MethodAccess;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -70,5 +72,22 @@ public class BeanUtils {
         sb.insert(0, "set");
         SETTER_METHOD_NAME_CACHE.put(property, sb.toString());
         return sb.toString();
+    }
+
+    /**
+     * 执行setter方法
+     *
+     * @param methodAccess MethodAccess对象
+     * @param object       容器对象
+     * @param property     属性名称
+     * @param value        属性值
+     */
+    public static void invokeSetter(MethodAccess methodAccess, Object object, String property, Object value) {
+        String setterName = BeanUtils.getSetterMethodName(property);
+        try {
+            methodAccess.invoke(object, setterName, value);
+        } catch (ClassCastException e) {
+            methodAccess.invoke(object, setterName, value.toString());
+        }
     }
 }
