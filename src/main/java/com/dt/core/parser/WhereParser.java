@@ -140,7 +140,7 @@ public final class WhereParser {
                 switch (linkWhereData.getLinkType()) {
                     case AND:
                         data = parseWhereData(whereDataList, LinkType.AND);
-                        if (data != null) {
+                        if (data != null && data.getSql() != null) {
                             sql.append(" and ").append(data.getSql());
                             args.addAll(data.getArgs());
                             i++;
@@ -148,7 +148,7 @@ public final class WhereParser {
                         continue;
                     case OR:
                         data = parseWhereData(whereDataList, LinkType.OR);
-                        if (data != null) {
+                        if (data != null && data.getSql() != null) {
                             sql.append(" or ").append(data.getSql());
                             args.addAll(data.getArgs());
                             i++;
@@ -160,7 +160,7 @@ public final class WhereParser {
                 switch (linkWhereData.getLinkType()) {
                     case AND:
                         data = parseLinkWhereData(list, LinkType.AND);
-                        if (data != null) {
+                        if (data != null && data.getSql() != null) {
                             sql.append(" and ").append(data.getSql());
                             args.addAll(data.getArgs());
                             i++;
@@ -168,7 +168,7 @@ public final class WhereParser {
                         continue;
                     case OR:
                         data = parseLinkWhereData(list, LinkType.OR);
-                        if (data != null) {
+                        if (data != null && data.getSql() != null) {
                             sql.append(" or ").append(data.getSql());
                             args.addAll(data.getArgs());
                             i++;
