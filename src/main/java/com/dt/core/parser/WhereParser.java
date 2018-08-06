@@ -120,6 +120,8 @@ public final class WhereParser {
                     parseData.setSql(sql.length() > 4 ? sql.substring(5) : null);
                 }
                 break;
+            default:
+                return null;
         }
         return parseData;
     }
@@ -155,6 +157,8 @@ public final class WhereParser {
                             orCount++;
                         }
                         continue;
+                    default:
+                        return null;
                 }
             } else if (list != null && list.size() > 0) {
                 switch (linkWhereData.getLinkType()) {
@@ -175,6 +179,8 @@ public final class WhereParser {
                             orCount++;
                         }
                         continue;
+                    default:
+                        return null;
                 }
             }
         }
@@ -198,6 +204,8 @@ public final class WhereParser {
                     parseData.setSql(sql.length() > 4 ? sql.substring(5) : null);
                 }
                 break;
+            default:
+                return null;
         }
         return parseData;
     }

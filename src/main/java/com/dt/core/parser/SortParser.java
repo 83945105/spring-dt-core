@@ -1,7 +1,7 @@
 package com.dt.core.parser;
 
 import com.dt.core.data.SortData;
-import com.dt.core.data.TableData;
+import com.dt.core.data.AbstractTableData;
 import com.dt.core.exception.DtException;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public final class SortParser {
             return null;
         }
         StringBuilder sql = new StringBuilder(64);
-        TableData tableData;
+        AbstractTableData tableData;
         for (List<SortData> sortData : sortDataList) {
             for (SortData data : sortData) {
                 tableData = data.getTableData();

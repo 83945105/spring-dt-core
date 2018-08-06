@@ -9,7 +9,7 @@ import java.sql.*;
  * @version 1.0
  * @since 2018/7/10
  */
-public abstract class JdbcSource {
+public abstract class AbstractJdbcSource {
 
     protected Connection connection;
 
@@ -25,7 +25,7 @@ public abstract class JdbcSource {
 
     protected String password;
 
-    public JdbcSource(String driverClassName, String url, String username, String password) {
+    public AbstractJdbcSource(String driverClassName, String url, String username, String password) {
         this.driverClassName = driverClassName;
         this.url = url;
         this.username = username;

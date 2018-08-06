@@ -11,17 +11,17 @@ import com.dt.core.bean.SortType;
  */
 public final class SortData {
 
-    private TableData tableData;
+    private AbstractTableData tableData;
 
     private String columnName;
 
     private SortType sortType = SortType.ASC;
 
-    public TableData getTableData() {
+    public AbstractTableData getTableData() {
         return tableData;
     }
 
-    public void setTableData(TableData tableData) {
+    public void setTableData(AbstractTableData tableData) {
         this.tableData = tableData;
     }
 

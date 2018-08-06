@@ -14,7 +14,7 @@ import java.util.*;
  * @version 1.0
  * @since 2018/7/10
  */
-public class JdbcSourceEngine extends JdbcSource {
+public class AbstractJdbcSourceEngine extends AbstractJdbcSource {
 
     private String ip;
 
@@ -22,8 +22,8 @@ public class JdbcSourceEngine extends JdbcSource {
 
     private String dataBaseName;
 
-    public static JdbcSourceEngine newMySqlEngine(String ip, String port, String dataBaseName, String username, String password) {
-        JdbcSourceEngine engine = new JdbcSourceEngine("com.mysql.jdbc.Driver",
+    public static AbstractJdbcSourceEngine newMySqlEngine(String ip, String port, String dataBaseName, String username, String password) {
+        AbstractJdbcSourceEngine engine = new AbstractJdbcSourceEngine("com.mysql.jdbc.Driver",
                 "jdbc:mysql://" + ip + ":" + port + "/" + dataBaseName + "?useSSL=false",
                 username, password);
         engine.ip = ip;
@@ -32,7 +32,7 @@ public class JdbcSourceEngine extends JdbcSource {
         return engine;
     }
 
-    private JdbcSourceEngine(String driverClassName, String url, String username, String password) {
+    private AbstractJdbcSourceEngine(String driverClassName, String url, String username, String password) {
         super(driverClassName, url, username, password);
     }
 

@@ -50,6 +50,8 @@ public final class JoinParser {
                 case RIGHT:
                     sql.append(" right join ");
                     break;
+                default:
+                    return null;
             }
             sql.append(joinTableData.getTableName()).append(" ").append(joinTableData.getTableAlias());
             Map<LinkType, List<OnData>> onDataMap = joinTableData.getLinkOnDataMap();
@@ -65,6 +67,8 @@ public final class JoinParser {
                         case OR:
                             onSql.append(" or ");
                             break;
+                        default:
+                            return null;
                     }
                     for (OnData onData : onEntry.getValue()) {
                         on.append(" and ")
@@ -133,6 +137,8 @@ public final class JoinParser {
                                         .append(onData.getTargetColumnName())
                                         .append("`");
                                 continue;
+                            default:
+                                return null;
                         }
                     }
                     onSql.append(on.substring(5));

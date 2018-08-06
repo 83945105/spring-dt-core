@@ -15,7 +15,7 @@ public final class MainTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         TO extends OnModel<T, TL, TO, TC, TS, TG>,
         TC extends WhereModel<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
-        TG extends GroupModel<T, TL, TO, TC, TS, TG>> extends TableData<T, TL, TO, TC, TS, TG> {
+        TG extends GroupModel<T, TL, TO, TC, TS, TG>> extends AbstractTableData<T, TL, TO, TC, TS, TG> {
 
     public MainTableData(Class<T> tableClass) {
         super(tableClass);

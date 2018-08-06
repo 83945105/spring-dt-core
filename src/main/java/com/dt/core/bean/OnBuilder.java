@@ -83,6 +83,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] equalTo, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.EQUAL);
@@ -101,6 +103,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] notEqualTo, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.NOT_EQUAL);
@@ -119,6 +123,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] greaterThan, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.GREATER);
@@ -137,6 +143,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] greaterThanAndEqualTo, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.GREATER_EQUAL);
@@ -155,6 +163,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] lessThan, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.LESS);
@@ -173,6 +183,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] lessThanAndEqualTo, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.LESS_EQUAL);
@@ -191,6 +203,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] between, the value can not be null.");
+                default:
+                    return null;
             }
         }
         if (secondValue == null) {
@@ -199,6 +213,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] between, the secondValue can not be null.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.BETWEEN);
@@ -218,6 +234,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] like, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.LIKE);
@@ -236,6 +254,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.IN);
@@ -254,6 +274,8 @@ public final class OnBuilder<M extends Model<M, ML, MO, MC, MS, MG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("join table alias [" + this.onData.getOwnerTableAlias() + "] column [" + this.onData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
+                default:
+                    return null;
             }
         }
         this.onData.setOnType(OnType.IN);

@@ -26,7 +26,7 @@ public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
     private Map<String, JoinTableData> joinTableDataAliasMap = new LinkedHashMap<>();
     private Map<String, Boolean> alias = new HashMap<>();
 
-    private Set<TableData> columnDataSet = new LinkedHashSet<>();
+    private Set<AbstractTableData> columnDataSet = new LinkedHashSet<>();
     private Set<VirtualFieldData> virtualFieldDataSet = new LinkedHashSet<>();
     private Set<FunctionColumnData> functionColumnDataSet = new LinkedHashSet<>();
 
@@ -89,12 +89,12 @@ public final class EngineData<M extends Model<M, ML, MO, MC, MS, MG>,
     }
 
     @Override
-    public Set<TableData> getColumnDataSet() {
+    public Set<AbstractTableData> getColumnDataSet() {
         return this.columnDataSet;
     }
 
     @Override
-    public void addColumnData(TableData columnData) {
+    public void addColumnData(AbstractTableData columnData) {
         if (columnData == null) {
             return;
         }

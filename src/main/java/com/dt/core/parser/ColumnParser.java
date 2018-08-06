@@ -2,7 +2,7 @@ package com.dt.core.parser;
 
 import com.dt.core.data.FunctionColumnData;
 import com.dt.core.data.MainTableData;
-import com.dt.core.data.TableData;
+import com.dt.core.data.AbstractTableData;
 import com.dt.core.data.VirtualFieldData;
 import com.dt.core.exception.DtException;
 import com.dt.core.exception.TableDataException;
@@ -29,7 +29,7 @@ public final class ColumnParser {
         return COLUMN_PARSER;
     }
 
-    public String parse(MainTableData mainTableData, Set<FunctionColumnData> functionColumnDataSet, Set<VirtualFieldData> virtualFieldDataSet, Set<TableData> columnDataSet) {
+    public String parse(MainTableData mainTableData, Set<FunctionColumnData> functionColumnDataSet, Set<VirtualFieldData> virtualFieldDataSet, Set<AbstractTableData> columnDataSet) {
         boolean hasF = functionColumnDataSet != null && functionColumnDataSet.size() != 0;
         boolean hasV = virtualFieldDataSet != null && virtualFieldDataSet.size() != 0;
         boolean hasC = columnDataSet != null && columnDataSet.size() != 0;
@@ -50,10 +50,10 @@ public final class ColumnParser {
             }
             return sql.substring(1);
         }
-        Map<String, Boolean> cache = new HashMap<>();
+        Map<String, Boolean> cache = new HashMap<>(32);
 
         if (hasF) {
-            TableData tableData;
+            AbstractTableData tableData;
             String alias;
             for (FunctionColumnData data : functionColumnDataSet) {
                 tableData = data.getTableData();
@@ -120,7 +120,7 @@ public final class ColumnParser {
         }
 
         if (hasC) {
-            for (TableData tableData : columnDataSet) {
+            for (AbstractTableData tableData : columnDataSet) {
                 columnAliasMap = tableData.getColumnAliasMap();
                 if (columnAliasMap.size() == 0) {
                     columnAliasMap = tableData.getTable().getColumnAliasMap();

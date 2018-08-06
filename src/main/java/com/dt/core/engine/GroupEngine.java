@@ -2,7 +2,7 @@ package com.dt.core.engine;
 
 import com.dt.core.bean.*;
 import com.dt.core.data.GroupData;
-import com.dt.core.data.TableData;
+import com.dt.core.data.AbstractTableData;
 import com.dt.core.norm.Group;
 import com.dt.core.norm.Model;
 import com.dt.core.parser.GroupParser;
@@ -38,7 +38,7 @@ public class GroupEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         if (columnNames == null || columnNames.length == 0) {
             return this;
         }
-        TableData tableData = this.data.getMainTableData();
+        AbstractTableData tableData = this.data.getMainTableData();
         tableData.addGroupColumns(columnNames);
         this.data.addGroupData(new GroupData(tableData, columnNames));
         return this;
@@ -48,7 +48,7 @@ public class GroupEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         if (columnNames == null || columnNames.size() == 0) {
             return this;
         }
-        TableData tableData = this.data.getMainTableData();
+        AbstractTableData tableData = this.data.getMainTableData();
         tableData.addGroupColumns(columnNames);
         this.data.addGroupData(new GroupData(tableData, columnNames.toArray(new String[columnNames.size()])));
         return this;
@@ -63,7 +63,7 @@ public class GroupEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         if (columnNames == null || columnNames.length == 0) {
             return this;
         }
-        TableData tableData = this.data.getJoinTableData(alias, columnClass);
+        AbstractTableData tableData = this.data.getJoinTableData(alias, columnClass);
         tableData.addGroupColumns(columnNames);
         this.data.addGroupData(new GroupData(tableData, columnNames));
         return this;
@@ -78,7 +78,7 @@ public class GroupEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         if (columnNames == null || columnNames.size() == 0) {
             return this;
         }
-        TableData tableData = this.data.getJoinTableData(alias, columnClass);
+        AbstractTableData tableData = this.data.getJoinTableData(alias, columnClass);
         tableData.addGroupColumns(columnNames);
         this.data.addGroupData(new GroupData(tableData, columnNames.toArray(new String[columnNames.size()])));
         return this;

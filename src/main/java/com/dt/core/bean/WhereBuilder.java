@@ -1,6 +1,6 @@
 package com.dt.core.bean;
 
-import com.dt.core.data.TableData;
+import com.dt.core.data.AbstractTableData;
 import com.dt.core.data.WhereData;
 import com.dt.core.exception.ComparisonException;
 import com.dt.core.norm.ComparisonOperator;
@@ -43,7 +43,7 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
         return whereDataList;
     }
 
-    private TableData ownerTableData;
+    private AbstractTableData ownerTableData;
 
     public WhereBuilder<C, CL, CO, CC, CS, CG> handler(String ownerTableName, String ownerAlias, String ownerColumnName) {
         this.whereData = new WhereData();
@@ -78,6 +78,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] equalTo, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.EQUAL);
@@ -95,6 +97,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] notEqualTo, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.NOT_EQUAL);
@@ -112,6 +116,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] greaterThan, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.GREATER);
@@ -129,6 +135,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] greaterThanAndEqualTo, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.GREATER_EQUAL);
@@ -146,6 +154,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] lessThan, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.LESS);
@@ -163,6 +173,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] lessThanAndEqualTo, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.LESS_EQUAL);
@@ -180,6 +192,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] between, the value can not be null.");
+                default:
+                    return null;
             }
         }
         if (secondValue == null) {
@@ -188,6 +202,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] between, the secondValue can not be null.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.BETWEEN);
@@ -206,6 +222,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] like, the value can not be null.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.LIKE);
@@ -223,6 +241,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.IN);
@@ -240,6 +260,8 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
                     return this.handleModel;
                 case NOT_NULL:
                     throw new ComparisonException("table alias [" + this.whereData.getOwnerAlias() + "] column [" + this.whereData.getOwnerColumnName() + "] in, the values can not be null or size = 0.");
+                default:
+                    return null;
             }
         }
         this.whereData.setWhereType(WhereType.IN);
@@ -249,7 +271,7 @@ public final class WhereBuilder<C extends Model<C, CL, CO, CC, CS, CG>,
         return this.handleModel;
     }
 
-    public void setOwnerTableData(TableData ownerTableData) {
+    public void setOwnerTableData(AbstractTableData ownerTableData) {
         this.ownerTableData = ownerTableData;
     }
 }

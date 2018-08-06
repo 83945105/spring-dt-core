@@ -2,7 +2,7 @@ package com.dt.core.model;
 
 import com.dt.core.converter.ColumnFieldConverter;
 import com.dt.core.converter.HumpConverter;
-import com.dt.core.jdbc.JdbcSourceEngine;
+import com.dt.core.jdbc.AbstractJdbcSourceEngine;
 import org.fusesource.jansi.Ansi;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  */
 public final class ModelTemplateEngine {
 
-    private JdbcSourceEngine jdbcSourceEngine;
+    private AbstractJdbcSourceEngine jdbcSourceEngine;
 
     private ColumnFieldConverter columnFieldConverter = new HumpConverter();
 
@@ -33,11 +33,11 @@ public final class ModelTemplateEngine {
 
     private static final String PACKAGE_PATH_REGEX = "^([a-z,A-Z,$,_][a-z,A-Z,0-9,$,_,]*.?[a-z,A-Z,$,_][a-z,A-Z,0-9,$,_,]*|[a-z,A-Z,$,_][a-z,A-Z,0-9,$,_,]*)+";
 
-    public ModelTemplateEngine(JdbcSourceEngine jdbcSourceEngine) {
+    public ModelTemplateEngine(AbstractJdbcSourceEngine jdbcSourceEngine) {
         this.jdbcSourceEngine = jdbcSourceEngine;
     }
 
-    public ModelTemplateEngine(JdbcSourceEngine jdbcSourceEngine, ColumnFieldConverter columnFieldConverter) {
+    public ModelTemplateEngine(AbstractJdbcSourceEngine jdbcSourceEngine, ColumnFieldConverter columnFieldConverter) {
         this.jdbcSourceEngine = jdbcSourceEngine;
         this.columnFieldConverter = columnFieldConverter;
     }
@@ -118,7 +118,7 @@ public final class ModelTemplateEngine {
                     .fg(Ansi.Color.BLUE)
                     .a("========================================================================================================================================================================================================\n")
                     .reset());
-            setting = new HashMap<>();
+            setting = new HashMap<>(5);
             setting.put("packagePath", packagePath);
             setting.put("tableName", entry.getKey());
             setting.put("tableAlias", entry.getValue());

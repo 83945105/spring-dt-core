@@ -45,9 +45,9 @@ public interface Data<M extends Model<M, ML, MO, MC, MS, MG>,
 
     void setJoinTableData(JoinTableData joinTableData);
 
-    Set<TableData> getColumnDataSet();
+    Set<AbstractTableData> getColumnDataSet();
 
-    void addColumnData(TableData columnData);
+    void addColumnData(AbstractTableData columnData);
 
     Set<VirtualFieldData> getVirtualFieldDataSet();
 

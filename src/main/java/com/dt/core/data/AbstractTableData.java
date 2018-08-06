@@ -12,7 +12,7 @@ import java.util.*;
  * @version 1.0
  * @since 2018/7/10
  */
-public abstract class TableData<T extends Model<T, TL, TO, TC, TS, TG>,
+public abstract class AbstractTableData<T extends Model<T, TL, TO, TC, TS, TG>,
         TL extends ColumnModel<T, TL, TO, TC, TS, TG>,
         TO extends OnModel<T, TL, TO, TC, TS, TG>,
         TC extends WhereModel<T, TL, TO, TC, TS, TG>,
@@ -39,7 +39,7 @@ public abstract class TableData<T extends Model<T, TL, TO, TC, TS, TG>,
 
     private List<List<SortData>> sortDataList = new ArrayList<>();
 
-    public TableData(Class<T> tableClass) {
+    public AbstractTableData(Class<T> tableClass) {
         this.tableClass = tableClass;
         try {
             this.table = tableClass.newInstance();
@@ -154,9 +154,13 @@ public abstract class TableData<T extends Model<T, TL, TO, TC, TS, TG>,
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TableData tableData = (TableData) o;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        AbstractTableData tableData = (AbstractTableData) o;
         return Objects.equals(tableAlias, tableData.tableAlias);
     }
 

@@ -9,16 +9,16 @@ package com.dt.core.data;
  */
 public final class GroupData {
 
-    private TableData tableData;
+    private AbstractTableData tableData;
 
     private String[] columnNames;
 
-    public GroupData(TableData tableData, String[] columnNames) {
+    public GroupData(AbstractTableData tableData, String[] columnNames) {
         this.tableData = tableData;
         this.columnNames = columnNames;
     }
 
-    public TableData getTableData() {
+    public AbstractTableData getTableData() {
         return tableData;
     }
 

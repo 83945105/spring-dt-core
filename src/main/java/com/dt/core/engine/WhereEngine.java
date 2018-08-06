@@ -19,7 +19,7 @@ import java.util.List;
  * @version 1.0
  * @since 2018/7/10
  */
-public abstract class WhereEngine<M extends Model<M, ML, MO, MC, MS, MG>,
+public class WhereEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         ML extends ColumnModel<M, ML, MO, MC, MS, MG>,
         MO extends OnModel<M, ML, MO, MC, MS, MG>,
         MC extends WhereModel<M, ML, MO, MC, MS, MG>,
