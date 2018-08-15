@@ -78,6 +78,9 @@ public final class ModelTemplateEngine {
         process("/", packagePath);
     }
 
+    private static final String PROJECT_ROOT_PATH_SIGN = "/";
+    private static final String PACKAGE_LINK_REGEX = "\\.";
+
     public void process(String projectPath, String packagePath) throws SQLException {
         if (projectPath == null || projectPath.trim().length() == 0) {
             throw new RuntimeException("projectPath can not be null or empty.");
@@ -85,7 +88,7 @@ public final class ModelTemplateEngine {
         if (!Pattern.matches(PACKAGE_PATH_REGEX, packagePath)) {
             throw new RuntimeException("packagePath format error.");
         }
-        if ("/".equals(projectPath.trim())) {
+        if (PROJECT_ROOT_PATH_SIGN.equals(projectPath.trim())) {
             projectPath = System.getProperty("user.dir");
         }
 
@@ -96,7 +99,7 @@ public final class ModelTemplateEngine {
                 .append("main")
                 .append(File.separator)
                 .append("java");
-        for (String s : packagePath.split("\\.")) {
+        for (String s : packagePath.split(PACKAGE_LINK_REGEX)) {
             path.append(File.separator).append(s);
         }
         path.append(File.separator);

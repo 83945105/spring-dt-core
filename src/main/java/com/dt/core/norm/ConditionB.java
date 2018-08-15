@@ -24,10 +24,12 @@ public interface ConditionB<M extends Model<M, ML, MO, MC, MS, MG>,
         TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
     /**
+     * 接收处理条件
+     *
      * @param condition 连接条件
      * @param table     指定表条件
      * @param mainTable 主表的条件
-     * @return
+     * @return 条件连接
      */
     WhereLink<M, ML, MO, MC, MS, MG> apply(WhereLink<M, ML, MO, MC, MS, MG> condition, TC table, MC mainTable);
 }

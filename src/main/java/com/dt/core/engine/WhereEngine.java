@@ -79,7 +79,7 @@ public class WhereEngine<M extends Model<M, ML, MO, MC, MS, MG>,
 
     @Override
     public ParseData getWhereParseData() {
-        return this.whereParser.parse(this.getData().getLinkWhereDataList());
+        return this.whereParser.parse(this.getData().getLinkWhereDataListList());
     }
 
 }

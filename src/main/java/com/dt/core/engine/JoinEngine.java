@@ -55,7 +55,7 @@ public class JoinEngine<M extends Model<M, ML, MO, MC, MS, MG>,
         MO mo = (MO) mainTableData.getTable().getOn();
         OnLink link = on.apply(onLink, jo, mo);
         joinTableData.addLinkOnDataMap(link.getLinkOnDataMap());
-        this.data.setJoinTableData(joinTableData);
+        this.data.addJoinTableData(joinTableData);
         return this;
     }
 

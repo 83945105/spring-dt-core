@@ -17,6 +17,12 @@ public interface Column<T extends Model<T, TL, TO, TC, TS, TG>,
         TS extends SortModel<T, TL, TO, TC, TS, TG>,
         TG extends GroupModel<T, TL, TO, TC, TS, TG>> {
 
-    TL apply(TL table);
+    /**
+     * 接收列模组
+     *
+     * @param columnModel 列模组
+     * @return 列模组
+     */
+    TL apply(TL columnModel);
 
 }

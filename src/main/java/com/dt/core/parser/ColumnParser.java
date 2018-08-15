@@ -8,6 +8,7 @@ import com.dt.core.exception.DtException;
 import com.dt.core.exception.TableDataException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public final class ColumnParser {
         return COLUMN_PARSER;
     }
 
-    public String parse(MainTableData mainTableData, Set<FunctionColumnData> functionColumnDataSet, Set<VirtualFieldData> virtualFieldDataSet, Set<AbstractTableData> columnDataSet) {
+    public String parse(MainTableData mainTableData, List<FunctionColumnData> functionColumnDataSet, Set<VirtualFieldData> virtualFieldDataSet, Set<AbstractTableData> columnDataSet) {
         boolean hasF = functionColumnDataSet != null && functionColumnDataSet.size() != 0;
         boolean hasV = virtualFieldDataSet != null && virtualFieldDataSet.size() != 0;
         boolean hasC = columnDataSet != null && columnDataSet.size() != 0;

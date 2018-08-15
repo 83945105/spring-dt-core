@@ -85,7 +85,7 @@ public class ColumnEngine<M extends Model<M, ML, MO, MC, MS, MG>,
     @Override
     public String getColumnSql() {
         return this.columnParser.parse(this.getData().getMainTableData(),
-                this.getData().getFunctionColumnDataSet(),
+                this.getData().getFunctionColumnDataList(),
                 this.getData().getVirtualFieldDataSet(),
                 this.getData().getColumnDataSet());
     }
